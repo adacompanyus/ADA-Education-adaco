@@ -1,17 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { GradientButton } from '@/components/ui/gradient-button';
-import { GradientCard } from '@/components/ui/gradient-card';
-import { ParticleBackground } from '@/components/animations/particle-background';
 import { BottomNavigation } from '@/components/layout/bottom-navigation';
-import { 
-  ChevronDown, 
-  RotateCcw, 
-  Zap, 
-  Trophy, 
-  Timer,
+import { GradientCard } from '@/components/ui/gradient-card';
+import { GradientButton } from '@/components/ui/gradient-button';
+import { ParticleBackground } from '@/components/animations/particle-background';
+import { useTheme } from '@/contexts/theme-context';
+import {
   Star,
   Target,
-  Brain
+  Trophy,
+  Zap,
+  Brain,
+  Timer,
+  Award,
+  RotateCcw,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  User,
+  Settings,
+  CreditCard,
+  Bell,
+  Shield,
+  HelpCircle,
+  Moon,
+  Sun,
+  Mail,
+  Phone,
+  Calendar,
+  MapPin,
+  Edit,
+  LogOut,
 } from 'lucide-react';
 
 interface DashboardScreenProps {
@@ -160,46 +178,55 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             <h2 className="text-xl font-semibold text-text-primary">AI Flashcards</h2>
             
             <div className="relative">
-              <GradientCard 
-                className="min-h-48 cursor-pointer perspective-1000"
-                onClick={flipCard}
-              >
-                <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
-                  {/* Front */}
-                  <div className="absolute inset-0 backface-hidden">
-                    <div className="h-full flex flex-col justify-center items-center text-center space-y-4">
-                      <Star className="w-8 h-8 text-gradient-purple" />
-                      <p className="text-lg text-text-primary font-medium">
-                        {currentCard.front}
-                      </p>
-                      <p className="text-sm text-text-muted">Tap to reveal answer</p>
+              <div className="gradient-outline rounded-xl p-1">
+                <div 
+                  className="bg-background rounded-xl min-h-48 cursor-pointer perspective-1000"
+                  onClick={flipCard}
+                >
+                  <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-48`}>
+                    {/* Front */}
+                    <div className="absolute inset-0 backface-hidden rounded-xl bg-surface">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                        <Star className="w-8 h-8 text-gradient-purple" />
+                        <p className="text-lg text-text-primary font-medium">
+                          {currentCard.front}
+                        </p>
+                        <p className="text-sm text-text-muted">Tap to reveal answer</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Back */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180">
-                    <div className="h-full flex flex-col justify-center items-center text-center space-y-4">
-                      <Target className="w-8 h-8 text-gradient-orange" />
-                      <p className="text-lg text-text-primary font-medium">
-                        {currentCard.back}
-                      </p>
-                      <p className="text-sm text-gaming-success">Great job!</p>
+                    
+                    {/* Back */}
+                    <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl bg-surface">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                        <Target className="w-8 h-8 text-gradient-orange" />
+                        <p className="text-lg text-text-primary font-medium">
+                          {currentCard.back}
+                        </p>
+                        <p className="text-sm text-gaming-success">Great job!</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </GradientCard>
+              </div>
 
               <div className="flex justify-between items-center mt-4">
                 <button
-                  onClick={nextCard}
+                  onClick={() => setFlashcardIndex(prev => prev === 0 ? sampleFlashcards.length - 1 : prev - 1)}
                   className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
                 >
-                  <RotateCcw className="w-4 h-4" />
-                  Next Card
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
                 </button>
                 <span className="text-sm text-text-muted">
-                  Card {flashcardIndex + 1}
+                  Card {flashcardIndex + 1} of {sampleFlashcards.length}
                 </span>
+                <button
+                  onClick={() => setFlashcardIndex(prev => prev === sampleFlashcards.length - 1 ? 0 : prev + 1)}
+                  className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
@@ -369,16 +396,213 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   }
 
   // Profile Tab (default)
+  const { theme, toggleTheme } = useTheme();
+  
   return (
     <div className="min-h-screen bg-background relative pb-20">
       <ParticleBackground />
       
-      <div className="relative z-10 p-6 flex flex-col items-center justify-center min-h-screen">
+      <div className="relative z-10 p-6 space-y-6">
+        {/* Profile Header */}
         <div className="text-center space-y-4">
-          <Trophy className="w-16 h-16 text-gradient-purple mx-auto" />
-          <h2 className="text-2xl font-bold gradient-text capitalize">{activeTab}</h2>
-          <p className="text-text-secondary">Coming soon! This feature is under development.</p>
+          <div className="gradient-outline rounded-full p-1 w-24 h-24 mx-auto">
+            <div className="gradient-outline-content rounded-full w-full h-full bg-surface flex items-center justify-center">
+              <User className="w-12 h-12 text-gradient-purple" />
+            </div>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold gradient-text">John Doe</h1>
+            <p className="text-text-secondary">Student • Level 12</p>
+            <div className="flex items-center justify-center gap-4 mt-2">
+              <div className="text-center">
+                <p className="text-sm text-gaming-xp font-semibold">2,450 XP</p>
+                <p className="text-xs text-text-muted">Experience</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-token-silver font-semibold">1,250</p>
+                <p className="text-xs text-text-muted">Tokens</p>
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-gaming-success font-semibold">7 Days</p>
+                <p className="text-xs text-text-muted">Streak</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Personal Information */}
+        <GradientCard>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold gradient-text">Personal Information</h2>
+              <Edit className="w-5 h-5 text-text-secondary cursor-pointer hover:text-text-primary transition-colors" />
+            </div>
+            
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-gradient-purple" />
+                <div>
+                  <p className="text-sm text-text-muted">Email</p>
+                  <p className="text-text-primary">john.doe@email.com</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-gradient-orange" />
+                <div>
+                  <p className="text-sm text-text-muted">Phone</p>
+                  <p className="text-text-primary">+1 (555) 123-4567</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Calendar className="w-5 h-5 text-gradient-purple" />
+                <div>
+                  <p className="text-sm text-text-muted">Member Since</p>
+                  <p className="text-text-primary">January 2024</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-gradient-orange" />
+                <div>
+                  <p className="text-sm text-text-muted">Location</p>
+                  <p className="text-text-primary">New York, NY</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </GradientCard>
+
+        {/* Account Settings */}
+        <GradientCard>
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold gradient-text">Account Settings</h2>
+            
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-5 h-5 text-gradient-purple" />
+                  <span className="text-text-primary">Subscription</span>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gaming-success font-semibold">Personal+</p>
+                  <p className="text-xs text-text-muted">$24.99/month</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Bell className="w-5 h-5 text-gradient-orange" />
+                  <span className="text-text-primary">Notifications</span>
+                </div>
+                <button className="text-sm gradient-text font-medium">Manage</button>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-gradient-purple" />
+                  <span className="text-text-primary">Privacy & Security</span>
+                </div>
+                <button className="text-sm gradient-text font-medium">Settings</button>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {theme === 'dark' ? (
+                    <Moon className="w-5 h-5 text-gradient-orange" />
+                  ) : (
+                    <Sun className="w-5 h-5 text-gradient-orange" />
+                  )}
+                  <span className="text-text-primary">Theme</span>
+                </div>
+                <button 
+                  onClick={toggleTheme}
+                  className="text-sm gradient-text font-medium capitalize"
+                >
+                  {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </GradientCard>
+
+        {/* Study Statistics */}
+        <GradientCard>
+          <div className="space-y-4">
+            <h2 className="text-lg font-semibold gradient-text">Study Statistics</h2>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="gradient-outline rounded-lg p-1 mb-2">
+                  <div className="gradient-outline-content rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gradient-purple">142</p>
+                    <p className="text-xs text-text-muted">Cards Studied</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="gradient-outline rounded-lg p-1 mb-2">
+                  <div className="gradient-outline-content rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gradient-orange">89%</p>
+                    <p className="text-xs text-text-muted">Accuracy Rate</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="gradient-outline rounded-lg p-1 mb-2">
+                  <div className="gradient-outline-content rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gaming-success">24</p>
+                    <p className="text-xs text-text-muted">Quests Completed</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <div className="gradient-outline rounded-lg p-1 mb-2">
+                  <div className="gradient-outline-content rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gaming-xp">15</p>
+                    <p className="text-xs text-text-muted">Achievements</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </GradientCard>
+
+        {/* Support & Help */}
+        <GradientCard>
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold gradient-text">Support & Help</h2>
+            
+            <div className="space-y-3">
+              <button className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
+                <HelpCircle className="w-5 h-5 text-gradient-purple" />
+                <span className="text-text-primary">Help Center</span>
+              </button>
+              
+              <button className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
+                <Mail className="w-5 h-5 text-gradient-orange" />
+                <span className="text-text-primary">Contact Support</span>
+              </button>
+              
+              <button className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
+                <Settings className="w-5 h-5 text-gradient-purple" />
+                <span className="text-text-primary">App Settings</span>
+              </button>
+            </div>
+          </div>
+        </GradientCard>
+
+        {/* Logout */}
+        <GradientCard className="cursor-pointer hover:scale-[1.02]">
+          <button className="flex items-center justify-center gap-3 w-full text-error">
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium">Log Out</span>
+          </button>
+        </GradientCard>
       </div>
 
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />

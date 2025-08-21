@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { ThemeProvider } from "./contexts/theme-context";
 import { LoginScreen } from "./screens/login-screen";
 import { QuestionnaireScreen } from "./screens/questionnaire-screen";
 import { AILoadingScreen } from "./screens/ai-loading-screen";
@@ -69,37 +70,39 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        
-        <div className="app-container bg-background text-foreground min-h-screen">
-          {currentScreen === 'login' && (
-            <LoginScreen 
-              onLogin={handleLogin}
-              onSignUp={handleSignUp}
-              loading={loading}
-            />
-          )}
+        <ThemeProvider>
+          <Toaster />
+          <Sonner />
           
-          {currentScreen === 'questionnaire' && (
-            <QuestionnaireScreen onComplete={handleQuestionnaireComplete} />
-          )}
-          
-          {currentScreen === 'loading' && (
-            <AILoadingScreen onComplete={handleAILoadingComplete} />
-          )}
-          
-          {currentScreen === 'subscription' && (
-            <SubscriptionScreen onSelectPlan={handlePlanSelect} />
-          )}
-          
-          {currentScreen === 'dashboard' && userData && (
-            <DashboardScreen 
-              user={userData}
-              selectedSubjects={userData.subjects}
-            />
-          )}
-        </div>
+          <div className="app-container bg-background text-foreground min-h-screen">
+            {currentScreen === 'login' && (
+              <LoginScreen 
+                onLogin={handleLogin}
+                onSignUp={handleSignUp}
+                loading={loading}
+              />
+            )}
+            
+            {currentScreen === 'questionnaire' && (
+              <QuestionnaireScreen onComplete={handleQuestionnaireComplete} />
+            )}
+            
+            {currentScreen === 'loading' && (
+              <AILoadingScreen onComplete={handleAILoadingComplete} />
+            )}
+            
+            {currentScreen === 'subscription' && (
+              <SubscriptionScreen onSelectPlan={handlePlanSelect} />
+            )}
+            
+            {currentScreen === 'dashboard' && userData && (
+              <DashboardScreen 
+                user={userData}
+                selectedSubjects={userData.subjects}
+              />
+            )}
+          </div>
+        </ThemeProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
