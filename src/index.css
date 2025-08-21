@@ -2,41 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ADA Learning App - Gamified Design System with Purple-Orange Gradient */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Core App Colors - Dark Theme */
+    --background: 220 15% 8%;
+    --foreground: 220 10% 95%;
+    
+    --surface: 220 12% 12%;
+    --surface-elevated: 220 10% 16%;
+    --surface-muted: 220 8% 20%;
+    
+    /* Purple-Orange Gradient System */
+    --gradient-purple: 270 70% 60%;
+    --gradient-orange: 25 95% 60%;
+    --gradient-purple-light: 270 50% 70%;
+    --gradient-orange-light: 25 80% 70%;
+    
+    /* Interactive States */
+    --gradient-glow: 270 70% 60% / 0.3;
+    --particle-purple: 270 80% 70%;
+    --particle-orange: 25 90% 65%;
+    
+    /* Text Hierarchy */
+    --text-primary: 220 10% 95%;
+    --text-secondary: 220 8% 70%;
+    --text-muted: 220 6% 50%;
+    --text-accent: 270 60% 80%;
+    
+    /* Component Colors */
+    --card: 220 12% 12%;
+    --card-foreground: 220 10% 95%;
+    --card-border: 220 8% 20%;
+    
+    --input: 220 10% 16%;
+    --input-border: 220 8% 24%;
+    --input-focus: 270 70% 60%;
+    
+    /* Success & Gaming Colors */
+    --success: 140 60% 50%;
+    --warning: 45 90% 60%;
+    --error: 0 80% 60%;
+    --xp-gold: 45 100% 60%;
+    --token-silver: 220 5% 65%;
+    
+    /* Animation & Effects */
+    --glow-intensity: 0.6;
+    --particle-size: 4px;
+    --animation-speed: 0.3s;
+    
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -55,43 +71,181 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  /* Remove default dark mode styles - app is always dark themed */
+}
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+/* Gradient System */
+@layer utilities {
+  .gradient-outline {
+    background: linear-gradient(135deg, hsl(var(--gradient-purple)), hsl(var(--gradient-orange)));
+    padding: 2px;
+    border-radius: var(--radius);
   }
+
+  .gradient-outline-content {
+    background: hsl(var(--surface));
+    border-radius: calc(var(--radius) - 2px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--gradient-purple)), hsl(var(--gradient-orange)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-glow {
+    box-shadow: 0 0 20px hsl(var(--gradient-glow)), 0 0 40px hsl(var(--gradient-glow));
+  }
+
+  .particle-purple {
+    background: hsl(var(--particle-purple));
+  }
+
+  .particle-orange {
+    background: hsl(var(--particle-orange));
+  }
+}
+
+/* Component Styles */
+@layer components {
+  /* Gradient Button Variants */
+  .btn-gradient-outline {
+    @apply gradient-outline transition-all duration-300 hover:gradient-glow active:scale-95;
+  }
+
+  .btn-gradient-outline .btn-content {
+    @apply gradient-outline-content px-6 py-3 font-semibold transition-all duration-300;
+  }
+
+  /* Card Variants */
+  .card-gradient {
+    @apply gradient-outline transition-all duration-300 hover:gradient-glow hover:scale-[1.02];
+  }
+
+  .card-gradient-content {
+    @apply gradient-outline-content p-6 transition-all duration-300;
+  }
+
+  /* Input Variants */
+  .input-gradient {
+    @apply gradient-outline focus-within:gradient-glow;
+  }
+
+  .input-gradient-content {
+    @apply gradient-outline-content px-4 py-3 bg-transparent border-none outline-none text-white placeholder:text-gray-400;
+  }
+
+  /* Animation Classes */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-particle-orbit {
+    animation: particle-orbit 4s linear infinite;
+  }
+
+  .animate-bounce-gentle {
+    animation: bounce-gentle 2s ease-in-out infinite;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+}
+
+/* Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes particle-orbit {
+  0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* 3D Card Flip Effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Particle Effects */
+.particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.particles::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, hsl(var(--particle-purple)), transparent),
+    radial-gradient(2px 2px at 40px 70px, hsl(var(--particle-orange)), transparent),
+    radial-gradient(1px 1px at 90px 40px, hsl(var(--particle-purple)), transparent),
+    radial-gradient(1px 1px at 130px 80px, hsl(var(--particle-orange)), transparent);
+  background-repeat: repeat;
+  background-size: 150px 120px;
+  animation: particle-drift 20s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes particle-drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-150px); }
 }
 
 @layer base {

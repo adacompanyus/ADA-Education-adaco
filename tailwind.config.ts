@@ -19,34 +19,34 @@ export default {
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))',
+				border: 'hsl(var(--card-border))',
 				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
+				ring: 'hsl(var(--input-focus))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+				surface: {
+					DEFAULT: 'hsl(var(--surface))',
+					elevated: 'hsl(var(--surface-elevated))',
+					muted: 'hsl(var(--surface-muted))',
 				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+				text: {
+					primary: 'hsl(var(--text-primary))',
+					secondary: 'hsl(var(--text-secondary))',
+					muted: 'hsl(var(--text-muted))',
+					accent: 'hsl(var(--text-accent))',
 				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+				gradient: {
+					purple: 'hsl(var(--gradient-purple))',
+					orange: 'hsl(var(--gradient-orange))',
+					'purple-light': 'hsl(var(--gradient-purple-light))',
+					'orange-light': 'hsl(var(--gradient-orange-light))',
 				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+				gaming: {
+					success: 'hsl(var(--success))',
+					warning: 'hsl(var(--warning))',
+					error: 'hsl(var(--error))',
+					xp: 'hsl(var(--xp-gold))',
+					token: 'hsl(var(--token-silver))',
 				},
 				card: {
 					DEFAULT: 'hsl(var(--card))',
