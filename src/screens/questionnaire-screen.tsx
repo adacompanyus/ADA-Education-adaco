@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { ParticleBackground } from '@/components/animations/particle-background';
-import { ChevronRight, Check } from 'lucide-react';
+import { ChevronRight, Check, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/contexts/theme-context';
 
 interface QuestionnaireScreenProps {
-  onComplete: (data: { usage: string; subjects: string[] }) => void;
+  onComplete: (data: { usage: string; subjects: string[]; theme: string }) => void;
 }
 
 const apSubjects = [
@@ -26,9 +27,11 @@ const apSubjects = [
 export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
   onComplete,
 }) => {
+  const { theme, toggleTheme } = useTheme();
   const [step, setStep] = useState(1);
   const [usage, setUsage] = useState('');
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+  const [selectedTheme, setSelectedTheme] = useState<'light' | 'dark'>(theme);
 
   const handleUsageSelect = (value: string) => {
     setUsage(value);
@@ -42,15 +45,25 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
     );
   };
 
+  const handleThemeSelect = (themeValue: 'light' | 'dark') => {
+    setSelectedTheme(themeValue);
+    // Apply theme immediately for preview
+    if (theme !== themeValue) {
+      toggleTheme();
+    }
+  };
+
   const handleContinue = () => {
     if (step === 1 && usage) {
       setStep(2);
     } else if (step === 2 && selectedSubjects.length > 0) {
-      onComplete({ usage, subjects: selectedSubjects });
+      setStep(3);
+    } else if (step === 3 && selectedTheme) {
+      onComplete({ usage, subjects: selectedSubjects, theme: selectedTheme });
     }
   };
 
-  const canContinue = (step === 1 && usage) || (step === 2 && selectedSubjects.length > 0);
+  const canContinue = (step === 1 && usage) || (step === 2 && selectedSubjects.length > 0) || (step === 3 && selectedTheme);
 
   return (
     <div className="min-h-screen bg-background relative flex flex-col p-6">
@@ -58,20 +71,23 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
       
       <div className="relative z-10 flex-1 max-w-md mx-auto w-full">
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in">
+          <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center mb-4">
             <div className="flex space-x-2">
               <div className={`w-3 h-3 rounded-full transition-colors ${step >= 1 ? 'bg-gradient-purple' : 'bg-surface-muted'}`} />
               <div className={`w-3 h-3 rounded-full transition-colors ${step >= 2 ? 'bg-gradient-purple' : 'bg-surface-muted'}`} />
+              <div className={`w-3 h-3 rounded-full transition-colors ${step >= 3 ? 'bg-gradient-purple' : 'bg-surface-muted'}`} />
             </div>
           </div>
           <h1 className="text-2xl font-bold text-text-primary mb-2">
-            {step === 1 ? 'Getting Started' : 'Choose Your Subjects'}
+            {step === 1 ? 'Getting Started' : step === 2 ? 'Choose Your Subjects' : 'Select Your App Theme'}
           </h1>
           <p className="text-text-secondary">
             {step === 1 
               ? 'Help us personalize your experience'
-              : 'Select the AP courses you want to study'
+              : step === 2 
+              ? 'Select the AP courses you want to study'
+              : 'Choose between light and dark mode'
             }
           </p>
         </div>
@@ -147,6 +163,65 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
                   </div>
                 </GradientCard>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 3: Theme Selection */}
+        {step === 3 && (
+          <div className="space-y-4 animate-slide-up">
+            <h2 className="text-lg font-semibold text-text-primary mb-6 text-center">
+              Choose your preferred theme
+            </h2>
+            
+            <div className="space-y-4">
+              <GradientCard
+                selectable
+                selected={selectedTheme === 'light'}
+                onClick={() => handleThemeSelect('light')}
+                className="cursor-pointer"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-3 rounded-lg bg-white border border-gray-200">
+                      <Sun className="w-6 h-6 text-yellow-500" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Light Mode</h3>
+                      <p className="text-sm text-gray-600">
+                        Clean and bright interface
+                      </p>
+                    </div>
+                  </div>
+                  {selectedTheme === 'light' && (
+                    <Check className="w-5 h-5 text-gaming-success" />
+                  )}
+                </div>
+              </GradientCard>
+
+              <GradientCard
+                selectable
+                selected={selectedTheme === 'dark'}
+                onClick={() => handleThemeSelect('dark')}
+                className="cursor-pointer"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-3 rounded-lg bg-slate-800 border border-slate-600">
+                      <Moon className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-100">Dark Mode</h3>
+                      <p className="text-sm text-slate-300">
+                        Easy on the eyes, perfect for studying
+                      </p>
+                    </div>
+                  </div>
+                  {selectedTheme === 'dark' && (
+                    <Check className="w-5 h-5 text-gaming-success" />
+                  )}
+                </div>
+              </GradientCard>
             </div>
           </div>
         )}

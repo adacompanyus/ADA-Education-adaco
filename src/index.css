@@ -69,28 +69,7 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
-  /* Light Theme */
-  .light {
-    --background: 220 15% 95%;
-    --foreground: 220 15% 10%;
-    
-    --surface: 220 10% 98%;
-    --surface-elevated: 220 8% 94%;
-    --surface-muted: 220 6% 90%;
-    
-    --text-primary: 220 15% 10%;
-    --text-secondary: 220 10% 30%;
-    --text-muted: 220 8% 50%;
-    --text-accent: 270 60% 40%;
-    
-    --card: 220 10% 98%;
-    --card-foreground: 220 15% 10%;
-    --card-border: 220 8% 85%;
-    
-    --input: 220 8% 94%;
-    --input-border: 220 6% 80%;
   }
-}
 
   /* Light Theme */
   .light {

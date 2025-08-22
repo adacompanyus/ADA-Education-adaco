@@ -48,8 +48,8 @@ const App = () => {
     alert('Sign up feature would navigate to registration flow');
   };
 
-  const handleQuestionnaireComplete = (data: { usage: string; subjects: string[] }) => {
-    setUserData(prev => prev ? { ...prev, ...data } : null);
+  const handleQuestionnaireComplete = (data: { usage: string; subjects: string[]; theme: string }) => {
+    setUserData(prev => prev ? { ...prev, usage: data.usage, subjects: data.subjects } : null);
     setCurrentScreen('loading');
   };
 
