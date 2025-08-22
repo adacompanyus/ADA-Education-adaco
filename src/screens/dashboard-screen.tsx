@@ -35,6 +35,7 @@ import {
 interface DashboardScreenProps {
   user: { name: string };
   selectedSubjects: string[];
+  onLogout: () => void;
 }
 
 const minigames = [
@@ -67,6 +68,7 @@ const minigames = [
 export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   user,
   selectedSubjects,
+  onLogout,
 }) => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -87,25 +89,54 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     return 'Good Evening';
   };
 
-  const sampleFlashcards = [
-    {
-      front: "What is the derivative of x²?",
-      back: "2x",
-      subject: "AP Calculus AB"
-    },
-    {
-      front: "Define photosynthesis",
-      back: "The process by which plants convert light energy into chemical energy",
-      subject: "AP Biology"
-    },
-    {
-      front: "What year was the Declaration of Independence signed?",
-      back: "1776",
-      subject: "AP US History"
-    }
-  ];
+  const subjectFlashcards = {
+    "AP Calculus AB": [
+      { front: "What is the derivative of x²?", back: "2x" },
+      { front: "What is the integral of 2x?", back: "x² + C" },
+      { front: "What is the limit of (sin x)/x as x approaches 0?", back: "1" },
+      { front: "What is the chain rule?", back: "d/dx[f(g(x))] = f'(g(x)) × g'(x)" },
+      { front: "What is the Mean Value Theorem?", back: "If f is continuous on [a,b] and differentiable on (a,b), then there exists c such that f'(c) = [f(b)-f(a)]/(b-a)" }
+    ],
+    "AP Biology": [
+      { front: "Define photosynthesis", back: "The process by which plants convert light energy into chemical energy" },
+      { front: "What is mitosis?", back: "Cell division that produces two identical diploid cells" },
+      { front: "What is ATP?", back: "Adenosine triphosphate - the energy currency of cells" },
+      { front: "What is the difference between prokaryotes and eukaryotes?", back: "Prokaryotes lack a membrane-bound nucleus; eukaryotes have one" },
+      { front: "What is natural selection?", back: "The process by which organisms with favorable traits are more likely to survive and reproduce" }
+    ],
+    "AP US History": [
+      { front: "What year was the Declaration of Independence signed?", back: "1776" },
+      { front: "What was the Great Depression?", back: "A severe economic downturn from 1929-1939" },
+      { front: "Who was the first President of the United States?", back: "George Washington" },
+      { front: "What was the Civil Rights Act of 1964?", back: "Landmark legislation that outlawed discrimination based on race, color, religion, sex, or national origin" },
+      { front: "What was the Louisiana Purchase?", back: "1803 land deal between the US and France that doubled the size of the US" }
+    ],
+    "AP Chemistry": [
+      { front: "What is Avogadro's number?", back: "6.022 × 10²³ particles per mole" },
+      { front: "What is the ideal gas law?", back: "PV = nRT" },
+      { front: "What is electronegativity?", back: "The tendency of an atom to attract electrons in a chemical bond" },
+      { front: "What is a buffer solution?", back: "A solution that resists changes in pH when acids or bases are added" },
+      { front: "What is the first law of thermodynamics?", back: "Energy cannot be created or destroyed, only transferred or converted" }
+    ],
+    "AP Physics 1": [
+      { front: "What is Newton's first law?", back: "An object at rest stays at rest, and an object in motion stays in motion unless acted upon by a net force" },
+      { front: "What is the formula for kinetic energy?", back: "KE = ½mv²" },
+      { front: "What is the difference between speed and velocity?", back: "Speed is scalar (magnitude only), velocity is vector (magnitude and direction)" },
+      { front: "What is Ohm's law?", back: "V = IR (Voltage = Current × Resistance)" },
+      { front: "What is the conservation of momentum?", back: "The total momentum of a system remains constant when no external forces act on it" }
+    ],
+    "AP English Literature": [
+      { front: "What is a metaphor?", back: "A direct comparison between two unlike things without using 'like' or 'as'" },
+      { front: "What is iambic pentameter?", back: "A poetic meter with five iambs (unstressed-stressed syllable pairs) per line" },
+      { front: "What is symbolism?", back: "The use of objects, colors, or actions to represent deeper meanings or ideas" },
+      { front: "What is dramatic irony?", back: "When the audience knows something that the characters do not" },
+      { front: "What is a sonnet?", back: "A 14-line poem typically written in iambic pentameter with a specific rhyme scheme" }
+    ]
+  };
 
-  const currentCard = sampleFlashcards[flashcardIndex % sampleFlashcards.length];
+  const currentSubjectCards = subjectFlashcards[selectedSubject as keyof typeof subjectFlashcards] || subjectFlashcards["AP Calculus AB"];
+
+  const currentCard = currentSubjectCards[flashcardIndex % currentSubjectCards.length];
 
   const nextCard = () => {
     setFlashcardIndex(prev => prev + 1);
@@ -159,10 +190,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                   {selectedSubjects.map((subject) => (
                     <button
                       key={subject}
-                      onClick={() => {
-                        setSelectedSubject(subject);
-                        setShowSubjectDropdown(false);
-                      }}
+                     onClick={() => {
+                       setSelectedSubject(subject);
+                       setShowSubjectDropdown(false);
+                       setFlashcardIndex(0);
+                       setIsFlipped(false);
+                     }}
                       className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary"
                     >
                       {subject}
@@ -211,17 +244,17 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
               <div className="flex justify-between items-center mt-4">
                 <button
-                  onClick={() => setFlashcardIndex(prev => prev === 0 ? sampleFlashcards.length - 1 : prev - 1)}
+                  onClick={() => setFlashcardIndex(prev => prev === 0 ? currentSubjectCards.length - 1 : prev - 1)}
                   className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Previous
                 </button>
                 <span className="text-sm text-text-muted">
-                  Card {flashcardIndex + 1} of {sampleFlashcards.length}
+                  Card {flashcardIndex + 1} of {currentSubjectCards.length}
                 </span>
                 <button
-                  onClick={() => setFlashcardIndex(prev => prev === sampleFlashcards.length - 1 ? 0 : prev + 1)}
+                  onClick={() => setFlashcardIndex(prev => prev === currentSubjectCards.length - 1 ? 0 : prev + 1)}
                   className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
                 >
                   Next
@@ -598,7 +631,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
         {/* Logout */}
         <GradientCard className="cursor-pointer hover:scale-[1.02]">
-          <button className="flex items-center justify-center gap-3 w-full text-error">
+          <button 
+            onClick={onLogout}
+            className="flex items-center justify-center gap-3 w-full text-error"
+          >
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Log Out</span>
           </button>

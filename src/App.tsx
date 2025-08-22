@@ -68,6 +68,11 @@ const App = () => {
     }, 1000);
   };
 
+  const handleLogout = () => {
+    setUserData(null);
+    setCurrentScreen('login');
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -107,6 +112,7 @@ const App = () => {
               <DashboardScreen 
                 user={userData}
                 selectedSubjects={userData.subjects}
+                onLogout={handleLogout}
               />
             )}
           </div>
