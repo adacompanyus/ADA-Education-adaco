@@ -19,6 +19,7 @@ interface UserData {
   email: string;
   usage: string;
   subjects: string[];
+  theme?: string;
 }
 
 const App = () => {
@@ -49,7 +50,7 @@ const App = () => {
   };
 
   const handleQuestionnaireComplete = (data: { usage: string; subjects: string[]; theme: string }) => {
-    setUserData(prev => prev ? { ...prev, usage: data.usage, subjects: data.subjects } : null);
+    setUserData(prev => prev ? { ...prev, usage: data.usage, subjects: data.subjects, theme: data.theme } : null);
     setCurrentScreen('loading');
   };
 
@@ -87,8 +88,15 @@ const App = () => {
               <QuestionnaireScreen onComplete={handleQuestionnaireComplete} />
             )}
             
-            {currentScreen === 'loading' && (
-              <AILoadingScreen onComplete={handleAILoadingComplete} />
+            {currentScreen === 'loading' && userData && (
+              <AILoadingScreen 
+                onComplete={handleAILoadingComplete} 
+                userInfo={{
+                  usage: userData.usage,
+                  subjects: userData.subjects,
+                  theme: userData.theme || 'dark'
+                }}
+              />
             )}
             
             {currentScreen === 'subscription' && (

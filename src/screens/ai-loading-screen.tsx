@@ -4,21 +4,46 @@ import { Brain, Atom } from 'lucide-react';
 
 interface AILoadingScreenProps {
   onComplete: () => void;
+  userInfo?: {
+    usage: string;
+    subjects: string[];
+    theme: string;
+  };
 }
 
-export const AILoadingScreen: React.FC<AILoadingScreenProps> = ({ onComplete }) => {
+export const AILoadingScreen: React.FC<AILoadingScreenProps> = ({ onComplete, userInfo }) => {
   const [progress, setProgress] = useState(0);
   const [loadingText, setLoadingText] = useState('Initializing AI...');
 
   useEffect(() => {
-    const texts = [
-      'Initializing AI...',
-      'Analyzing your preferences...',
-      'Generating personalized content...',
-      'Setting up your learning path...',
-      'Compiling your data with AI...',
-      'Almost ready!'
-    ];
+    const getPersonalizedTexts = () => {
+      if (!userInfo) {
+        return [
+          'Initializing AI...',
+          'Analyzing your preferences...',
+          'Generating personalized content...',
+          'Setting up your learning path...',
+          'Compiling your data with AI...',
+          'Almost ready!'
+        ];
+      }
+
+      const subjectCount = userInfo.subjects.length;
+      const usageType = userInfo.usage === 'school' ? 'school curriculum' : 'self-study goals';
+      const mainSubject = userInfo.subjects[0] || 'your selected subjects';
+
+      return [
+        'Initializing AI...',
+        `Analyzing your ${usageType}...`,
+        `Customizing ${mainSubject} content...`,
+        `Setting up your ${subjectCount} AP course${subjectCount !== 1 ? 's' : ''}...`,
+        `Optimizing for ${userInfo.theme} mode learning...`,
+        'Personalizing your experience...',
+        'Almost ready!'
+      ];
+    };
+
+    const texts = getPersonalizedTexts();
 
     const interval = setInterval(() => {
       setProgress(prev => {
@@ -35,7 +60,7 @@ export const AILoadingScreen: React.FC<AILoadingScreenProps> = ({ onComplete }) 
     }, 100);
 
     return () => clearInterval(interval);
-  }, [onComplete]);
+  }, [onComplete, userInfo]);
 
   return (
     <div className="min-h-screen bg-background relative flex flex-col justify-center items-center p-6">

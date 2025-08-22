@@ -187,8 +187,8 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
                       <Sun className="w-6 h-6 text-yellow-500" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Light Mode</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className={`font-semibold ${selectedTheme === 'light' ? 'text-gray-900' : 'text-text-primary'}`}>Light Mode</h3>
+                      <p className={`text-sm ${selectedTheme === 'light' ? 'text-gray-600' : 'text-text-secondary'}`}>
                         Clean and bright interface
                       </p>
                     </div>
@@ -211,8 +211,8 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
                       <Moon className="w-6 h-6 text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-100">Dark Mode</h3>
-                      <p className="text-sm text-slate-300">
+                      <h3 className={`font-semibold ${selectedTheme === 'dark' ? 'text-white' : 'text-text-primary'}`}>Dark Mode</h3>
+                      <p className={`text-sm ${selectedTheme === 'dark' ? 'text-slate-300' : 'text-text-secondary'}`}>
                         Easy on the eyes, perfect for studying
                       </p>
                     </div>
