@@ -578,5 +578,323 @@ export const AP_CURRICULUM: APCurriculum = {
         { front: "What is bildungsroman?", back: "Coming-of-age story showing character's psychological/moral development" },
       ]
     }
+  ],
+
+  "AP Calculus BC": [
+    {
+      id: "limits-continuity-advanced",
+      name: "Advanced Limits and Continuity",
+      flashcards: [
+        { front: "What is L'Hôpital's Rule?", back: "If lim f(x)/g(x) is indeterminate (0/0 or ∞/∞), then lim f(x)/g(x) = lim f'(x)/g'(x)" },
+        { front: "What is the squeeze theorem?", back: "If f(x) ≤ g(x) ≤ h(x) and lim f(x) = lim h(x) = L, then lim g(x) = L" },
+        { front: "How do you find limits at infinity?", back: "Look at highest degree terms in numerator and denominator" },
+        { front: "What is a removable discontinuity?", back: "A hole in the graph where limit exists but function is undefined" },
+        { front: "What is the epsilon-delta definition of a limit?", back: "For every ε > 0, there exists δ > 0 such that |f(x) - L| < ε when 0 < |x - c| < δ" },
+      ]
+    },
+    {
+      id: "series-sequences",
+      name: "Sequences and Series",
+      flashcards: [
+        { front: "What is a geometric series?", back: "Series of form Σar^n, converges if |r| < 1 to a/(1-r)" },
+        { front: "What is the ratio test?", back: "If lim |aₙ₊₁/aₙ| = L < 1, series converges; L > 1, diverges; L = 1, inconclusive" },
+        { front: "What is Taylor series?", back: "f(x) = Σ [f^(n)(a)/n!](x-a)^n for x near a" },
+        { front: "What is Maclaurin series?", back: "Taylor series centered at a = 0" },
+        { front: "What is alternating series test?", back: "If |aₙ| decreases and lim aₙ = 0, then Σ(-1)ⁿaₙ converges" },
+      ]
+    },
+    {
+      id: "parametric-polar",
+      name: "Parametric and Polar",
+      flashcards: [
+        { front: "How do you find dy/dx for parametric equations?", back: "dy/dx = (dy/dt)/(dx/dt)" },
+        { front: "What is arc length for parametric curves?", back: "L = ∫√((dx/dt)² + (dy/dt)²)dt" },
+        { front: "How do you convert polar to rectangular?", back: "x = r cos θ, y = r sin θ" },
+        { front: "What is area in polar coordinates?", back: "A = (1/2)∫r² dθ" },
+        { front: "How do you find slope of polar curve?", back: "dy/dx = (dr/dθ sin θ + r cos θ)/(dr/dθ cos θ - r sin θ)" },
+      ]
+    }
+  ],
+
+  "AP Statistics": [
+    {
+      id: "data-analysis",
+      name: "Exploring Data",
+      flashcards: [
+        { front: "What is the difference between mean and median?", back: "Mean is average; median is middle value when ordered" },
+        { front: "What is standard deviation?", back: "Measure of spread; average distance from mean" },
+        { front: "What is the interquartile range (IQR)?", back: "Q3 - Q1; range of middle 50% of data" },
+        { front: "What makes a distribution skewed right?", back: "Tail extends to right; mean > median" },
+        { front: "What is correlation coefficient?", back: "Measure of linear relationship strength, ranges from -1 to 1" },
+      ]
+    },
+    {
+      id: "sampling-experiments",
+      name: "Sampling and Experimentation",
+      flashcards: [
+        { front: "What is simple random sampling?", back: "Every individual has equal chance of selection" },
+        { front: "What is stratified sampling?", back: "Population divided into strata, then random sample from each" },
+        { front: "What is the difference between observational study and experiment?", back: "Experiment assigns treatments; observational study observes existing conditions" },
+        { front: "What is a confounding variable?", back: "Variable that affects response and is associated with explanatory variable" },
+        { front: "What is randomization in experiments?", back: "Random assignment of treatments to reduce bias" },
+      ]
+    },
+    {
+      id: "probability",
+      name: "Probability",
+      flashcards: [
+        { front: "What is the complement rule?", back: "P(A') = 1 - P(A)" },
+        { front: "What is the multiplication rule for independent events?", back: "P(A and B) = P(A) × P(B)" },
+        { front: "What is conditional probability?", back: "P(A|B) = P(A and B)/P(B)" },
+        { front: "What is Bayes' theorem?", back: "P(A|B) = P(B|A) × P(A)/P(B)" },
+        { front: "What is the law of large numbers?", back: "As sample size increases, sample proportion approaches true probability" },
+      ]
+    },
+    {
+      id: "statistical-inference",
+      name: "Statistical Inference",
+      flashcards: [
+        { front: "What is a confidence interval?", back: "Range of plausible values for parameter with given confidence level" },
+        { front: "What is Type I error?", back: "Rejecting true null hypothesis (false positive)" },
+        { front: "What is Type II error?", back: "Failing to reject false null hypothesis (false negative)" },
+        { front: "What is p-value?", back: "Probability of observing data at least as extreme given null hypothesis is true" },
+        { front: "What increases power of a test?", back: "Larger sample size, larger effect size, higher α level" },
+      ]
+    }
+  ],
+
+  "AP Computer Science A": [
+    {
+      id: "programming-fundamentals",
+      name: "Programming Fundamentals",
+      flashcards: [
+        { front: "What is a variable in Java?", back: "Container that holds data that can be changed during program execution" },
+        { front: "What are the primitive data types in Java?", back: "int, double, boolean, char, byte, short, long, float" },
+        { front: "What is the difference between == and .equals()?", back: "== compares references; .equals() compares content" },
+        { front: "What is a method?", back: "Named block of code that performs specific task and can be called repeatedly" },
+        { front: "What is method overloading?", back: "Multiple methods with same name but different parameter lists" },
+      ]
+    },
+    {
+      id: "object-oriented",
+      name: "Object-Oriented Programming",
+      flashcards: [
+        { front: "What is a class?", back: "Blueprint or template for creating objects" },
+        { front: "What is an object?", back: "Instance of a class with specific values for attributes" },
+        { front: "What is encapsulation?", back: "Hiding internal implementation details using private variables and public methods" },
+        { front: "What is inheritance?", back: "Creating new class based on existing class, inheriting its properties and methods" },
+        { front: "What is polymorphism?", back: "Ability of objects to take multiple forms through method overriding" },
+      ]
+    },
+    {
+      id: "data-structures",
+      name: "Data Structures",
+      flashcards: [
+        { front: "What is an array?", back: "Collection of elements of same type stored in contiguous memory locations" },
+        { front: "What is an ArrayList?", back: "Dynamic array that can grow and shrink in size" },
+        { front: "How do you declare an array in Java?", back: "int[] arr = new int[size]; or int[] arr = {1, 2, 3};" },
+        { front: "What is the difference between array and ArrayList?", back: "Array has fixed size; ArrayList is dynamic and has built-in methods" },
+        { front: "What is a 2D array?", back: "Array of arrays, representing data in rows and columns" },
+      ]
+    },
+    {
+      id: "algorithms",
+      name: "Algorithms and Control Structures",
+      flashcards: [
+        { front: "What is a for loop?", back: "Loop that repeats code for specified number of iterations" },
+        { front: "What is a while loop?", back: "Loop that continues while condition is true" },
+        { front: "What is recursion?", back: "Method that calls itself with simpler input until base case is reached" },
+        { front: "What is binary search?", back: "Efficient search algorithm that repeatedly divides sorted array in half" },
+        { front: "What is selection sort?", back: "Sorting algorithm that repeatedly finds minimum element and places it at beginning" },
+      ]
+    }
+  ],
+
+  "AP Physics 2": [
+    {
+      id: "thermodynamics",
+      name: "Thermodynamics",
+      flashcards: [
+        { front: "What is the first law of thermodynamics?", back: "Energy cannot be created or destroyed, only converted (ΔU = Q - W)" },
+        { front: "What is entropy?", back: "Measure of disorder in a system; always increases in isolated systems" },
+        { front: "What is an isothermal process?", back: "Process at constant temperature" },
+        { front: "What is an adiabatic process?", back: "Process with no heat transfer (Q = 0)" },
+        { front: "What is heat capacity?", back: "Amount of heat needed to raise temperature by 1°C" },
+      ]
+    },
+    {
+      id: "electricity-magnetism",
+      name: "Electricity and Magnetism",
+      flashcards: [
+        { front: "What is Coulomb's Law?", back: "F = kq₁q₂/r²; force between charged particles" },
+        { front: "What is electric field?", back: "Force per unit charge; E = F/q" },
+        { front: "What is Ohm's Law?", back: "V = IR; voltage equals current times resistance" },
+        { front: "What is Faraday's Law?", back: "Changing magnetic flux induces EMF" },
+        { front: "What is Lenz's Law?", back: "Induced current opposes the change causing it" },
+      ]
+    },
+    {
+      id: "waves-optics",
+      name: "Waves and Optics",
+      flashcards: [
+        { front: "What is wave frequency?", back: "Number of waves passing point per second (Hz)" },
+        { front: "What is the wave equation?", back: "v = fλ; speed equals frequency times wavelength" },
+        { front: "What is interference?", back: "Superposition of waves creating constructive or destructive patterns" },
+        { front: "What is refraction?", back: "Bending of waves when entering different medium" },
+        { front: "What is Snell's Law?", back: "n₁sinθ₁ = n₂sinθ₂; relates angles and refractive indices" },
+      ]
+    },
+    {
+      id: "modern-physics",
+      name: "Modern Physics",
+      flashcards: [
+        { front: "What is the photoelectric effect?", back: "Emission of electrons when light hits metal surface" },
+        { front: "What is de Broglie wavelength?", back: "λ = h/p; wavelength associated with moving particles" },
+        { front: "What is quantum tunneling?", back: "Particles passing through energy barriers classically impossible" },
+        { front: "What is nuclear fission?", back: "Heavy nucleus splits into lighter nuclei, releasing energy" },
+        { front: "What is nuclear fusion?", back: "Light nuclei combine to form heavier nucleus, releasing energy" },
+      ]
+    }
+  ],
+
+  "AP World History: Modern": [
+    {
+      id: "1200-1450",
+      name: "Global Tapestry (1200-1450)",
+      flashcards: [
+        { front: "What was the Silk Road?", back: "Network of trade routes connecting East Asia with Europe and Africa" },
+        { front: "What was the Mongol Empire's impact?", back: "Largest contiguous empire; facilitated trade and cultural exchange" },
+        { front: "What was the Mali Empire known for?", back: "Gold and salt trade; Mansa Musa's pilgrimage showed immense wealth" },
+        { front: "What was the Byzantine Empire?", back: "Eastern Roman Empire centered in Constantinople (modern Istanbul)" },
+        { front: "What was feudalism?", back: "Medieval European system of land tenure and personal relationships" },
+      ]
+    },
+    {
+      id: "1450-1750",
+      name: "Age of Exploration (1450-1750)",
+      flashcards: [
+        { front: "What caused the Age of Exploration?", back: "Search for spices, gold, glory; technological advances; Ottoman control of trade routes" },
+        { front: "What was the Columbian Exchange?", back: "Transfer of plants, animals, diseases between Old and New Worlds" },
+        { front: "What was the Atlantic Slave Trade?", back: "Forced migration of 12+ million Africans to Americas" },
+        { front: "What was mercantilism?", back: "Economic theory emphasizing exports over imports to accumulate wealth" },
+        { front: "What was the Ottoman Empire's millet system?", back: "Administrative system organizing subjects by religious community" },
+      ]
+    },
+    {
+      id: "1750-1900",
+      name: "Industrial Revolution (1750-1900)",
+      flashcards: [
+        { front: "What started the Industrial Revolution?", back: "Steam power, textile manufacturing, transportation improvements in Britain" },
+        { front: "What was the impact of railroads?", back: "Connected markets, moved raw materials and finished goods, urbanization" },
+        { front: "What was New Imperialism?", back: "European colonization of Africa and Asia in late 1800s" },
+        { front: "What was the Berlin Conference?", back: "1884-85 meeting where Europeans divided Africa among themselves" },
+        { front: "What caused the abolition of slavery?", back: "Enlightenment ideals, economic changes, slave resistance, moral campaigns" },
+      ]
+    },
+    {
+      id: "1900-present",
+      name: "Modern Era (1900-Present)",
+      flashcards: [
+        { front: "What caused World War I?", back: "Militarism, alliances, imperialism, nationalism; sparked by assassination of Archduke Franz Ferdinand" },
+        { front: "What was the Russian Revolution?", back: "1917 overthrow of Tsar, leading to Bolshevik communist government" },
+        { front: "What caused the Great Depression?", back: "Stock market crash, bank failures, overproduction, global economic collapse" },
+        { front: "What was decolonization?", back: "Process of colonies gaining independence, especially after WWII" },
+        { front: "What is globalization?", back: "Increasing interconnection of world through trade, technology, culture" },
+      ]
+    }
+  ],
+
+  "AP Government and Politics": [
+    {
+      id: "constitution-federalism",
+      name: "Constitution and Federalism",
+      flashcards: [
+        { front: "What is federalism?", back: "Division of power between national and state governments" },
+        { front: "What is separation of powers?", back: "Division of government into legislative, executive, and judicial branches" },
+        { front: "What are checks and balances?", back: "System where each branch can limit powers of other branches" },
+        { front: "What is the supremacy clause?", back: "Federal law takes precedence over state law when they conflict" },
+        { front: "What is judicial review?", back: "Supreme Court's power to declare laws unconstitutional" },
+      ]
+    },
+    {
+      id: "civil-rights-liberties",
+      name: "Civil Rights and Liberties",
+      flashcards: [
+        { front: "What is the difference between civil rights and civil liberties?", back: "Liberties protect from government; rights ensure equal treatment" },
+        { front: "What is the establishment clause?", back: "Government cannot establish official religion" },
+        { front: "What is the free exercise clause?", back: "Government cannot prohibit religious practice" },
+        { front: "What is strict scrutiny?", back: "Highest standard of judicial review for fundamental rights" },
+        { front: "What is the 14th Amendment?", back: "Equal protection and due process; citizenship definition" },
+      ]
+    },
+    {
+      id: "political-participation",
+      name: "Political Participation and Behavior",
+      flashcards: [
+        { front: "What factors affect voter turnout?", back: "Age, education, income, registration requirements, competitive elections" },
+        { front: "What is political socialization?", back: "Process by which people acquire political beliefs and values" },
+        { front: "What are linkage institutions?", back: "Political parties, interest groups, media, elections that connect people to government" },
+        { front: "What is the gender gap?", back: "Difference in voting patterns between men and women" },
+        { front: "What is political efficacy?", back: "Belief that political participation can make a difference" },
+      ]
+    },
+    {
+      id: "institutions-policy",
+      name: "Institutions and Policy Making",
+      flashcards: [
+        { front: "What is the filibuster?", back: "Senate procedure allowing unlimited debate to delay voting" },
+        { front: "What is gerrymandering?", back: "Drawing district boundaries to favor one party" },
+        { front: "What is the electoral college?", back: "System for electing president based on state representation" },
+        { front: "What is bureaucratic discretion?", back: "Ability of agencies to interpret and implement laws" },
+        { front: "What is iron triangle?", back: "Relationship between agency, congressional committee, and interest group" },
+      ]
+    }
+  ],
+
+  "AP Psychology": [
+    {
+      id: "biological-bases",
+      name: "Biological Bases of Behavior",
+      flashcards: [
+        { front: "What is the function of the hippocampus?", back: "Memory formation and spatial navigation" },
+        { front: "What is the difference between sympathetic and parasympathetic nervous systems?", back: "Sympathetic: fight/flight; Parasympathetic: rest/digest" },
+        { front: "What is neuroplasticity?", back: "Brain's ability to reorganize and form new neural connections" },
+        { front: "What is the function of neurotransmitters?", back: "Chemical messengers that transmit signals between neurons" },
+        { front: "What is the role of the amygdala?", back: "Processing emotions, especially fear and aggression" },
+      ]
+    },
+    {
+      id: "sensation-perception",
+      name: "Sensation and Perception",
+      flashcards: [
+        { front: "What is the difference between sensation and perception?", back: "Sensation: detecting stimuli; Perception: interpreting sensory information" },
+        { front: "What is Weber's Law?", back: "Just noticeable difference is proportional to stimulus intensity" },
+        { front: "What is signal detection theory?", back: "Theory explaining how we detect signals amid background noise" },
+        { front: "What is the blind spot?", back: "Area where optic nerve connects to retina, no photoreceptors" },
+        { front: "What is top-down processing?", back: "Using prior knowledge and expectations to interpret sensory input" },
+      ]
+    },
+    {
+      id: "learning-memory",
+      name: "Learning and Memory",
+      flashcards: [
+        { front: "What is classical conditioning?", back: "Learning through association between neutral stimulus and response" },
+        { front: "What is operant conditioning?", back: "Learning through consequences (reinforcement/punishment)" },
+        { front: "What is the difference between positive and negative reinforcement?", back: "Positive: adding pleasant; Negative: removing unpleasant" },
+        { front: "What are the stages of memory?", back: "Encoding, storage, retrieval" },
+        { front: "What is the serial position effect?", back: "Better recall for items at beginning (primacy) and end (recency) of list" },
+      ]
+    },
+    {
+      id: "cognitive-development",
+      name: "Cognitive Psychology and Development",
+      flashcards: [
+        { front: "What are Piaget's stages of cognitive development?", back: "Sensorimotor, preoperational, concrete operational, formal operational" },
+        { front: "What is object permanence?", back: "Understanding that objects continue to exist when not visible" },
+        { front: "What is theory of mind?", back: "Ability to understand that others have beliefs different from one's own" },
+        { front: "What is confirmation bias?", back: "Tendency to search for information that confirms existing beliefs" },
+        { front: "What is the availability heuristic?", back: "Judging probability by how easily examples come to mind" },
+      ]
+    }
   ]
 };
