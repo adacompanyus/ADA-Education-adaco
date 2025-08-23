@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GradientCard } from '../ui/gradient-card';
 import { GradientButton } from '../ui/gradient-button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
 import { 
   Timer, 
@@ -26,22 +25,11 @@ interface TimeTrialProps {
 }
 
 export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
-  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [score, setScore] = useState(0);
-  // Adjust time based on difficulty
-  const getTimeByDifficulty = () => {
-    switch (difficulty) {
-      case 'Easy': return 180;    // 3 minutes
-      case 'Medium': return 120;  // 2 minutes  
-      case 'Hard': return 90;     // 1.5 minutes
-      default: return 120;
-    }
-  };
-
-  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
+  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -85,7 +73,7 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
 
     setQuestions(shuffledQuestions);
     setGameStarted(true);
-  }, [subject, difficulty]);
+  }, [subject]);
 
   const checkAnswer = () => {
     if (!userAnswer.trim()) return;
@@ -129,7 +117,7 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
     setCurrentQuestion(0);
     setUserAnswer('');
     setScore(0);
-    setTimeLeft(getTimeByDifficulty());
+    setTimeLeft(120);
     setGameStarted(false);
     setGameEnded(false);
     setShowResult(false);
@@ -151,11 +139,6 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
 
     setQuestions(shuffledQuestions);
     setGameStarted(true);
-  };
-
-  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
-    setDifficulty(newDifficulty);
-    // Difficulty change will trigger useEffect to restart the game
   };
 
   const formatTime = (seconds: number) => {
@@ -263,21 +246,9 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
           <Timer className="w-5 h-5 text-gradient-orange" />
           <h2 className="text-xl font-bold text-text-primary">Time Trial</h2>
         </div>
-        <div className="flex items-center gap-2">
-          <Select value={difficulty} onValueChange={handleDifficultyChange}>
-            <SelectTrigger className="w-24 h-8 text-xs bg-surface border-card-border">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-surface border-card-border">
-              <SelectItem value="Easy">Easy</SelectItem>
-              <SelectItem value="Medium">Medium</SelectItem>
-              <SelectItem value="Hard">Hard</SelectItem>
-            </SelectContent>
-          </Select>
-          <GradientButton onClick={onClose} variant="secondary" size="sm">
-            Close
-          </GradientButton>
-        </div>
+        <GradientButton onClick={onClose} variant="secondary" size="sm">
+          Close
+        </GradientButton>
       </div>
 
       {/* Game Stats */}
@@ -371,7 +342,7 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
 
       <div className="text-center">
         <p className="text-xs text-text-muted">
-          Answer as many questions as you can in {Math.floor(getTimeByDifficulty() / 60)} minutes! • {subject}
+          Answer as many questions as you can in 2 minutes! • {subject}
         </p>
       </div>
     </div>

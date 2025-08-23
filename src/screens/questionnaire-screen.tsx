@@ -144,26 +144,24 @@ export const QuestionnaireScreen: React.FC<QuestionnaireScreenProps> = ({
               </p>
             </div>
             
-            <div className="max-h-96 overflow-y-auto space-y-3 pb-20 px-1">
+            <div className="max-h-96 overflow-y-auto space-y-3 pb-20">
               {apSubjects.map((subject) => (
-                <div 
+                <GradientCard
                   key={subject}
-                  className={`gradient-outline rounded-lg p-1 cursor-pointer transition-all hover:scale-[1.01] ${
-                    selectedSubjects.includes(subject) ? 'gradient-outline-selected' : ''
-                  }`}
+                  selectable
+                  selected={selectedSubjects.includes(subject)}
                   onClick={() => handleSubjectToggle(subject)}
+                  className="cursor-pointer"
                 >
-                  <div className="gradient-outline-content rounded-lg bg-surface p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-text-primary">
-                        {subject}
-                      </span>
-                      {selectedSubjects.includes(subject) && (
-                        <Check className="w-5 h-5 text-gaming-success" />
-                      )}
-                    </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-text-primary">
+                      {subject}
+                    </span>
+                    {selectedSubjects.includes(subject) && (
+                      <Check className="w-5 h-5 text-gaming-success" />
+                    )}
                   </div>
-                </div>
+                </GradientCard>
               ))}
             </div>
           </div>

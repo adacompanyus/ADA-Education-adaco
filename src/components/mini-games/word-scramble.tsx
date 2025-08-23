@@ -1,47 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, X, RotateCcw } from 'lucide-react';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
+
 interface WordScrambleProps {
   subject: string;
   onClose: () => void;
 }
+
 interface Question {
   original: string;
   scrambled: string;
   hint: string;
 }
-export const WordScramble: React.FC<WordScrambleProps> = ({
-  subject,
-  onClose
-}) => {
-  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
+
+export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [score, setScore] = useState(0);
-  // Adjust time based on difficulty
-  const getTimeByDifficulty = () => {
-    switch (difficulty) {
-      case 'Easy':
-        return 120;
-      // 2 minutes
-      case 'Medium':
-        return 90;
-      // 1.5 minutes
-      case 'Hard':
-        return 60;
-      // 1 minute
-      default:
-        return 90;
-    }
-  };
-  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
+  const [timeLeft, setTimeLeft] = useState(90);
   const [gameOver, setGameOver] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+
   const scrambleWord = (word: string): string => {
     const chars = word.split('');
     for (let i = chars.length - 1; i > 0; i--) {
@@ -50,53 +33,57 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
     }
     return chars.join('');
   };
+
   const extractWords = (text: string): string[] => {
-    return text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(word => word.length >= 4 && word.length <= 10);
+    return text.toLowerCase()
+      .replace(/[^\w\s]/g, ' ')
+      .split(/\s+/)
+      .filter(word => word.length >= 4 && word.length <= 10);
   };
+
   useEffect(() => {
     const curriculum = AP_CURRICULUM[subject];
     if (!curriculum) {
       setQuestions([]);
       return;
     }
-    const allWords: {
-      word: string;
-      hint: string;
-    }[] = [];
+
+    const allWords: { word: string; hint: string }[] = [];
+    
     curriculum.forEach(unit => {
       unit.flashcards.forEach(card => {
         const frontWords = extractWords(card.front);
         const backWords = extractWords(card.back);
+        
         frontWords.forEach(word => {
           if (word.length >= 4) {
-            allWords.push({
-              word,
-              hint: card.back.substring(0, 50) + '...'
-            });
+            allWords.push({ word, hint: card.back.substring(0, 50) + '...' });
           }
         });
+        
         backWords.forEach(word => {
           if (word.length >= 4) {
-            allWords.push({
-              word,
-              hint: card.front
-            });
+            allWords.push({ word, hint: card.front });
           }
         });
       });
     });
-    const uniqueWords = Array.from(new Map(allWords.map(item => [item.word, item])).values());
+
+    const uniqueWords = Array.from(
+      new Map(allWords.map(item => [item.word, item])).values()
+    );
+
     const shuffled = uniqueWords.sort(() => Math.random() - 0.5).slice(0, 15);
-    const gameQuestions = shuffled.map(({
-      word,
-      hint
-    }) => ({
+    
+    const gameQuestions = shuffled.map(({ word, hint }) => ({
       original: word,
       scrambled: scrambleWord(word),
       hint
     }));
+
     setQuestions(gameQuestions);
-  }, [subject, difficulty]);
+  }, [subject]);
+
   useEffect(() => {
     if (timeLeft > 0 && !gameOver) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -105,17 +92,22 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
       setGameOver(true);
     }
   }, [timeLeft, gameOver]);
+
   const checkAnswer = () => {
     if (!questions[currentQuestion]) return;
+
     const isAnswerCorrect = userAnswer.toLowerCase().trim() === questions[currentQuestion].original;
     setIsCorrect(isAnswerCorrect);
     setShowResult(true);
+
     if (isAnswerCorrect) {
       setScore(score + 10);
     }
+
     setTimeout(() => {
       setShowResult(false);
       setUserAnswer('');
+      
       if (currentQuestion + 1 >= questions.length) {
         setGameOver(true);
       } else {
@@ -123,30 +115,31 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
       }
     }, 1500);
   };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && userAnswer.trim()) {
       checkAnswer();
     }
   };
+
   const resetGame = () => {
     setCurrentQuestion(0);
     setUserAnswer('');
     setScore(0);
-    setTimeLeft(getTimeByDifficulty());
+    setTimeLeft(90);
     setGameOver(false);
     setShowResult(false);
   };
-  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
-    setDifficulty(newDifficulty);
-    // Difficulty change will trigger useEffect to restart the game
-  };
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
+
   if (questions.length === 0) {
-    return <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <GradientCard className="w-full max-w-md">
           <div className="text-center space-y-4">
             <h3 className="text-xl font-bold gradient-text">No Content Available</h3>
@@ -154,11 +147,14 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
             <GradientButton onClick={onClose}>Close</GradientButton>
           </div>
         </GradientCard>
-      </div>;
+      </div>
+    );
   }
+
   if (gameOver) {
-    const percentage = Math.round(score / (questions.length * 10) * 100);
-    return <div className="fixed inset-0 flex items-center justify-center z-50 p-4 bg-black/[0.33] py-[300px] my-0">
+    const percentage = Math.round((score / (questions.length * 10)) * 100);
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <GradientCard className="w-full max-w-md">
           <div className="text-center space-y-4">
             <h3 className="text-2xl font-bold gradient-text">Game Over!</h3>
@@ -178,29 +174,20 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
             </div>
           </div>
         </GradientCard>
-      </div>;
+      </div>
+    );
   }
-  return <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 py-[114px]">
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <GradientCard className="w-full max-w-md">
         <div className="space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold gradient-text">Word Scramble</h3>
-            <div className="flex items-center gap-2">
-              <Select value={difficulty} onValueChange={handleDifficultyChange}>
-                <SelectTrigger className="w-20 h-7 text-xs bg-surface border-card-border">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-surface border-card-border">
-                  <SelectItem value="Easy">Easy</SelectItem>
-                  <SelectItem value="Medium">Medium</SelectItem>
-                  <SelectItem value="Hard">Hard</SelectItem>
-                </SelectContent>
-              </Select>
-              <button onClick={onClose} className="text-text-muted hover:text-text-primary">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <button onClick={onClose} className="text-text-muted hover:text-text-primary">
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Stats */}
@@ -227,17 +214,34 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
 
           {/* Input */}
           <div className="space-y-3">
-            <input type="text" value={userAnswer} onChange={e => setUserAnswer(e.target.value)} onKeyPress={handleKeyPress} placeholder="Unscramble the word..." className="w-full px-4 py-3 rounded-lg border border-input bg-background text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-gradient-purple" disabled={showResult} />
+            <input
+              type="text"
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Unscramble the word..."
+              className="w-full px-4 py-3 rounded-lg border border-input bg-background text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-gradient-purple"
+              disabled={showResult}
+            />
             
-            {showResult && <div className={`text-center py-2 px-4 rounded-lg ${isCorrect ? 'bg-gaming-success/20 text-gaming-success' : 'bg-gaming-error/20 text-gaming-error'}`}>
+            {showResult && (
+              <div className={`text-center py-2 px-4 rounded-lg ${
+                isCorrect ? 'bg-gaming-success/20 text-gaming-success' : 'bg-gaming-error/20 text-gaming-error'
+              }`}>
                 {isCorrect ? '✓ Correct!' : `✗ Wrong! It was "${questions[currentQuestion]?.original}"`}
-              </div>}
+              </div>
+            )}
 
-            <GradientButton onClick={checkAnswer} disabled={!userAnswer.trim() || showResult} className="w-full">
+            <GradientButton
+              onClick={checkAnswer}
+              disabled={!userAnswer.trim() || showResult}
+              className="w-full"
+            >
               Submit Answer
             </GradientButton>
           </div>
         </div>
       </GradientCard>
-    </div>;
+    </div>
+  );
 };
