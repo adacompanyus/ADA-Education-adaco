@@ -8,6 +8,7 @@ import { QuickQuiz } from '@/components/mini-games/quick-quiz';
 import { MemoryMatch } from '@/components/mini-games/memory-match';
 import { TimeTrial } from '@/components/mini-games/time-trial';
 import { AITutorScreen } from './ai-tutor-screen';
+import { QuestsScreen } from './quests-screen';
 import { useTheme } from '@/contexts/theme-context';
 import {
   Star,
@@ -236,7 +237,17 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     );
   }
 
-  // Store Tab (previously Quests)
+  // Quests Tab
+  if (activeTab === 'quests') {
+    return (
+      <QuestsScreen 
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+    );
+  }
+
+  // Store Tab
   if (activeTab === 'store') {
     return (
       <div className="min-h-screen bg-background relative pb-20">

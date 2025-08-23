@@ -239,21 +239,22 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
 
         {/* Input */}
-        <div className="p-6 border-t border-card-border bg-surface/80 backdrop-blur-sm">
-          <div className="max-w-4xl mx-auto">
+        <div className="p-4 sm:p-6 border-t border-card-border bg-surface/80 backdrop-blur-sm">
+          <div className="w-full max-w-none">
             <div className="flex gap-3">
               <GradientInput
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={`Ask me anything about ${focusSubjects.join(', ')}...`}
-                className="flex-1"
+                className="flex-1 min-w-0"
                 disabled={isLoading}
               />
               <GradientButton 
                 onClick={sendMessage} 
                 disabled={isLoading || !inputMessage.trim()}
                 size="sm"
+                className="shrink-0"
               >
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

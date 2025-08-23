@@ -1332,36 +1332,423 @@ export const AP_CURRICULUM: APCurriculum = {
 
   "AP Music Theory": [
     {
-      id: "fundamentals",
-      name: "Music Fundamentals",
+      id: 'theory-fundamentals',
+      name: 'Music Theory Fundamentals',
       flashcards: [
-        { front: "What is a scale?", back: "Series of pitches arranged in ascending or descending order" },
-        { front: "What is key signature?", back: "Sharps or flats at beginning of staff indicating key" },
-        { front: "What is time signature?", back: "Fraction showing number of beats per measure and note value" },
-        { front: "What is interval?", back: "Distance between two pitches" },
-        { front: "What is chord?", back: "Three or more pitches sounded simultaneously" },
+        { front: "What is a major scale?", back: "A sequence of whole and half steps: W-W-H-W-W-W-H" },
+        { front: "What is the circle of fifths?", back: "A visual representation of key signatures and their relationships" },
+        { front: "What is a dominant seventh chord?", back: "A major triad with an added minor seventh" },
+        { front: "What is voice leading?", back: "The smooth movement of individual voices in harmonic progressions" },
+        { front: "What is a cadence?", back: "A harmonic progression that provides closure to a phrase" }
       ]
     },
     {
-      id: "harmony-voice-leading",
-      name: "Harmony and Voice Leading",
+      id: 'harmony-analysis',
+      name: 'Harmony and Analysis',
       flashcards: [
-        { front: "What is voice leading?", back: "How individual voices move from chord to chord" },
-        { front: "What is figured bass?", back: "Baroque notation system using numbers below bass line" },
-        { front: "What is modulation?", back: "Change from one key to another within piece" },
-        { front: "What is cadence?", back: "Harmonic conclusion to phrase or section" },
-        { front: "What is non-chord tone?", back: "Note that doesn't belong to underlying chord" },
+        { front: "What is Roman numeral analysis?", back: "System for labeling chords based on scale degrees and quality" },
+        { front: "What is a secondary dominant?", back: "A dominant chord that tonicizes a chord other than the tonic" },
+        { front: "What is modulation?", back: "The process of changing from one key to another" },
+        { front: "What is a Neapolitan sixth chord?", back: "A major chord built on the lowered second degree in first inversion" },
+        { front: "What is an augmented sixth chord?", back: "A chord containing an augmented sixth interval resolving outward" }
       ]
     },
     {
-      id: "form-analysis",
-      name: "Form and Analysis",
+      id: 'melodic-composition',
+      name: 'Melodic Composition',
       flashcards: [
-        { front: "What is binary form?", back: "Two-part musical form (AB)" },
-        { front: "What is ternary form?", back: "Three-part musical form (ABA)" },
-        { front: "What is sonata form?", back: "Classical form with exposition, development, recapitulation" },
-        { front: "What is motive?", back: "Short musical idea that recurs throughout piece" },
-        { front: "What is sequence?", back: "Repetition of musical pattern at different pitch levels" },
+        { front: "What is motivic development?", back: "Techniques for transforming and varying musical motifs" },
+        { front: "What is sequence?", back: "The repetition of a musical pattern at different pitch levels" },
+        { front: "What is counterpoint?", back: "The art of combining two or more melodic lines" },
+        { front: "What is phrase structure?", back: "The organization of musical ideas into coherent units" },
+        { front: "What is melodic contour?", back: "The overall shape or direction of a melody" }
+      ]
+    },
+    {
+      id: 'rhythm-meter',
+      name: 'Rhythm and Meter',
+      flashcards: [
+        { front: "What is syncopation?", back: "Emphasizing weak beats or off-beats in music" },
+        { front: "What is compound meter?", back: "Meter where the beat subdivides into three equal parts" },
+        { front: "What is hemiola?", back: "A rhythmic pattern suggesting two beats when three are expected" },
+        { front: "What is polymeter?", back: "The simultaneous use of two or more different meters" },
+        { front: "What is metric modulation?", back: "Changing tempo by making a note value from one tempo equal to a different note value in the new tempo" }
+      ]
+    }
+  ]
+};
+  'AP Chinese Language and Culture': [
+    {
+      id: 'interpersonal-speaking',
+      name: 'Interpersonal Speaking',
+      flashcards: [
+        { front: "What is the format of the conversation task?", back: "6 exchanges where you respond to prompts in Chinese" },
+        { front: "Key strategy for conversation task?", back: "Address all aspects of the prompt and ask follow-up questions" },
+        { front: "How long should each response be?", back: "15 seconds of speaking time per response" },
+        { front: "What registers should you use?", back: "Appropriate formal/informal language based on context" },
+        { front: "Cultural consideration in conversations?", back: "Show awareness of Chinese cultural norms and practices" }
+      ]
+    },
+    {
+      id: 'interpretive-reading',
+      name: 'Interpretive Reading',
+      flashcards: [
+        { front: "Types of texts on the exam?", back: "News articles, advertisements, letters, literary texts, charts" },
+        { front: "Key reading strategy?", back: "Identify main ideas, supporting details, and cultural context" },
+        { front: "What are stimulus materials?", back: "Authentic Chinese texts used for reading comprehension" },
+        { front: "How to approach unfamiliar characters?", back: "Use context clues and radicals to infer meaning" },
+        { front: "Cultural themes in texts?", back: "Family, education, technology, environment, traditions" }
+      ]
+    },
+    {
+      id: 'presentational-writing',
+      name: 'Presentational Writing',
+      flashcards: [
+        { front: "Email reply task format?", back: "Formal email responding to Chinese correspondence" },
+        { front: "Story narration task?", back: "Write a story based on 4 pictures using connecting words" },
+        { front: "Key writing strategies?", back: "Use varied vocabulary, complex sentences, cultural references" },
+        { front: "Time management for writing?", back: "Email: 15 minutes, Story: 15 minutes" },
+        { front: "What to avoid in writing?", back: "Literal translation from English; use natural Chinese expressions" }
+      ]
+    },
+    {
+      id: 'cultural-understanding',
+      name: 'Cultural Understanding',
+      flashcards: [
+        { front: "Traditional Chinese festivals?", back: "Spring Festival, Mid-Autumn Festival, Dragon Boat Festival" },
+        { front: "Concept of 'face' (面子)?", back: "Social standing and reputation in Chinese culture" },
+        { front: "Filial piety (孝顺)?", back: "Respect and care for parents and ancestors" },
+        { front: "Chinese educational values?", back: "Emphasis on hard work, respect for teachers, academic achievement" },
+        { front: "Business culture norms?", back: "Relationship building (关系), hierarchy, gift-giving etiquette" }
+      ]
+    }
+  ],
+
+  'AP French Language and Culture': [
+    {
+      id: 'interpersonal-communication',
+      name: 'Interpersonal Communication',
+      flashcards: [
+        { front: "Conversation task structure?", back: "5 prompts, 20 seconds to respond to each" },
+        { front: "Key conversational strategies?", back: "Ask questions, elaborate responses, use cultural references" },
+        { front: "Register considerations?", back: "Use tu/vous appropriately based on context" },
+        { front: "How to handle unfamiliar topics?", back: "Use circumlocution and draw connections to familiar concepts" },
+        { front: "Cultural awareness in speaking?", back: "Reference French/Francophone customs and perspectives" }
+      ]
+    },
+    {
+      id: 'interpretive-listening',
+      name: 'Interpretive Listening',
+      flashcards: [
+        { front: "Audio source types?", back: "Radio programs, interviews, announcements, conversations" },
+        { front: "Listening strategies?", back: "Focus on main ideas first, then details; note tone and register" },
+        { front: "How to approach fast speech?", back: "Listen for cognates, keywords, and context clues" },
+        { front: "Note-taking tips?", back: "Use abbreviations, French keywords, symbols for ideas" },
+        { front: "Cultural context in audio?", back: "Identify French/Francophone perspectives and practices" }
+      ]
+    },
+    {
+      id: 'presentational-speaking',
+      name: 'Presentational Speaking',
+      flashcards: [
+        { front: "Cultural comparison format?", back: "2-minute presentation comparing your culture with French culture" },
+        { front: "Presentation structure?", back: "Introduction, comparison points, specific examples, conclusion" },
+        { front: "Preparation time?", back: "4 minutes to prepare, 2 minutes to present" },
+        { front: "Key vocabulary areas?", back: "Comparison terms, cultural concepts, transition phrases" },
+        { front: "What makes a strong comparison?", back: "Specific examples, nuanced understanding, clear organization" }
+      ]
+    },
+    {
+      id: 'francophone-cultures',
+      name: 'Francophone Cultures',
+      flashcards: [
+        { front: "Major French-speaking regions?", back: "France, Quebec, West Africa, Caribbean, Pacific Islands" },
+        { front: "La Francophonie organization?", back: "International organization of French-speaking countries" },
+        { front: "Quebec cultural identity?", back: "French language preservation, distinct North American culture" },
+        { front: "French educational system?", back: "Baccalauréat, grandes écoles, emphasis on philosophy" },
+        { front: "French work culture?", back: "Work-life balance, vacation time, meal traditions" }
+      ]
+    }
+  ],
+
+  'AP German Language and Culture': [
+    {
+      id: 'interpretive-communication',
+      name: 'Interpretive Communication',
+      flashcards: [
+        { front: "Text types for reading?", back: "News articles, literature, advertisements, blogs, instructions" },
+        { front: "Audio source variety?", back: "Radio, podcasts, interviews, announcements, conversations" },
+        { front: "Key interpretive skills?", back: "Main idea identification, inference, cultural context analysis" },
+        { front: "Handling complex grammar?", back: "Focus on meaning over perfect grammatical analysis" },
+        { front: "Cultural perspectives in texts?", back: "German-speaking world viewpoints on global issues" }
+      ]
+    },
+    {
+      id: 'interpersonal-writing',
+      name: 'Interpersonal Writing',
+      flashcards: [
+        { front: "Email correspondence format?", back: "Formal email responding to German prompt" },
+        { front: "Writing time allocation?", back: "15 minutes total including reading and writing" },
+        { front: "Key writing elements?", back: "Address all bullet points, appropriate register, cultural awareness" },
+        { front: "Formal email conventions?", back: "Proper greeting/closing, Sie form, structured paragraphs" },
+        { front: "Cultural references to include?", back: "German customs, holidays, social norms relevant to context" }
+      ]
+    },
+    {
+      id: 'presentational-writing',
+      name: 'Presentational Writing',
+      flashcards: [
+        { front: "Persuasive essay structure?", back: "Introduction, argument development, counterarguments, conclusion" },
+        { front: "Source integration?", back: "Use three sources to support arguments about cultural topic" },
+        { front: "Time management?", back: "40 minutes: reading sources, planning, writing, reviewing" },
+        { front: "Advanced grammar usage?", back: "Subjunctive, passive voice, complex sentence structures" },
+        { front: "Cultural argumentation?", back: "Compare German-speaking perspectives with own culture" }
+      ]
+    },
+    {
+      id: 'german-speaking-world',
+      name: 'German-Speaking World',
+      flashcards: [
+        { front: "DACH countries?", back: "Deutschland, Austria, Switzerland (plus Liechtenstein)" },
+        { front: "German reunification impact?", back: "Economic, social, cultural changes since 1990" },
+        { front: "Swiss multilingualism?", back: "German, French, Italian, Romansh as national languages" },
+        { front: "Austrian cultural identity?", back: "Classical music tradition, Alpine culture, coffee house culture" },
+        { front: "Environmental consciousness?", back: "Recycling systems, renewable energy, Green Party influence" }
+      ]
+    }
+  ],
+
+  'AP Italian Language and Culture': [
+    {
+      id: 'interpretive-tasks',
+      name: 'Interpretive Tasks',
+      flashcards: [
+        { front: "Print text varieties?", back: "Articles, literature excerpts, advertisements, instructions" },
+        { front: "Audio source types?", back: "News broadcasts, interviews, conversations, cultural programs" },
+        { front: "Multiple choice strategies?", back: "Eliminate wrong answers, focus on main ideas and details" },
+        { front: "Time management tips?", back: "Skim first, then read carefully; preview questions" },
+        { front: "Cultural context clues?", back: "Italian historical, social, artistic references in texts" }
+      ]
+    },
+    {
+      id: 'communication-modes',
+      name: 'Communication Modes',
+      flashcards: [
+        { front: "Interpersonal speaking format?", back: "Simulated conversation with 5 response opportunities" },
+        { front: "Presentational speaking task?", back: "2-minute cultural comparison presentation" },
+        { front: "Interpersonal writing?", back: "Email reply addressing all prompt points" },
+        { front: "Presentational writing?", back: "Persuasive essay using three sources" },
+        { front: "Assessment criteria?", back: "Task completion, language use, cultural awareness" }
+      ]
+    },
+    {
+      id: 'italian-grammar',
+      name: 'Italian Grammar',
+      flashcards: [
+        { front: "Subjunctive mood usage?", back: "Doubt, emotion, desire, impersonal expressions, certain conjunctions" },
+        { front: "Conditional tense functions?", back: "Politeness, hypothetical situations, reported speech" },
+        { front: "Direct/indirect pronouns?", back: "Lo/la/li/le (direct), gli/le (indirect), combined forms" },
+        { front: "Agreement rules?", back: "Adjectives with nouns, past participles with essere/direct objects" },
+        { front: "Formal vs informal address?", back: "Lei (formal) vs tu (informal), appropriate contexts" }
+      ]
+    },
+    {
+      id: 'cultural-themes',
+      name: 'Cultural Themes',
+      flashcards: [
+        { front: "Italian family structure?", back: "Strong family ties, multi-generational households, family meals" },
+        { front: "Educational system?", back: "Liceo types, university entrance, emphasis on humanities" },
+        { front: "Regional diversity?", back: "North-South differences, dialects, local traditions" },
+        { front: "Arts and culture?", back: "Renaissance heritage, opera, cinema, fashion, architecture" },
+        { front: "Food culture importance?", back: "Slow food movement, regional cuisines, meal traditions" }
+      ]
+    }
+  ],
+
+  'AP Japanese Language and Culture': [
+    {
+      id: 'writing-systems',
+      name: 'Writing Systems',
+      flashcards: [
+        { front: "Three writing systems?", back: "Hiragana, Katakana, Kanji" },
+        { front: "Hiragana usage?", back: "Native Japanese words, grammatical particles, verb endings" },
+        { front: "Katakana usage?", back: "Foreign loanwords, onomatopoeia, emphasis" },
+        { front: "Kanji categories?", back: "Pictographs, ideographs, phonetic compounds" },
+        { front: "Furigana purpose?", back: "Small hiragana above kanji to show pronunciation" }
+      ]
+    },
+    {
+      id: 'keigo-politeness',
+      name: 'Keigo (Politeness Levels)',
+      flashcards: [
+        { front: "Three politeness levels?", back: "Sonkeigo (respectful), Kenjougo (humble), Teineigo (polite)" },
+        { front: "When to use sonkeigo?", back: "To elevate actions of others, especially superiors" },
+        { front: "Kenjougo examples?", back: "Humble forms when talking about your own actions" },
+        { front: "Teineigo characteristics?", back: "です/ます forms for general politeness" },
+        { front: "Context importance?", back: "Age, status, situation determine appropriate level" }
+      ]
+    },
+    {
+      id: 'cultural-concepts',
+      name: 'Cultural Concepts',
+      flashcards: [
+        { front: "Wa (harmony) concept?", back: "Group harmony over individual expression" },
+        { front: "Senpai-kohai system?", back: "Senior-junior relationship hierarchy" },
+        { front: "Omotenashi meaning?", back: "Selfless hospitality and service" },
+        { front: "Tatemae vs honne?", back: "Public facade vs true feelings" },
+        { front: "Gift-giving culture?", back: "Omiyage, seasonal gifts, proper wrapping etiquette" }
+      ]
+    },
+    {
+      id: 'exam-strategies',
+      name: 'Exam Strategies',
+      flashcards: [
+        { front: "Reading comprehension approach?", back: "Identify text type, scan for main ideas, use context for unknown kanji" },
+        { front: "Listening strategies?", back: "Focus on key information, note speaker relationships, cultural context" },
+        { front: "Speaking preparation?", back: "Practice natural intonation, appropriate politeness levels" },
+        { front: "Writing organization?", back: "Clear introduction, logical flow, appropriate conclusions" },
+        { front: "Cultural comparison tips?", back: "Use specific examples, avoid stereotypes, show understanding" }
+      ]
+    }
+  ],
+
+  'AP Latin': [
+    {
+      id: 'caesar-bellum-gallicum',
+      name: 'Caesar: Bellum Gallicum',
+      flashcards: [
+        { front: "Opening line of Bellum Gallicum?", back: "Gallia est omnis divisa in partes tres (All Gaul is divided into three parts)" },
+        { front: "Three parts of Gaul?", back: "Belgae, Aquitani, Celtae (Galli)" },
+        { front: "Caesar's literary style?", back: "Third person narrative, clear prose, indirect discourse" },
+        { front: "Key themes in Caesar?", back: "Roman superiority, military strategy, barbarian customs" },
+        { front: "Historical context?", back: "50s BCE, Roman expansion, Caesar's political ambitions" }
+      ]
+    },
+    {
+      id: 'vergil-aeneid',
+      name: 'Vergil: Aeneid',
+      flashcards: [
+        { front: "Aeneid opening words?", back: "Arma virumque cano (Arms and the man I sing)" },
+        { front: "Epic's central theme?", back: "Founding of Rome, duty vs personal desire" },
+        { front: "Vergilian style features?", back: "Epic similes, epithets, dactylic hexameter" },
+        { front: "Aeneas's character trait?", back: "Pius (dutiful to gods, family, country)" },
+        { front: "Dido's significance?", back: "Represents personal love vs public duty conflict" }
+      ]
+    },
+    {
+      id: 'latin-grammar',
+      name: 'Latin Grammar',
+      flashcards: [
+        { front: "Six Latin cases?", back: "Nominative, Genitive, Dative, Accusative, Ablative, Vocative" },
+        { front: "Subjunctive mood uses?", back: "Purpose, result, indirect command, conditions, cum clauses" },
+        { front: "Ablative absolute?", back: "Noun + participle in ablative, independent construction" },
+        { front: "Indirect discourse rules?", back: "Accusative + infinitive for statements" },
+        { front: "Gerund vs gerundive?", back: "Gerund is verbal noun, gerundive is verbal adjective expressing necessity" }
+      ]
+    },
+    {
+      id: 'translation-skills',
+      name: 'Translation Skills',
+      flashcards: [
+        { front: "Translation approach?", back: "Identify main verb, find subject, determine sentence structure" },
+        { front: "Word order significance?", back: "Emphasis through position, especially sentence beginnings/ends" },
+        { front: "Handling unknown words?", back: "Use context, root analysis, grammatical function" },
+        { front: "Literary translation tips?", back: "Preserve tone, register, poetic effects when possible" },
+        { front: "Common translation errors?", back: "Too literal, ignoring context, missing grammatical signals" }
+      ]
+    }
+  ],
+
+  'AP Spanish Language and Culture': [
+    {
+      id: 'interpretive-communication',
+      name: 'Interpretive Communication',
+      flashcards: [
+        { front: "Print text types?", back: "Articles, editorials, literature, advertisements, instructions" },
+        { front: "Audio source variety?", back: "Interviews, presentations, conversations, radio programs" },
+        { front: "Key reading strategies?", back: "Skimming, scanning, identifying main ideas and supporting details" },
+        { front: "Listening comprehension tips?", back: "Focus on speaker's purpose, tone, and cultural context" },
+        { front: "Multiple choice approach?", back: "Eliminate obviously wrong answers, choose best fit" }
+      ]
+    },
+    {
+      id: 'interpersonal-communication',
+      name: 'Interpersonal Communication',
+      flashcards: [
+        { front: "Conversation task format?", back: "Simulated conversation with 5 response opportunities, 20 seconds each" },
+        { front: "Email reply structure?", back: "Formal greeting, address all points, appropriate closing" },
+        { front: "Register considerations?", back: "Formal (usted) vs informal (tú) based on context" },
+        { front: "Cultural appropriateness?", back: "Use culturally appropriate expressions and references" },
+        { front: "Interpersonal strategies?", back: "Ask follow-up questions, elaborate responses, show engagement" }
+      ]
+    },
+    {
+      id: 'presentational-communication',
+      name: 'Presentational Communication',
+      flashcards: [
+        { front: "Cultural comparison format?", back: "2-minute oral presentation comparing cultures" },
+        { front: "Persuasive essay structure?", back: "Introduction, arguments with evidence, counterarguments, conclusion" },
+        { front: "Source integration?", back: "Use all three sources to support arguments" },
+        { front: "Time management?", back: "Speaking: 4 min prep, 2 min presentation; Writing: 55 minutes total" },
+        { front: "Advanced language use?", back: "Subjunctive, complex structures, varied vocabulary" }
+      ]
+    },
+    {
+      id: 'hispanic-cultures',
+      name: 'Hispanic Cultures',
+      flashcards: [
+        { front: "Spanish-speaking countries?", back: "21 countries including Spain, Mexico, Central/South America" },
+        { front: "Cultural products examples?", back: "Art, literature, music, architecture, cuisine" },
+        { front: "Cultural practices?", back: "Celebrations, traditions, customs, social interactions" },
+        { front: "Cultural perspectives?", back: "Values, beliefs, assumptions underlying cultural products/practices" },
+        { front: "Regional diversity?", back: "Dialect differences, local customs, historical influences" }
+      ]
+    }
+  ],
+
+  'AP Spanish Literature and Culture': [
+    {
+      id: 'medieval-renaissance',
+      name: 'Medieval and Renaissance Literature',
+      flashcards: [
+        { front: "Poema de Mio Cid characteristics?", back: "Epic poem, irregular verse, realistic tone, Castilian nationalism" },
+        { front: "Romancero tradition?", back: "Anonymous ballads, oral tradition, historical and legendary themes" },
+        { front: "La Celestina genre?", back: "Tragicomedia, humanistic themes, social criticism" },
+        { front: "Renaissance themes?", back: "Humanism, classical influence, idealized love, nature" },
+        { front: "Garcilaso's innovations?", back: "Italian verse forms, Petrarchan sonnets, pastoral poetry" }
+      ]
+    },
+    {
+      id: 'golden-age',
+      name: 'Golden Age Literature',
+      flashcards: [
+        { front: "Cervantes' Don Quijote significance?", back: "First modern novel, metafiction, reality vs idealism" },
+        { front: "Baroque characteristics?", back: "Conceptismo, culteranismo, disillusionment, complex style" },
+        { front: "Lope de Vega's teatro?", back: "Nueva comedia, three acts, honor theme, mixing genres" },
+        { front: "Calderón's auto sacramental?", back: "Allegorical religious drama, philosophical themes" },
+        { front: "Góngora's style?", back: "Culteranismo, complex metaphors, classical allusions, difficult syntax" }
+      ]
+    },
+    {
+      id: 'modern-contemporary',
+      name: 'Modern and Contemporary Literature',
+      flashcards: [
+        { front: "Generation of '98 concerns?", back: "Spanish identity crisis, europeization, national regeneration" },
+        { front: "García Lorca's themes?", back: "Death, frustrated love, social injustice, Andalusian culture" },
+        { front: "Latin American Boom?", back: "1960s-70s international recognition, magical realism, political themes" },
+        { front: "Isabel Allende's style?", back: "Magical realism, feminist perspective, family sagas" },
+        { front: "Contemporary themes?", back: "Globalization, immigration, gender issues, historical memory" }
+      ]
+    },
+    {
+      id: 'literary-analysis',
+      name: 'Literary Analysis Skills',
+      flashcards: [
+        { front: "Textual analysis approach?", back: "Identify genre, structure, themes, literary devices, cultural context" },
+        { front: "Comparative analysis?", back: "Compare themes, styles, historical periods across texts" },
+        { front: "Essay writing structure?", back: "Clear thesis, textual evidence, analysis, cultural connections" },
+        { front: "Literary terminology?", back: "Metaphor, symbolism, irony, point of view, tone" },
+        { front: "Cultural contextualization?", back: "Historical background, social issues, literary movements" }
       ]
     }
   ]
