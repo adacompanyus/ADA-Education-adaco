@@ -3,6 +3,7 @@ import { ParticleBackground } from '@/components/animations/particle-background'
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { BottomNavigation } from '@/components/layout/bottom-navigation';
+// Removed game imports - quests don't launch games directly
 import { 
   Trophy, 
   Target, 
@@ -34,6 +35,8 @@ interface QuestsScreenProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
+
+// Removed game types - quests don't launch games directly
 
 const quests: Quest[] = [
   {
@@ -115,6 +118,7 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
   onTabChange,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'daily' | 'weekly' | 'achievement'>('all');
+  // Removed game/difficulty state for quests - users select difficulty in minigames themselves
 
   const filteredQuests = selectedFilter === 'all' 
     ? quests 
@@ -141,6 +145,23 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
       default: return 'text-text-secondary';
     }
   };
+
+  const handleQuestClick = (quest: Quest) => {
+    if (quest.completed) return;
+    
+    // Route to appropriate activity based on quest type
+    if (quest.id.includes('flashcard') || quest.id.includes('subject-explorer')) {
+      onTabChange('flashcards');
+    } else if (quest.id.includes('quiz')) {
+      onTabChange('games'); // User can then select quiz games
+    } else if (quest.id.includes('time-trial') || quest.id.includes('memory')) {
+      onTabChange('games'); // User can then select specific games
+    } else {
+      onTabChange('ai-tutor'); // Default to AI tutor for study activities
+    }
+  };
+
+  // Removed game component rendering - quests don't launch games directly
 
   return (
     <div className="min-h-screen bg-background relative pb-20">
@@ -273,8 +294,12 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
                       <span>Completed!</span>
                     </div>
                   ) : (
-                    <GradientButton size="sm" className="w-full">
-                      {progressPercentage === 100 ? 'Claim Reward' : 'Continue'}
+                    <GradientButton 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => handleQuestClick(quest)}
+                    >
+                      {progressPercentage === 100 ? 'Claim Reward' : 'View Progress'}
                     </GradientButton>
                   )}
                 </div>

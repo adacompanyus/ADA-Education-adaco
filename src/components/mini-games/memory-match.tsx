@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GradientCard } from '../ui/gradient-card';
 import { GradientButton } from '../ui/gradient-button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
 import { 
   Brain, 
@@ -26,6 +27,7 @@ interface MemoryMatchProps {
 }
 
 export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) => {
+  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<Card[]>([]);
   const [matches, setMatches] = useState(0);
@@ -34,7 +36,17 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
 
-  const totalPairs = 6; // 6 pairs = 12 cards
+  // Adjust pairs based on difficulty
+  const getPairsByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 4;    // 4 pairs = 8 cards
+      case 'Medium': return 6;  // 6 pairs = 12 cards 
+      case 'Hard': return 8;    // 8 pairs = 16 cards
+      default: return 6;
+    }
+  };
+  
+  const totalPairs = getPairsByDifficulty();
 
   // Timer
   useEffect(() => {
@@ -84,7 +96,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
     const shuffledCards = gameCards.sort(() => Math.random() - 0.5);
     setCards(shuffledCards);
     setGameStarted(true);
-  }, [subject]);
+  }, [subject, difficulty]);
 
   const handleCardClick = (clickedCard: Card) => {
     if (
@@ -183,6 +195,11 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
     setGameStarted(true);
   };
 
+  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
+    setDifficulty(newDifficulty);
+    // Difficulty change will trigger useEffect to restart the game
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -265,9 +282,21 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
           <Brain className="w-5 h-5 text-gradient-purple" />
           <h2 className="text-xl font-bold text-text-primary">Memory Match</h2>
         </div>
-        <GradientButton onClick={onClose} variant="secondary" size="sm">
-          Close
-        </GradientButton>
+        <div className="flex items-center gap-2">
+          <Select value={difficulty} onValueChange={handleDifficultyChange}>
+            <SelectTrigger className="w-24 h-8 text-xs bg-surface border-card-border">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-surface border-card-border">
+              <SelectItem value="Easy">Easy</SelectItem>
+              <SelectItem value="Medium">Medium</SelectItem>
+              <SelectItem value="Hard">Hard</SelectItem>
+            </SelectContent>
+          </Select>
+          <GradientButton onClick={onClose} variant="secondary" size="sm">
+            Close
+          </GradientButton>
+        </div>
       </div>
 
       {/* Game Stats */}
@@ -292,7 +321,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
       </div>
 
       {/* Game Grid */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className={`grid gap-3 ${totalPairs <= 4 ? 'grid-cols-4' : totalPairs <= 6 ? 'grid-cols-4' : 'grid-cols-4'}`}>
         {cards.map((card) => (
           <button
             key={card.id}
