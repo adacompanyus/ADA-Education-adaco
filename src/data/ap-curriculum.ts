@@ -1375,8 +1375,8 @@ export const AP_CURRICULUM: APCurriculum = {
         { front: "What is metric modulation?", back: "Changing tempo by making a note value from one tempo equal to a different note value in the new tempo" }
       ]
     }
-  ]
-};
+  ],
+
   'AP Chinese Language and Culture': [
     {
       id: 'interpersonal-speaking',
@@ -1655,53 +1655,6 @@ export const AP_CURRICULUM: APCurriculum = {
         { front: "Handling unknown words?", back: "Use context, root analysis, grammatical function" },
         { front: "Literary translation tips?", back: "Preserve tone, register, poetic effects when possible" },
         { front: "Common translation errors?", back: "Too literal, ignoring context, missing grammatical signals" }
-      ]
-    }
-  ],
-
-  'AP Spanish Language and Culture': [
-    {
-      id: 'interpretive-communication',
-      name: 'Interpretive Communication',
-      flashcards: [
-        { front: "Print text types?", back: "Articles, editorials, literature, advertisements, instructions" },
-        { front: "Audio source variety?", back: "Interviews, presentations, conversations, radio programs" },
-        { front: "Key reading strategies?", back: "Skimming, scanning, identifying main ideas and supporting details" },
-        { front: "Listening comprehension tips?", back: "Focus on speaker's purpose, tone, and cultural context" },
-        { front: "Multiple choice approach?", back: "Eliminate obviously wrong answers, choose best fit" }
-      ]
-    },
-    {
-      id: 'interpersonal-communication',
-      name: 'Interpersonal Communication',
-      flashcards: [
-        { front: "Conversation task format?", back: "Simulated conversation with 5 response opportunities, 20 seconds each" },
-        { front: "Email reply structure?", back: "Formal greeting, address all points, appropriate closing" },
-        { front: "Register considerations?", back: "Formal (usted) vs informal (tú) based on context" },
-        { front: "Cultural appropriateness?", back: "Use culturally appropriate expressions and references" },
-        { front: "Interpersonal strategies?", back: "Ask follow-up questions, elaborate responses, show engagement" }
-      ]
-    },
-    {
-      id: 'presentational-communication',
-      name: 'Presentational Communication',
-      flashcards: [
-        { front: "Cultural comparison format?", back: "2-minute oral presentation comparing cultures" },
-        { front: "Persuasive essay structure?", back: "Introduction, arguments with evidence, counterarguments, conclusion" },
-        { front: "Source integration?", back: "Use all three sources to support arguments" },
-        { front: "Time management?", back: "Speaking: 4 min prep, 2 min presentation; Writing: 55 minutes total" },
-        { front: "Advanced language use?", back: "Subjunctive, complex structures, varied vocabulary" }
-      ]
-    },
-    {
-      id: 'hispanic-cultures',
-      name: 'Hispanic Cultures',
-      flashcards: [
-        { front: "Spanish-speaking countries?", back: "21 countries including Spain, Mexico, Central/South America" },
-        { front: "Cultural products examples?", back: "Art, literature, music, architecture, cuisine" },
-        { front: "Cultural practices?", back: "Celebrations, traditions, customs, social interactions" },
-        { front: "Cultural perspectives?", back: "Values, beliefs, assumptions underlying cultural products/practices" },
-        { front: "Regional diversity?", back: "Dialect differences, local customs, historical influences" }
       ]
     }
   ],
