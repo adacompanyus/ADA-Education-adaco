@@ -896,5 +896,473 @@ export const AP_CURRICULUM: APCurriculum = {
         { front: "What is the availability heuristic?", back: "Judging probability by how easily examples come to mind" },
       ]
     }
+  ],
+
+  "AP English Language and Composition": [
+    {
+      id: "rhetorical-analysis",
+      name: "Rhetorical Analysis",
+      flashcards: [
+        { front: "What is ethos?", back: "Appeal to credibility, ethics, or character of speaker" },
+        { front: "What is pathos?", back: "Appeal to emotion and feelings of audience" },
+        { front: "What is logos?", back: "Appeal to logic, reason, and evidence" },
+        { front: "What is rhetorical situation?", back: "Context including author, audience, purpose, and occasion" },
+        { front: "What is tone?", back: "Author's attitude toward subject or audience" },
+      ]
+    },
+    {
+      id: "argument-writing",
+      name: "Argument and Persuasion",
+      flashcards: [
+        { front: "What is a claim?", back: "Main argument or thesis that author wants to prove" },
+        { front: "What is evidence?", back: "Facts, statistics, examples, or expert opinions supporting argument" },
+        { front: "What is a warrant?", back: "Assumption connecting evidence to claim" },
+        { front: "What is counterargument?", back: "Opposing viewpoint that author addresses" },
+        { front: "What is concession?", back: "Acknowledging validity of opposing point" },
+      ]
+    },
+    {
+      id: "synthesis",
+      name: "Synthesis and Sources",
+      flashcards: [
+        { front: "What is synthesis?", back: "Combining multiple sources to support original argument" },
+        { front: "What is attribution?", back: "Crediting sources properly in writing" },
+        { front: "What is bias?", back: "Prejudice or preference that affects objectivity" },
+        { front: "What is credibility?", back: "Trustworthiness and reliability of source" },
+        { front: "What is plagiarism?", back: "Using others' ideas without proper citation" },
+      ]
+    }
+  ],
+
+  "AP European History": [
+    {
+      id: "renaissance-reformation",
+      name: "Renaissance and Reformation (1450-1648)",
+      flashcards: [
+        { front: "What was humanism?", back: "Intellectual movement emphasizing human potential and classical learning" },
+        { front: "What started the Protestant Reformation?", back: "Martin Luther's 95 Theses (1517) challenging Catholic practices" },
+        { front: "What was the printing press's impact?", back: "Spread of ideas, literacy, and standardized knowledge" },
+        { front: "What was the Peace of Augsburg?", back: "1555 agreement allowing German princes to choose their religion" },
+        { front: "What was the Counter-Reformation?", back: "Catholic Church's response to Protestant Reformation" },
+      ]
+    },
+    {
+      id: "absolutism-constitutionalism",
+      name: "Absolutism and Constitutionalism (1648-1815)",
+      flashcards: [
+        { front: "What is absolutism?", back: "Political system where monarch has unlimited power" },
+        { front: "What was Louis XIV's Versailles?", back: "Palace symbolizing absolute monarchy and controlling nobility" },
+        { front: "What was the Glorious Revolution?", back: "1688 English revolution establishing parliamentary supremacy" },
+        { front: "What was the Enlightenment?", back: "Intellectual movement emphasizing reason, natural rights, progress" },
+        { front: "What caused the French Revolution?", back: "Financial crisis, social inequality, Enlightenment ideas" },
+      ]
+    },
+    {
+      id: "industrialization-nationalism",
+      name: "Industrialization and Nationalism (1815-1914)",
+      flashcards: [
+        { front: "What was the Concert of Europe?", back: "System maintaining balance of power after Napoleon" },
+        { front: "What was nationalism?", back: "Political ideology based on shared culture, language, history" },
+        { front: "What was the Crimean War's significance?", back: "Exposed weaknesses of great powers, modern warfare" },
+        { front: "What was German unification?", back: "Process led by Prussia under Otto von Bismarck (1871)" },
+        { front: "What was the New Imperialism?", back: "European expansion into Africa and Asia (1870s-1914)" },
+      ]
+    }
+  ],
+
+  "AP Human Geography": [
+    {
+      id: "population-migration",
+      name: "Population and Migration",
+      flashcards: [
+        { front: "What is demographic transition model?", back: "Model showing population changes as countries develop economically" },
+        { front: "What are push and pull factors?", back: "Push: reasons to leave; Pull: reasons to migrate to location" },
+        { front: "What is population density?", back: "Number of people per unit of area" },
+        { front: "What is carrying capacity?", back: "Maximum population environment can sustain" },
+        { front: "What is brain drain?", back: "Emigration of educated people from developing countries" },
+      ]
+    },
+    {
+      id: "cultural-patterns",
+      name: "Cultural Patterns and Processes",
+      flashcards: [
+        { front: "What is culture?", back: "Shared beliefs, values, practices of group of people" },
+        { front: "What is cultural diffusion?", back: "Spread of cultural elements from one place to another" },
+        { front: "What is acculturation?", back: "Process of cultural change when groups interact" },
+        { front: "What is a lingua franca?", back: "Common language used for communication between groups" },
+        { front: "What is cultural landscape?", back: "Human-modified natural landscape reflecting culture" },
+      ]
+    },
+    {
+      id: "urban-geography",
+      name: "Cities and Urban Land Use",
+      flashcards: [
+        { front: "What is urbanization?", back: "Increasing proportion of population living in cities" },
+        { front: "What is urban sprawl?", back: "Uncontrolled expansion of urban areas" },
+        { front: "What is gentrification?", back: "Renovation of urban areas leading to displacement of residents" },
+        { front: "What is central place theory?", back: "Model explaining distribution and size of cities" },
+        { front: "What is a megacity?", back: "Urban area with population over 10 million" },
+      ]
+    }
+  ],
+
+  "AP Macroeconomics": [
+    {
+      id: "basic-concepts",
+      name: "Basic Economic Concepts",
+      flashcards: [
+        { front: "What is GDP?", back: "Gross Domestic Product: total value of goods/services produced in country" },
+        { front: "What is opportunity cost?", back: "Value of best alternative given up when making choice" },
+        { front: "What is inflation?", back: "General increase in price level over time" },
+        { front: "What is unemployment rate?", back: "Percentage of labor force that is unemployed" },
+        { front: "What is fiscal policy?", back: "Government use of spending and taxation to influence economy" },
+      ]
+    },
+    {
+      id: "economic-indicators",
+      name: "Economic Indicators and Business Cycle",
+      flashcards: [
+        { front: "What are the phases of business cycle?", back: "Expansion, peak, contraction, trough" },
+        { front: "What is recession?", back: "Period of declining economic activity, typically two consecutive quarters of negative GDP growth" },
+        { front: "What is Consumer Price Index (CPI)?", back: "Measure of average change in prices consumers pay for goods/services" },
+        { front: "What is full employment?", back: "Level of employment where only frictional and structural unemployment exist" },
+        { front: "What is aggregate demand?", back: "Total demand for goods and services in economy" },
+      ]
+    },
+    {
+      id: "monetary-policy",
+      name: "Monetary Policy and Banking",
+      flashcards: [
+        { front: "What is monetary policy?", back: "Central bank's management of money supply and interest rates" },
+        { front: "What is the Federal Reserve?", back: "Central banking system of United States" },
+        { front: "What is money supply?", back: "Total amount of money circulating in economy" },
+        { front: "What is fractional reserve banking?", back: "System where banks hold fraction of deposits as reserves" },
+        { front: "What is quantitative easing?", back: "Monetary policy where central bank purchases securities to increase money supply" },
+      ]
+    }
+  ],
+
+  "AP Microeconomics": [
+    {
+      id: "supply-demand",
+      name: "Supply and Demand",
+      flashcards: [
+        { front: "What is law of demand?", back: "As price increases, quantity demanded decreases, all else equal" },
+        { front: "What is law of supply?", back: "As price increases, quantity supplied increases, all else equal" },
+        { front: "What is equilibrium?", back: "Point where quantity supplied equals quantity demanded" },
+        { front: "What is price elasticity of demand?", back: "Responsiveness of quantity demanded to price changes" },
+        { front: "What is consumer surplus?", back: "Difference between what consumers willing to pay and what they actually pay" },
+      ]
+    },
+    {
+      id: "market-structures",
+      name: "Market Structures",
+      flashcards: [
+        { front: "What is perfect competition?", back: "Market with many buyers/sellers, identical products, easy entry/exit" },
+        { front: "What is monopoly?", back: "Market with single seller and no close substitutes" },
+        { front: "What is oligopoly?", back: "Market with few large firms that can influence price" },
+        { front: "What is monopolistic competition?", back: "Market with many firms selling differentiated products" },
+        { front: "What is market power?", back: "Ability of firm to influence price of its product" },
+      ]
+    },
+    {
+      id: "production-costs",
+      name: "Production and Costs",
+      flashcards: [
+        { front: "What is marginal cost?", back: "Additional cost of producing one more unit" },
+        { front: "What is average total cost?", back: "Total cost divided by quantity produced" },
+        { front: "What is law of diminishing returns?", back: "As one input increases, marginal product eventually decreases" },
+        { front: "What are fixed costs?", back: "Costs that don't change with level of output" },
+        { front: "What are variable costs?", back: "Costs that change with level of output" },
+      ]
+    }
+  ],
+
+  "AP Environmental Science": [
+    {
+      id: "earth-systems",
+      name: "Earth Systems and Resources",
+      flashcards: [
+        { front: "What is the greenhouse effect?", back: "Trapping of heat in atmosphere by greenhouse gases" },
+        { front: "What are the main greenhouse gases?", back: "Carbon dioxide, methane, nitrous oxide, fluorinated gases" },
+        { front: "What is the carbon cycle?", back: "Movement of carbon through atmosphere, biosphere, hydrosphere, geosphere" },
+        { front: "What is biodiversity?", back: "Variety of life at genetic, species, and ecosystem levels" },
+        { front: "What is an ecosystem?", back: "Community of organisms interacting with their environment" },
+      ]
+    },
+    {
+      id: "pollution-conservation",
+      name: "Pollution and Conservation",
+      flashcards: [
+        { front: "What is acid rain?", back: "Precipitation with pH below 5.6 due to air pollution" },
+        { front: "What is biomagnification?", back: "Concentration of toxins increases up food chain" },
+        { front: "What is renewable energy?", back: "Energy from sources that naturally replenish" },
+        { front: "What is sustainable development?", back: "Meeting present needs without compromising future generations" },
+        { front: "What is habitat fragmentation?", back: "Breaking up of continuous habitat into smaller patches" },
+      ]
+    },
+    {
+      id: "global-changes",
+      name: "Global Changes and Climate",
+      flashcards: [
+        { front: "What is global warming?", back: "Increase in Earth's average surface temperature" },
+        { front: "What is ozone depletion?", back: "Thinning of ozone layer due to human activities" },
+        { front: "What is deforestation?", back: "Clearing of forests for other land uses" },
+        { front: "What is desertification?", back: "Land degradation in dry areas" },
+        { front: "What is ecological footprint?", back: "Measure of human impact on Earth's ecosystems" },
+      ]
+    }
+  ],
+
+  "AP Physics C: Mechanics": [
+    {
+      id: "kinematics-calculus",
+      name: "Kinematics with Calculus",
+      flashcards: [
+        { front: "How is velocity related to position?", back: "v = dx/dt (derivative of position)" },
+        { front: "How is acceleration related to velocity?", back: "a = dv/dt (derivative of velocity)" },
+        { front: "What is position from acceleration?", back: "x = ∫∫a dt dt (double integral)" },
+        { front: "What is projectile motion equation for range?", back: "R = v₀²sin(2θ)/g" },
+        { front: "What is centripetal acceleration?", back: "aᶜ = v²/r toward center of circle" },
+      ]
+    },
+    {
+      id: "dynamics-forces",
+      name: "Dynamics and Forces",
+      flashcards: [
+        { front: "What is Newton's second law in calculus form?", back: "F = dp/dt (rate of change of momentum)" },
+        { front: "What is work-energy theorem?", back: "W = ΔKE; work equals change in kinetic energy" },
+        { front: "What is conservative force?", back: "Force where work is path-independent (like gravity)" },
+        { front: "What is potential energy?", back: "U = -∫F⃗·dr⃗; stored energy in conservative field" },
+        { front: "What is escape velocity?", back: "vₑ = √(2GM/r); minimum speed to escape gravitational field" },
+      ]
+    },
+    {
+      id: "rotation-oscillation",
+      name: "Rotational Motion and Oscillations",
+      flashcards: [
+        { front: "What is angular momentum?", back: "L = Iω; rotational analog of linear momentum" },
+        { front: "What is torque?", back: "τ = rF sin θ = Iα; rotational analog of force" },
+        { front: "What is moment of inertia?", back: "I = Σmr²; measure of rotational inertia" },
+        { front: "What is simple harmonic motion?", back: "Motion where restoring force is proportional to displacement" },
+        { front: "What is period of pendulum?", back: "T = 2π√(L/g) for small angles" },
+      ]
+    }
+  ],
+
+  "AP Physics C: Electricity and Magnetism": [
+    {
+      id: "electrostatics",
+      name: "Electrostatics",
+      flashcards: [
+        { front: "What is Gauss's Law?", back: "∮E⃗·dA⃗ = Q/ε₀; electric flux through closed surface" },
+        { front: "What is electric potential?", back: "V = kQ/r; potential energy per unit charge" },
+        { front: "What is capacitance?", back: "C = Q/V; ability to store charge" },
+        { front: "What is energy stored in capacitor?", back: "U = ½CV²; electrical potential energy" },
+        { front: "What is electric field from potential?", back: "E = -∇V; negative gradient of potential" },
+      ]
+    },
+    {
+      id: "circuits",
+      name: "Electric Circuits",
+      flashcards: [
+        { front: "What is Kirchhoff's current law?", back: "Sum of currents entering junction equals sum leaving" },
+        { front: "What is Kirchhoff's voltage law?", back: "Sum of voltage drops around closed loop equals zero" },
+        { front: "What is RC time constant?", back: "τ = RC; time for capacitor to charge to 63% of maximum" },
+        { front: "What is impedance?", back: "Z = √(R² + (XL - XC)²); AC circuit resistance" },
+        { front: "What is power in AC circuit?", back: "P = VᵣₘₛIᵣₘₛcos φ; average power dissipated" },
+      ]
+    },
+    {
+      id: "magnetism",
+      name: "Magnetism and Induction",
+      flashcards: [
+        { front: "What is magnetic force on moving charge?", back: "F⃗ = q(v⃗ × B⃗); Lorentz force" },
+        { front: "What is Ampère's Law?", back: "∮B⃗·dl⃗ = μ₀I; relates magnetic field to current" },
+        { front: "What is Faraday's Law?", back: "ℰ = -dΦB/dt; induced EMF from changing flux" },
+        { front: "What is Lenz's Law?", back: "Induced current creates magnetic field opposing change" },
+        { front: "What is self-inductance?", back: "L = Φ/I; property of circuit opposing current changes" },
+      ]
+    }
+  ],
+
+  "AP Computer Science Principles": [
+    {
+      id: "computing-systems",
+      name: "Computing Systems and Networks",
+      flashcards: [
+        { front: "What is the Internet?", back: "Global network of interconnected computers using standardized protocols" },
+        { front: "What is IP address?", back: "Unique numerical identifier for devices on network" },
+        { front: "What is HTTP?", back: "HyperText Transfer Protocol for web communication" },
+        { front: "What is encryption?", back: "Process of encoding information to prevent unauthorized access" },
+        { front: "What is bandwidth?", back: "Maximum rate of data transfer across network connection" },
+      ]
+    },
+    {
+      id: "data-algorithms",
+      name: "Data and Algorithms",
+      flashcards: [
+        { front: "What is an algorithm?", back: "Step-by-step procedure for solving problem" },
+        { front: "What is Big Data?", back: "Extremely large datasets requiring specialized tools to process" },
+        { front: "What is machine learning?", back: "Algorithms that improve through experience without explicit programming" },
+        { front: "What is binary?", back: "Base-2 number system using only 0s and 1s" },
+        { front: "What is metadata?", back: "Data about data; describes characteristics of dataset" },
+      ]
+    },
+    {
+      id: "programming-impact",
+      name: "Programming and Impact",
+      flashcards: [
+        { front: "What is abstraction?", back: "Hiding implementation details while showing essential features" },
+        { front: "What is debugging?", back: "Process of finding and fixing errors in programs" },
+        { front: "What is digital divide?", back: "Gap between those with/without access to digital technology" },
+        { front: "What is intellectual property?", back: "Legal rights over creations of the mind" },
+        { front: "What is open source?", back: "Software with source code freely available for modification" },
+      ]
+    }
+  ],
+
+  "AP Precalculus": [
+    {
+      id: "polynomial-rational",
+      name: "Polynomial and Rational Functions",
+      flashcards: [
+        { front: "What is degree of polynomial?", back: "Highest power of variable in polynomial" },
+        { front: "What is synthetic division?", back: "Simplified method for dividing polynomials by linear factors" },
+        { front: "What is remainder theorem?", back: "When polynomial P(x) is divided by (x-a), remainder is P(a)" },
+        { front: "What is rational function?", back: "Function that is ratio of two polynomials" },
+        { front: "What is vertical asymptote?", back: "Vertical line where function approaches infinity" },
+      ]
+    },
+    {
+      id: "exponential-logarithmic",
+      name: "Exponential and Logarithmic Functions",
+      flashcards: [
+        { front: "What is exponential function?", back: "Function of form f(x) = abˣ where b > 0, b ≠ 1" },
+        { front: "What is natural logarithm?", back: "Logarithm with base e (approximately 2.718)" },
+        { front: "What is change of base formula?", back: "log_b(x) = log(x)/log(b) or ln(x)/ln(b)" },
+        { front: "What is exponential growth/decay?", back: "y = ae^(kt) where k > 0 (growth) or k < 0 (decay)" },
+        { front: "What is logarithmic scale?", back: "Scale where equal distances represent equal ratios" },
+      ]
+    },
+    {
+      id: "trigonometric-functions",
+      name: "Trigonometric Functions",
+      flashcards: [
+        { front: "What is unit circle?", back: "Circle with radius 1 centered at origin" },
+        { front: "What is period of sin(x) and cos(x)?", back: "2π radians or 360 degrees" },
+        { front: "What is amplitude?", back: "Maximum distance from midline in periodic function" },
+        { front: "What is phase shift?", back: "Horizontal displacement of trigonometric function" },
+        { front: "What are Pythagorean identities?", back: "sin²θ + cos²θ = 1, 1 + tan²θ = sec²θ, 1 + cot²θ = csc²θ" },
+      ]
+    }
+  ],
+
+  "AP Spanish Language and Culture": [
+    {
+      id: "communication",
+      name: "Interpretive Communication",
+      flashcards: [
+        { front: "¿Qué es la comunicación interpretiva?", back: "Understanding and interpreting spoken and written Spanish" },
+        { front: "¿Qué son cognados?", back: "Words that have similar spelling/meaning in Spanish and English" },
+        { front: "¿Qué es contexto?", back: "Surrounding text that helps determine meaning" },
+        { front: "¿Qué es registro?", back: "Level of formality in language (formal vs. informal)" },
+        { front: "¿Qué es connotación?", back: "Implied or suggested meaning beyond literal definition" },
+      ]
+    },
+    {
+      id: "cultural-themes",
+      name: "Cultural Themes and Products",
+      flashcards: [
+        { front: "¿Qué es la identidad nacional?", back: "Sense of belonging to particular nation or culture" },
+        { front: "¿Qué son tradiciones?", back: "Customs and beliefs passed down through generations" },
+        { front: "¿Qué es la globalización?", back: "Process of increasing worldwide integration and interdependence" },
+        { front: "¿Qué es patrimonio cultural?", back: "Cultural heritage including traditions, monuments, objects" },
+        { front: "¿Qué son valores?", back: "Principles and standards that guide behavior" },
+      ]
+    },
+    {
+      id: "grammar-structures",
+      name: "Grammar and Language Structures",
+      flashcards: [
+        { front: "¿Cuándo usar subjuntivo?", back: "Doubt, emotion, desire, impersonal expressions, commands" },
+        { front: "¿Qué es pretérito vs imperfecto?", back: "Preterite: completed actions; Imperfect: ongoing/habitual past" },
+        { front: "¿Cómo formar mandatos?", back: "Commands using specific conjugations for tú, usted, nosotros" },
+        { front: "¿Qué son pronombres relativos?", back: "Que, quien, donde, cuando - connect clauses" },
+        { front: "¿Cuándo usar ser vs estar?", back: "Ser: permanent states; Estar: temporary conditions/location" },
+      ]
+    }
+  ],
+
+  "AP Art History": [
+    {
+      id: "ancient-art",
+      name: "Ancient Mediterranean and Near East",
+      flashcards: [
+        { front: "What is contrapposto?", back: "Classical Greek pose showing weight shift and natural stance" },
+        { front: "What is the Parthenon?", back: "Greek temple dedicated to Athena, example of Doric architecture" },
+        { front: "What is Roman concrete?", back: "Revolutionary building material enabling domes and arches" },
+        { front: "What is hieratic scale?", back: "Sizing figures by importance rather than realism" },
+        { front: "What is a kouros?", back: "Archaic Greek statue of standing male youth" },
+      ]
+    },
+    {
+      id: "medieval-art",
+      name: "Medieval European Art",
+      flashcards: [
+        { front: "What is Gothic architecture?", back: "Medieval style featuring pointed arches, flying buttresses, large windows" },
+        { front: "What is illuminated manuscript?", back: "Handwritten book decorated with gold, silver, and colorful designs" },
+        { front: "What is Romanesque style?", back: "Medieval European style with thick walls, round arches, sturdy pillars" },
+        { front: "What is iconoclasm?", back: "Destruction of religious images and icons" },
+        { front: "What is tympanum?", back: "Decorative semicircular area above church doorway" },
+      ]
+    },
+    {
+      id: "renaissance-baroque",
+      name: "Renaissance and Baroque",
+      flashcards: [
+        { front: "What is linear perspective?", back: "Technique creating illusion of depth on flat surface" },
+        { front: "What is chiaroscuro?", back: "Dramatic contrast between light and dark" },
+        { front: "What is sfumato?", back: "Leonardo's technique of subtle gradations without harsh outlines" },
+        { front: "What is Mannerism?", back: "Late Renaissance style emphasizing artificiality and complexity" },
+        { front: "What is trompe l'oeil?", back: "Art technique creating optical illusion of three dimensions" },
+      ]
+    }
+  ],
+
+  "AP Music Theory": [
+    {
+      id: "fundamentals",
+      name: "Music Fundamentals",
+      flashcards: [
+        { front: "What is a scale?", back: "Series of pitches arranged in ascending or descending order" },
+        { front: "What is key signature?", back: "Sharps or flats at beginning of staff indicating key" },
+        { front: "What is time signature?", back: "Fraction showing number of beats per measure and note value" },
+        { front: "What is interval?", back: "Distance between two pitches" },
+        { front: "What is chord?", back: "Three or more pitches sounded simultaneously" },
+      ]
+    },
+    {
+      id: "harmony-voice-leading",
+      name: "Harmony and Voice Leading",
+      flashcards: [
+        { front: "What is voice leading?", back: "How individual voices move from chord to chord" },
+        { front: "What is figured bass?", back: "Baroque notation system using numbers below bass line" },
+        { front: "What is modulation?", back: "Change from one key to another within piece" },
+        { front: "What is cadence?", back: "Harmonic conclusion to phrase or section" },
+        { front: "What is non-chord tone?", back: "Note that doesn't belong to underlying chord" },
+      ]
+    },
+    {
+      id: "form-analysis",
+      name: "Form and Analysis",
+      flashcards: [
+        { front: "What is binary form?", back: "Two-part musical form (AB)" },
+        { front: "What is ternary form?", back: "Three-part musical form (ABA)" },
+        { front: "What is sonata form?", back: "Classical form with exposition, development, recapitulation" },
+        { front: "What is motive?", back: "Short musical idea that recurs throughout piece" },
+        { front: "What is sequence?", back: "Repetition of musical pattern at different pitch levels" },
+      ]
+    }
   ]
 };
