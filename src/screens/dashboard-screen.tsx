@@ -3,6 +3,7 @@ import { BottomNavigation } from '@/components/layout/bottom-navigation';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { ParticleBackground } from '@/components/animations/particle-background';
+import { AITutorChat } from '@/components/ai-tutor-chat';
 import { useTheme } from '@/contexts/theme-context';
 import {
   Star,
@@ -262,6 +263,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* AI Tutor */}
+          <div className="space-y-4">
+            <AITutorChat subject={selectedSubject} />
           </div>
 
           {/* Minigames */}
