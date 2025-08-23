@@ -577,7 +577,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               </button>
               
               <button 
-                onClick={() => window.open(`mailto:adacompanyus@gmail.com?subject=Support Request&body=Hello Ada Team,%0A%0AI need help with:`)}
+                onClick={() => {
+                  const emailSubject = encodeURIComponent('ADA App Support Request');
+                  const emailBody = encodeURIComponent('Hello ADA Support Team,\n\nI need assistance with:\n\n[Please describe your issue here]\n\nThanks!');
+                  window.open(`mailto:adacompanyus@gmail.com?subject=${emailSubject}&body=${emailBody}`, '_blank');
+                }}
                 className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors"
               >
                 <Mail className="w-5 h-5 text-gradient-orange" />

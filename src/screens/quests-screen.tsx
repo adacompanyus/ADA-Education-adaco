@@ -147,9 +147,18 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
   };
 
   const handleQuestClick = (quest: Quest) => {
-    // For quests, just simulate quest completion or show info
-    // Users should go to minigames directly for gameplay
-    console.log('Quest clicked:', quest.title);
+    if (quest.completed) return;
+    
+    // Route to appropriate activity based on quest type
+    if (quest.id.includes('flashcard') || quest.id.includes('subject-explorer')) {
+      onTabChange('flashcards');
+    } else if (quest.id.includes('quiz')) {
+      onTabChange('games'); // User can then select quiz games
+    } else if (quest.id.includes('time-trial') || quest.id.includes('memory')) {
+      onTabChange('games'); // User can then select specific games
+    } else {
+      onTabChange('ai-tutor'); // Default to AI tutor for study activities
+    }
   };
 
   // Removed game component rendering - quests don't launch games directly

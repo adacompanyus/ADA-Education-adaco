@@ -143,6 +143,11 @@
     height: 100%;
   }
 
+  .gradient-outline-selected {
+    background: linear-gradient(135deg, hsl(var(--gradient-purple)), hsl(var(--gradient-orange)));
+    box-shadow: 0 0 20px hsl(var(--gradient-purple) / 0.3);
+  }
+
   .gradient-text {
     background: linear-gradient(135deg, hsl(var(--gradient-purple)), hsl(var(--gradient-orange)));
     -webkit-background-clip: text;
