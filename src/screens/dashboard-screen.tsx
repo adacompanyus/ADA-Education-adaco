@@ -14,89 +14,54 @@ import { QuestsScreen } from './quests-screen';
 import { AppSettings } from '@/components/app-settings';
 import { MiniGameLauncher } from '@/components/mini-game-launcher';
 import { useTheme } from '@/contexts/theme-context';
-import {
-  Star,
-  Target,
-  Trophy,
-  Zap,
-  Brain,
-  Timer,
-  Shuffle,
-  Flame,
-  Award,
-  RotateCcw,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  User,
-  Settings,
-  CreditCard,
-  Bell,
-  Shield,
-  HelpCircle,
-  Moon,
-  Sun,
-  Mail,
-  Phone,
-  Calendar,
-  MapPin,
-  Edit,
-  LogOut,
-} from 'lucide-react';
-
+import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut } from 'lucide-react';
 interface DashboardScreenProps {
-  user: { name: string };
+  user: {
+    name: string;
+  };
   selectedSubjects: string[];
   onLogout: () => void;
 }
-
-const minigames = [
-  {
-    id: 'quick-quiz',
-    title: 'Quick Quiz',
-    description: 'Rapid-fire questions',
-    icon: Zap,
-    xpReward: 25,
-    difficulty: 'Easy'
-  },
-  {
-    id: 'memory-match',
-    title: 'Memory Match',
-    description: 'Match concepts',
-    icon: Brain,
-    xpReward: 35,
-    difficulty: 'Medium'
-  },
-  {
-    id: 'time-trial',
-    title: 'Time Trial',
-    description: 'Beat the clock',
-    icon: Timer,
-    xpReward: 50,
-    difficulty: 'Hard'
-  },
-  {
-    id: 'word-scramble',
-    title: 'Word Scramble',
-    description: 'Unscramble terms',
-    icon: Shuffle,
-    xpReward: 30,
-    difficulty: 'Medium'
-  },
-  {
-    id: 'speed-match',
-    title: 'Speed Match',
-    description: 'Quick matching',
-    icon: Flame,
-    xpReward: 40,
-    difficulty: 'Hard'
-  }
-];
-
+const minigames = [{
+  id: 'quick-quiz',
+  title: 'Quick Quiz',
+  description: 'Rapid-fire questions',
+  icon: Zap,
+  xpReward: 25,
+  difficulty: 'Easy'
+}, {
+  id: 'memory-match',
+  title: 'Memory Match',
+  description: 'Match concepts',
+  icon: Brain,
+  xpReward: 35,
+  difficulty: 'Medium'
+}, {
+  id: 'time-trial',
+  title: 'Time Trial',
+  description: 'Beat the clock',
+  icon: Timer,
+  xpReward: 50,
+  difficulty: 'Hard'
+}, {
+  id: 'word-scramble',
+  title: 'Word Scramble',
+  description: 'Unscramble terms',
+  icon: Shuffle,
+  xpReward: 30,
+  difficulty: 'Medium'
+}, {
+  id: 'speed-match',
+  title: 'Speed Match',
+  description: 'Quick matching',
+  icon: Flame,
+  xpReward: 40,
+  difficulty: 'Hard'
+}];
 export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   user,
   selectedSubjects,
-  onLogout,
+  onLogout
 }) => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -104,23 +69,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
   const [activeGame, setActiveGame] = useState<string | null>(null);
   const [showAppSettings, setShowAppSettings] = useState(false);
-
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
-
   const getGreeting = () => {
     const hour = currentTime.getHours();
     if (hour < 12) return 'Good Morning';
     if (hour < 17) return 'Good Afternoon';
     return 'Good Evening';
   };
-
-
   if (activeTab === 'dashboard') {
-    return (
-      <div className="min-h-screen bg-background relative pb-20">
+    return <div className="min-h-screen bg-background relative pb-20">
         <ParticleBackground />
         
         <div className="relative z-10 p-6 space-y-6">
@@ -145,34 +105,23 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
           {/* Subject Selector */}
           <div className="relative">
-            <button
-              onClick={() => setShowSubjectDropdown(!showSubjectDropdown)}
-              className="w-full gradient-outline rounded-lg p-1"
-            >
+            <button onClick={() => setShowSubjectDropdown(!showSubjectDropdown)} className="w-full gradient-outline rounded-lg p-1">
               <div className="gradient-outline-content px-4 py-3 flex items-center justify-between">
                 <span className="font-medium text-text-primary">{selectedSubject}</span>
                 <ChevronDown className="w-5 h-5 text-gradient-purple" />
               </div>
             </button>
 
-            {showSubjectDropdown && (
-              <div className="absolute top-full left-0 right-0 mt-2 gradient-outline rounded-lg p-1 z-50 animate-scale-in">
+            {showSubjectDropdown && <div className="absolute top-full left-0 right-0 mt-2 gradient-outline rounded-lg p-1 z-50 animate-scale-in">
                 <div className="gradient-outline-content rounded-lg max-h-48 overflow-y-auto">
-                  {selectedSubjects.map((subject) => (
-                     <button
-                       key={subject}
-                      onClick={() => {
-                        setSelectedSubject(subject);
-                        setShowSubjectDropdown(false);
-                      }}
-                       className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary"
-                     >
+                  {selectedSubjects.map(subject => <button key={subject} onClick={() => {
+                setSelectedSubject(subject);
+                setShowSubjectDropdown(false);
+              }} className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary">
                       {subject}
-                    </button>
-                  ))}
+                    </button>)}
                 </div>
-              </div>
-            )}
+              </div>}
           </div>
 
           {/* Curriculum Flashcards */}
@@ -183,10 +132,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             <h2 className="text-xl font-semibold text-text-primary">Minigames</h2>
             
             <div className="grid gap-4">
-              {minigames.map((game) => {
-                const Icon = game.icon;
-                return (
-                  <GradientCard key={game.id} className="cursor-pointer hover:scale-[1.02]">
+              {minigames.map(game => {
+              const Icon = game.icon;
+              return <GradientCard key={game.id} className="cursor-pointer hover:scale-[1.02]">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div className="gradient-outline rounded-lg p-2">
@@ -203,81 +151,51 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                           </div>
                         </div>
                       </div>
-                      <GradientButton 
-                        size="sm"
-                        onClick={() => setActiveGame(game.id)}
-                      >
+                      <GradientButton size="sm" onClick={() => setActiveGame(game.id)}>
                         Play
                       </GradientButton>
                     </div>
-                  </GradientCard>
-                );
-              })}
+                  </GradientCard>;
+            })}
             </div>
           </div>
 
           {/* Active Game Modal */}
-          {activeGame && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen bg-background/80 backdrop-blur-sm z-[9999] p-4 overflow-y-auto">
+          {activeGame && <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen bg-background/80 backdrop-blur-sm z-[9999] p-4 overflow-y-auto px-[16px] my-0">
               <div className="max-w-2xl mx-auto">
-                <MiniGameLauncher
-                  gameId={activeGame}
-                  subject={selectedSubject}
-                  onClose={() => setActiveGame(null)}
-                />
+                <MiniGameLauncher gameId={activeGame} subject={selectedSubject} onClose={() => setActiveGame(null)} />
               </div>
-            </div>
-          )}
+            </div>}
 
           {/* App Settings Modal - Show on any tab */}
-          {showAppSettings && (
-            <AppSettings onClose={() => setShowAppSettings(false)} />
-          )}
+          {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
         </div>
 
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
-    );
+      </div>;
   }
 
   // AI Tutor Tab
   if (activeTab === 'ai-tutor') {
-    return (
-      <>
-        <AITutorScreen 
-          user={user} 
-          selectedSubjects={selectedSubjects}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
+    return <>
+        <AITutorScreen user={user} selectedSubjects={selectedSubjects} activeTab={activeTab} onTabChange={setActiveTab} />
         {/* App Settings Modal - Global */}
-        {showAppSettings && (
-          <AppSettings onClose={() => setShowAppSettings(false)} />
-        )}
-      </>
-    );
+        {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      </>;
   }
 
   // Quests Tab
   if (activeTab === 'quests') {
-    return (
-      <>
-        <QuestsScreen 
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
+    return <>
+        <QuestsScreen activeTab={activeTab} onTabChange={setActiveTab} />
         {/* App Settings Modal - Global */}
-        {showAppSettings && (
-          <AppSettings onClose={() => setShowAppSettings(false)} />
-        )}
-      </>
-    );
+        {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      </>;
   }
 
   // Store Tab
   if (activeTab === 'store') {
-    return (
-      <div className="min-h-screen bg-background relative pb-20">
+    return <div className="min-h-screen bg-background relative pb-20">
         <ParticleBackground />
         <div className="relative z-10 p-6 space-y-6">
           <h1 className="text-2xl font-bold text-text-primary text-center">Token Store</h1>
@@ -416,18 +334,16 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
         
         {/* App Settings Modal - Global */}
-        {showAppSettings && (
-          <AppSettings onClose={() => setShowAppSettings(false)} />
-        )}
-      </div>
-    );
+        {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      </div>;
   }
 
   // Profile Tab (default)
-  const { theme, toggleTheme } = useTheme();
-  
-  return (
-    <div className="min-h-screen bg-background relative pb-20">
+  const {
+    theme,
+    toggleTheme
+  } = useTheme();
+  return <div className="min-h-screen bg-background relative pb-20">
       <ParticleBackground />
       
       <div className="relative z-10 p-6 space-y-6">
@@ -537,17 +453,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  {theme === 'dark' ? (
-                    <Moon className="w-5 h-5 text-gradient-orange" />
-                  ) : (
-                    <Sun className="w-5 h-5 text-gradient-orange" />
-                  )}
+                  {theme === 'dark' ? <Moon className="w-5 h-5 text-gradient-orange" /> : <Sun className="w-5 h-5 text-gradient-orange" />}
                   <span className="text-text-primary">Theme</span>
                 </div>
-                <button 
-                  onClick={toggleTheme}
-                  className="text-sm gradient-text font-medium capitalize"
-                >
+                <button onClick={toggleTheme} className="text-sm gradient-text font-medium capitalize">
                   {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                 </button>
               </div>
@@ -611,22 +520,16 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                 <span className="text-text-primary">Help Center</span>
               </button>
               
-              <button 
-                onClick={() => {
-                  const emailSubject = encodeURIComponent('ADA App Support Request');
-                  const emailBody = encodeURIComponent('Hello ADA Support Team,\n\nI need assistance with:\n\n[Please describe your issue here]\n\nThanks!');
-                  window.open(`mailto:adacompanyus@gmail.com?subject=${emailSubject}&body=${emailBody}`, '_blank');
-                }}
-                className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors"
-              >
+              <button onClick={() => {
+              const emailSubject = encodeURIComponent('ADA App Support Request');
+              const emailBody = encodeURIComponent('Hello ADA Support Team,\n\nI need assistance with:\n\n[Please describe your issue here]\n\nThanks!');
+              window.open(`mailto:adacompanyus@gmail.com?subject=${emailSubject}&body=${emailBody}`, '_blank');
+            }} className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
                 <Mail className="w-5 h-5 text-gradient-orange" />
                 <span className="text-text-primary">Contact Support</span>
               </button>
               
-              <button 
-                onClick={() => setShowAppSettings(true)}
-                className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors"
-              >
+              <button onClick={() => setShowAppSettings(true)} className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
                 <Settings className="w-5 h-5 text-gradient-purple" />
                 <span className="text-text-primary">App Settings</span>
               </button>
@@ -636,10 +539,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
         {/* Logout */}
         <GradientCard className="cursor-pointer hover:scale-[1.02]">
-          <button 
-            onClick={onLogout}
-            className="flex items-center justify-center gap-3 w-full text-error"
-          >
+          <button onClick={onLogout} className="flex items-center justify-center gap-3 w-full text-error">
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Log Out</span>
           </button>
@@ -649,9 +549,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
       
       {/* App Settings Modal - Global */}
-      {showAppSettings && (
-        <AppSettings onClose={() => setShowAppSettings(false)} />
-      )}
-    </div>
-  );
+      {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+    </div>;
 };
