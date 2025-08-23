@@ -8,7 +8,8 @@ import {
   Trophy,
   Target,
   Clock,
-  Brain
+  Brain,
+  X
 } from 'lucide-react';
 
 interface DifficultySelectorProps {
@@ -65,21 +66,23 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
   ];
 
   return (
-    <div 
-      className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <GradientCard className="w-full max-w-md">
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <GradientCard className="w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="space-y-6">
-          <div className="text-center">
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold gradient-text">Select Difficulty</h2>
+            <button onClick={onClose} className="text-text-muted hover:text-text-primary">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="text-center mb-4">
             <div className="gradient-outline rounded-full p-1 w-16 h-16 mx-auto mb-4">
               <div className="gradient-outline-content rounded-full w-full h-full bg-surface flex items-center justify-center">
                 <Brain className="w-8 h-8 text-gradient-purple" />
               </div>
             </div>
-            <h2 className="text-xl font-bold gradient-text">Select Difficulty</h2>
             <p className="text-text-secondary text-sm">{gameType}</p>
           </div>
 
@@ -87,41 +90,38 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
             {difficulties.map((diff) => {
               const Icon = diff.icon;
               return (
-                <button
+                <div
                   key={diff.level}
-                  onClick={() => onSelect(diff.level)}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all hover:scale-[1.02] ${diff.borderColor} bg-gradient-to-r ${diff.bgColor}`}
+                  className="space-y-4"
                 >
-                  <div className="flex items-start gap-3">
-                    <Icon className={`w-6 h-6 ${diff.color} flex-shrink-0 mt-1`} />
-                    <div className="flex-1">
-                      <h3 className={`font-bold ${diff.color} text-lg`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-text-primary flex items-center gap-2">
+                        <Icon className={`w-5 h-5 ${diff.color}`} />
                         {diff.level}
-                      </h3>
-                      <p className="text-text-secondary text-sm mb-2">
-                        {diff.description}
                       </p>
-                      <ul className="space-y-1">
-                        {diff.features.map((feature, index) => (
-                          <li key={index} className="text-xs text-text-muted flex items-center gap-2">
-                            <div className="w-1 h-1 bg-current rounded-full" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-sm text-text-secondary">{diff.description}</p>
                     </div>
+                    <GradientButton onClick={() => onSelect(diff.level)}>
+                      Select
+                    </GradientButton>
                   </div>
-                </button>
+                  
+                  <div className="ml-7 space-y-1">
+                    {diff.features.map((feature, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <div className="w-1 h-1 bg-text-muted rounded-full" />
+                        <span className="text-xs text-text-muted">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               );
             })}
           </div>
 
-          <div className="flex gap-2">
-            <GradientButton 
-              onClick={onClose} 
-              variant="secondary" 
-              className="flex-1"
-            >
+          <div className="flex gap-3 pt-4">
+            <GradientButton variant="secondary" onClick={onClose} className="flex-1">
               Cancel
             </GradientButton>
           </div>

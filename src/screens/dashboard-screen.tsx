@@ -21,6 +21,8 @@ import {
   Zap,
   Brain,
   Timer,
+  Shuffle,
+  Flame,
   Award,
   RotateCcw,
   ChevronDown,
@@ -71,6 +73,22 @@ const minigames = [
     description: 'Beat the clock',
     icon: Timer,
     xpReward: 50,
+    difficulty: 'Hard'
+  },
+  {
+    id: 'word-scramble',
+    title: 'Word Scramble',
+    description: 'Unscramble terms',
+    icon: Shuffle,
+    xpReward: 30,
+    difficulty: 'Medium'
+  },
+  {
+    id: 'speed-match',
+    title: 'Speed Match',
+    description: 'Quick matching',
+    icon: Flame,
+    xpReward: 40,
     difficulty: 'Hard'
   }
 ];
