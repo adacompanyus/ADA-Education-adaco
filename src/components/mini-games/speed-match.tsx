@@ -21,7 +21,17 @@ export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, diffic
   const [currentPair, setCurrentPair] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60);
+  // Adjust time based on difficulty  
+  const getTimeByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 90;     // 1.5 minutes
+      case 'Medium': return 60;   // 1 minute
+      case 'Hard': return 45;     // 45 seconds
+      default: return 60;
+    }
+  };
+
+  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
   const [gameOver, setGameOver] = useState(false);
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
@@ -98,7 +108,7 @@ export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, diffic
   const resetGame = () => {
     setCurrentPair(0);
     setScore(0);
-    setTimeLeft(60);
+    setTimeLeft(getTimeByDifficulty());
     setGameOver(false);
     setStreak(0);
     setMaxStreak(0);

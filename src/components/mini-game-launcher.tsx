@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { DifficultySelector } from './difficulty-selector';
 import { QuickQuiz } from './mini-games/quick-quiz';
 import { MemoryMatch } from './mini-games/memory-match';
 import { TimeTrial } from './mini-games/time-trial';
@@ -18,24 +19,62 @@ export const MiniGameLauncher: React.FC<MiniGameLauncherProps> = ({
   subject,
   onClose
 }) => {
-  const selectedDifficulty: Difficulty = 'Medium';
+  const [showDifficultySelector, setShowDifficultySelector] = useState(true);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('Medium');
+  const [gameStarted, setGameStarted] = useState(false);
+
+  const handleDifficultySelect = (difficulty: Difficulty) => {
+    setSelectedDifficulty(difficulty);
+    setShowDifficultySelector(false);
+    setGameStarted(true);
+  };
+
+  const handleGameClose = () => {
+    setGameStarted(false);
+    onClose();
+  };
+
+  const getGameTitle = (id: string) => {
+    switch (id) {
+      case 'quick-quiz': return 'Quick Quiz';
+      case 'memory-match': return 'Memory Match';
+      case 'time-trial': return 'Time Trial';
+      case 'word-scramble': return 'Word Scramble';
+      case 'speed-match': return 'Speed Match';
+      default: return 'Mini Game';
+    }
+  };
 
   const renderGame = () => {
     switch (gameId) {
       case 'quick-quiz':
-        return <QuickQuiz subject={subject} onClose={onClose} difficulty={selectedDifficulty} />;
+        return <QuickQuiz subject={subject} onClose={handleGameClose} difficulty={selectedDifficulty} />;
       case 'memory-match':
-        return <MemoryMatch subject={subject} onClose={onClose} difficulty={selectedDifficulty} />;
+        return <MemoryMatch subject={subject} onClose={handleGameClose} difficulty={selectedDifficulty} />;
       case 'time-trial':
-        return <TimeTrial subject={subject} onClose={onClose} difficulty={selectedDifficulty} />;
+        return <TimeTrial subject={subject} onClose={handleGameClose} difficulty={selectedDifficulty} />;
       case 'word-scramble':
-        return <WordScramble subject={subject} onClose={onClose} difficulty={selectedDifficulty} />;
+        return <WordScramble subject={subject} onClose={handleGameClose} difficulty={selectedDifficulty} />;
       case 'speed-match':
-        return <SpeedMatch subject={subject} onClose={onClose} difficulty={selectedDifficulty} />;
+        return <SpeedMatch subject={subject} onClose={handleGameClose} difficulty={selectedDifficulty} />;
       default:
         return null;
     }
   };
 
-  return renderGame();
+  if (showDifficultySelector) {
+    return (
+      <DifficultySelector
+        gameType={getGameTitle(gameId)}
+        onSelect={handleDifficultySelect}
+        onClose={onClose}
+      />
+    );
+  }
+
+  if (gameStarted) {
+    return renderGame();
+  }
+
+  return null;
 };

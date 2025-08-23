@@ -30,7 +30,17 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose, difficul
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120); // 2 minutes
+  // Adjust time based on difficulty
+  const getTimeByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 180;    // 3 minutes
+      case 'Medium': return 120;  // 2 minutes  
+      case 'Hard': return 90;     // 1.5 minutes
+      default: return 120;
+    }
+  };
+
+  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -118,7 +128,7 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose, difficul
     setCurrentQuestion(0);
     setUserAnswer('');
     setScore(0);
-    setTimeLeft(120);
+    setTimeLeft(getTimeByDifficulty());
     setGameStarted(false);
     setGameEnded(false);
     setShowResult(false);
@@ -343,7 +353,7 @@ export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose, difficul
 
       <div className="text-center">
         <p className="text-xs text-text-muted">
-          Answer as many questions as you can in 2 minutes! • {subject}
+          Answer as many questions as you can in {Math.floor(getTimeByDifficulty() / 60)} minutes! • {subject}
         </p>
       </div>
     </div>

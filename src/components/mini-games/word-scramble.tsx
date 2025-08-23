@@ -21,7 +21,17 @@ export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, di
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(90);
+  // Adjust time based on difficulty
+  const getTimeByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 120;    // 2 minutes
+      case 'Medium': return 90;   // 1.5 minutes
+      case 'Hard': return 60;     // 1 minute
+      default: return 90;
+    }
+  };
+
+  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
   const [gameOver, setGameOver] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -127,7 +137,7 @@ export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, di
     setCurrentQuestion(0);
     setUserAnswer('');
     setScore(0);
-    setTimeLeft(90);
+    setTimeLeft(getTimeByDifficulty());
     setGameOver(false);
     setShowResult(false);
   };
