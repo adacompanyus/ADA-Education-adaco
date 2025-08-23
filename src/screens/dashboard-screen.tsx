@@ -161,8 +161,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
 
           {/* Active Game Modal */}
-          {activeGame && <div className="fixed top-0 left-0 right-0 bottom-0 w-screen h-screen bg-background/80 backdrop-blur-sm z-[9999] p-4 overflow-y-auto mx-0 my-0 py-[15px] px-[15px]">
-              <div className="max-w-2xl mx-auto">
+          {activeGame && <div className="fixed inset-0 w-screen h-screen bg-background/80 backdrop-blur-sm z-[9999] overflow-y-auto">
+              <div className="max-w-2xl mx-auto p-4">
                 <MiniGameLauncher gameId={activeGame} subject={selectedSubject} onClose={() => setActiveGame(null)} />
               </div>
             </div>}
