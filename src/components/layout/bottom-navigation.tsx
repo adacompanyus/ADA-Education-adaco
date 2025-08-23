@@ -10,6 +10,7 @@ interface BottomNavigationProps {
 const tabs = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
   { id: 'ai-tutor', label: 'AI Tutor', icon: Trophy },
+  { id: 'quests', label: 'Quests', icon: ShoppingBag },
   { id: 'store', label: 'Store', icon: ShoppingBag },
   { id: 'profile', label: 'Profile', icon: User },
 ];
