@@ -72,7 +72,7 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
       }}
     >
       <div className="gradient-outline rounded-lg p-1 w-full max-w-md">
-        <div className="gradient-outline-content rounded-lg bg-surface p-6">
+        <div className="gradient-outline-content rounded-lg bg-surface p-6 border-0">
         <div className="space-y-6">
           <div className="text-center">
             <div className="gradient-outline rounded-full p-1 w-16 h-16 mx-auto mb-4">

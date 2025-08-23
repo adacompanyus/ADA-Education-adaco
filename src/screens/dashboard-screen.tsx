@@ -211,7 +211,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </div>
           )}
 
-          {/* App Settings Modal */}
+          {/* App Settings Modal - Show on any tab */}
           {showAppSettings && (
             <AppSettings onClose={() => setShowAppSettings(false)} />
           )}
@@ -225,22 +225,34 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   // AI Tutor Tab
   if (activeTab === 'ai-tutor') {
     return (
-      <AITutorScreen 
-        user={user} 
-        selectedSubjects={selectedSubjects}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
+      <>
+        <AITutorScreen 
+          user={user} 
+          selectedSubjects={selectedSubjects}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+        {/* App Settings Modal - Global */}
+        {showAppSettings && (
+          <AppSettings onClose={() => setShowAppSettings(false)} />
+        )}
+      </>
     );
   }
 
   // Quests Tab
   if (activeTab === 'quests') {
     return (
-      <QuestsScreen 
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
+      <>
+        <QuestsScreen 
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+        {/* App Settings Modal - Global */}
+        {showAppSettings && (
+          <AppSettings onClose={() => setShowAppSettings(false)} />
+        )}
+      </>
     );
   }
 
@@ -384,6 +396,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
         </div>
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+        
+        {/* App Settings Modal - Global */}
+        {showAppSettings && (
+          <AppSettings onClose={() => setShowAppSettings(false)} />
+        )}
       </div>
     );
   }
@@ -612,6 +629,11 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       </div>
 
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      
+      {/* App Settings Modal - Global */}
+      {showAppSettings && (
+        <AppSettings onClose={() => setShowAppSettings(false)} />
+      )}
     </div>
   );
 };

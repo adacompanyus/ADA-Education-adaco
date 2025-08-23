@@ -239,7 +239,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
 
         {/* Input */}
-        <div className="fixed bottom-20 left-4 right-4 p-4 border-t border-card-border bg-surface/95 backdrop-blur-sm z-40 rounded-t-lg">
+        <div className="fixed bottom-20 left-0 right-0 p-4 border-t border-card-border bg-surface/95 backdrop-blur-sm z-40 rounded-t-lg">
           <div className="w-full mx-auto">
             <div className="flex gap-3">
               <GradientInput
