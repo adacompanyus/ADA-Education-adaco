@@ -22,16 +22,27 @@ interface QuizQuestion {
 interface QuickQuizProps {
   subject: string;
   onClose: () => void;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
-export const QuickQuiz: React.FC<QuickQuizProps> = ({ subject, onClose }) => {
+export const QuickQuiz: React.FC<QuickQuizProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(60); // 60 seconds total
+  // Adjust time based on difficulty
+  const getTimeByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 90;    // 90 seconds
+      case 'Medium': return 60;  // 60 seconds
+      case 'Hard': return 45;    // 45 seconds
+      default: return 60;
+    }
+  };
+  
+  const [timeLeft, setTimeLeft] = useState(getTimeByDifficulty());
   const [gameEnded, setGameEnded] = useState(false);
   const { toast } = useToast();
 
@@ -64,7 +75,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({ subject, onClose }) => {
             body: {
               type: 'quiz',
               subject,
-              prompt: `Generate a quick quiz question for ${subject}. Make it moderately challenging for AP level students.`
+              prompt: `Generate a ${difficulty.toLowerCase()} difficulty quiz question for ${subject}. ${difficulty === 'Easy' ? 'Make it basic and straightforward for beginners' : difficulty === 'Hard' ? 'Make it very challenging with advanced concepts' : 'Make it moderately challenging for AP level students'}.`
             }
           });
 
@@ -137,7 +148,7 @@ export const QuickQuiz: React.FC<QuickQuizProps> = ({ subject, onClose }) => {
     setSelectedAnswer(null);
     setShowResult(false);
     setScore(0);
-    setTimeLeft(60);
+    setTimeLeft(getTimeByDifficulty());
     setGameEnded(false);
   };
 

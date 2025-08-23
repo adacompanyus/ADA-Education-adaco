@@ -7,6 +7,7 @@ import { AP_CURRICULUM } from '@/data/ap-curriculum';
 interface WordScrambleProps {
   subject: string;
   onClose: () => void;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
 interface Question {
@@ -15,7 +16,7 @@ interface Question {
   hint: string;
 }
 
-export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose }) => {
+export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');

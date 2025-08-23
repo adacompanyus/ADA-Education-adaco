@@ -7,6 +7,7 @@ import { AP_CURRICULUM } from '@/data/ap-curriculum';
 interface SpeedMatchProps {
   subject: string;
   onClose: () => void;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
 interface MatchPair {
@@ -15,7 +16,7 @@ interface MatchPair {
   answer: string;
 }
 
-export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose }) => {
+export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
   const [pairs, setPairs] = useState<MatchPair[]>([]);
   const [currentPair, setCurrentPair] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);

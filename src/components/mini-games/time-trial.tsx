@@ -22,9 +22,10 @@ interface Question {
 interface TimeTrialProps {
   subject: string;
   onClose: () => void;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
-export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose }) => {
+export const TimeTrial: React.FC<TimeTrialProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');

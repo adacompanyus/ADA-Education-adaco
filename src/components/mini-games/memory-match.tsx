@@ -23,9 +23,10 @@ interface Card {
 interface MemoryMatchProps {
   subject: string;
   onClose: () => void;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
-export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) => {
+export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<Card[]>([]);
   const [matches, setMatches] = useState(0);
@@ -34,7 +35,17 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
 
-  const totalPairs = 6; // 6 pairs = 12 cards
+  // Adjust pairs based on difficulty
+  const getPairsByDifficulty = () => {
+    switch (difficulty) {
+      case 'Easy': return 4;    // 4 pairs = 8 cards
+      case 'Medium': return 6;  // 6 pairs = 12 cards 
+      case 'Hard': return 8;    // 8 pairs = 16 cards
+      default: return 6;
+    }
+  };
+  
+  const totalPairs = getPairsByDifficulty();
 
   // Timer
   useEffect(() => {
@@ -292,7 +303,7 @@ export const MemoryMatch: React.FC<MemoryMatchProps> = ({ subject, onClose }) =>
       </div>
 
       {/* Game Grid */}
-      <div className="grid grid-cols-4 gap-3">
+      <div className={`grid gap-3 ${totalPairs <= 4 ? 'grid-cols-4' : totalPairs <= 6 ? 'grid-cols-4' : 'grid-cols-4'}`}>
         {cards.map((card) => (
           <button
             key={card.id}
