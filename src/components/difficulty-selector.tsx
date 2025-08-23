@@ -66,7 +66,7 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-background backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <GradientCard className="w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="space-y-6">
           {/* Header */}
