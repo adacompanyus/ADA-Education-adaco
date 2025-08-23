@@ -77,7 +77,15 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
 
       if (data.success) {
         try {
-          const newCards = JSON.parse(data.response);
+          // Clean the response by removing markdown code blocks if present
+          let cleanResponse = data.response.trim();
+          if (cleanResponse.startsWith('```json')) {
+            cleanResponse = cleanResponse.replace(/```json\s*/, '').replace(/```\s*$/, '');
+          } else if (cleanResponse.startsWith('```')) {
+            cleanResponse = cleanResponse.replace(/```\s*/, '').replace(/```\s*$/, '');
+          }
+          
+          const newCards = JSON.parse(cleanResponse);
           const cardsWithId = newCards.map((card: any, index: number) => ({
             ...card,
             subject: selectedSubject,

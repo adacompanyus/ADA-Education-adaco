@@ -3,8 +3,11 @@ import { BottomNavigation } from '@/components/layout/bottom-navigation';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { ParticleBackground } from '@/components/animations/particle-background';
-import { AITutorChat } from '@/components/ai-tutor-chat';
-import { AIFlashcardGenerator } from '@/components/ai-flashcard-generator';
+import { CurriculumFlashcards } from '@/components/curriculum-flashcards';
+import { QuickQuiz } from '@/components/mini-games/quick-quiz';
+import { MemoryMatch } from '@/components/mini-games/memory-match';
+import { TimeTrial } from '@/components/mini-games/time-trial';
+import { AITutorScreen } from './ai-tutor-screen';
 import { useTheme } from '@/contexts/theme-context';
 import {
   Star,
@@ -76,8 +79,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedSubject, setSelectedSubject] = useState(selectedSubjects[0] || '');
   const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
-  const [flashcardIndex, setFlashcardIndex] = useState(0);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [activeGame, setActiveGame] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -190,16 +192,14 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               <div className="absolute top-full left-0 right-0 mt-2 gradient-outline rounded-lg p-1 z-50 animate-scale-in">
                 <div className="gradient-outline-content rounded-lg max-h-48 overflow-y-auto">
                   {selectedSubjects.map((subject) => (
-                    <button
-                      key={subject}
-                     onClick={() => {
-                       setSelectedSubject(subject);
-                       setShowSubjectDropdown(false);
-                       setFlashcardIndex(0);
-                       setIsFlipped(false);
-                     }}
-                      className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary"
-                    >
+                     <button
+                       key={subject}
+                      onClick={() => {
+                        setSelectedSubject(subject);
+                        setShowSubjectDropdown(false);
+                      }}
+                       className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary"
+                     >
                       {subject}
                     </button>
                   ))}
@@ -208,13 +208,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             )}
           </div>
 
-          {/* AI Flashcards */}
-          <AIFlashcardGenerator selectedSubject={selectedSubject} />
-
-          {/* AI Tutor */}
-          <div className="space-y-4">
-            <AITutorChat subject={selectedSubject} />
-          </div>
+          {/* Curriculum Flashcards */}
+          <CurriculumFlashcards selectedSubject={selectedSubject} />
 
           {/* Minigames */}
           <div className="space-y-4">
@@ -241,7 +236,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                           </div>
                         </div>
                       </div>
-                      <GradientButton size="sm">
+                      <GradientButton 
+                        size="sm"
+                        onClick={() => setActiveGame(game.id)}
+                      >
                         Play
                       </GradientButton>
                     </div>
@@ -250,6 +248,32 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               })}
             </div>
           </div>
+
+          {/* Active Game Modal */}
+          {activeGame && (
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 p-4 overflow-y-auto">
+              <div className="max-w-2xl mx-auto">
+                {activeGame === 'quick-quiz' && (
+                  <QuickQuiz 
+                    subject={selectedSubject} 
+                    onClose={() => setActiveGame(null)} 
+                  />
+                )}
+                {activeGame === 'memory-match' && (
+                  <MemoryMatch 
+                    subject={selectedSubject} 
+                    onClose={() => setActiveGame(null)} 
+                  />
+                )}
+                {activeGame === 'time-trial' && (
+                  <TimeTrial 
+                    subject={selectedSubject} 
+                    onClose={() => setActiveGame(null)} 
+                  />
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
@@ -257,75 +281,25 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     );
   }
 
-  // Quests Tab
-  if (activeTab === 'quests') {
+  // AI Tutor Tab
+  if (activeTab === 'ai-tutor') {
     return (
-      <div className="min-h-screen bg-background relative pb-20">
-        <ParticleBackground />
-        <div className="relative z-10 p-6 space-y-6">
-          <h1 className="text-2xl font-bold text-text-primary text-center">Quests</h1>
-          
-          {/* Daily Quests */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold gradient-text">Daily Quests</h2>
-            <GradientCard>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">Complete 5 Flashcards</h3>
-                  <div className="w-32 bg-surface-muted rounded-full h-2 mt-2">
-                    <div className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full w-3/5"></div>
-                  </div>
-                  <p className="text-xs text-text-muted mt-1">3/5 complete</p>
-                </div>
-                <span className="text-gaming-xp font-semibold">+50 XP</span>
-              </div>
-            </GradientCard>
-          </div>
-
-          {/* Weekly Quests */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold gradient-text">Weekly Quests</h2>
-            <GradientCard>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">7-Day Study Streak</h3>
-                  <div className="w-32 bg-surface-muted rounded-full h-2 mt-2">
-                    <div className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full w-full"></div>
-                  </div>
-                  <p className="text-xs text-gaming-success mt-1">Complete!</p>
-                </div>
-                <span className="text-gaming-xp font-semibold">+200 XP</span>
-              </div>
-            </GradientCard>
-          </div>
-
-          {/* Achievement Quests */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold gradient-text">Achievements</h2>
-            <GradientCard>
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">First Steps</h3>
-                  <p className="text-sm text-text-secondary">Complete your first quiz</p>
-                </div>
-                <Trophy className="w-6 h-6 text-gradient-orange" />
-              </div>
-            </GradientCard>
-          </div>
-        </div>
-        <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
+      <AITutorScreen 
+        user={user} 
+        selectedSubjects={selectedSubjects}
+      />
     );
   }
 
-  // Store Tab
+  // Store Tab (previously Quests)
   if (activeTab === 'store') {
     return (
       <div className="min-h-screen bg-background relative pb-20">
         <ParticleBackground />
         <div className="relative z-10 p-6 space-y-6">
+          <h1 className="text-2xl font-bold text-text-primary text-center">Token Store</h1>
+          
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-text-primary">Token Store</h1>
             <div className="gradient-outline rounded-full p-1 inline-block mt-2">
               <div className="gradient-outline-content rounded-full px-4 py-1">
                 <span className="gradient-text font-semibold">🪙 1,250 Tokens</span>

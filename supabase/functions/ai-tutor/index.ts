@@ -23,11 +23,11 @@ serve(async (req) => {
     let systemMessage = '';
     
     if (type === 'flashcard') {
-      systemMessage = `You are an expert tutor for ${subject}. Generate educational flashcard content in JSON format. Return exactly 3 flashcards as an array with "front" and "back" properties. Make them appropriately challenging for AP level students.`;
+      systemMessage = `You are an expert tutor for ${subject}. Generate educational flashcard content. Return ONLY a valid JSON array with exactly 3 flashcards. Each flashcard must have "front" and "back" properties. Do not include any markdown formatting, code blocks, or extra text. Return only the raw JSON array.`;
     } else if (type === 'explanation') {
       systemMessage = `You are an expert tutor for ${subject}. Provide clear, concise explanations for AP level students. Keep responses under 150 words and use simple language.`;
     } else if (type === 'quiz') {
-      systemMessage = `You are creating a quiz question for ${subject}. Generate one multiple choice question with 4 options and indicate the correct answer. Format as JSON with "question", "options" array, and "correctAnswer" index.`;
+      systemMessage = `You are creating a quiz question for ${subject}. Generate one multiple choice question with 4 options and indicate the correct answer. Return ONLY valid JSON with "question", "options" array, and "correctAnswer" index. No markdown formatting.`;
     }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
