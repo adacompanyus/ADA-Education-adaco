@@ -53,6 +53,31 @@
     --animation-speed: 0.3s;
     
     --radius: 1rem;
+  }
+
+  /* Font size variants */
+  :root[data-font-size="small"] {
+    font-size: 14px;
+  }
+
+  :root[data-font-size="medium"] {
+    font-size: 16px;
+  }
+
+  :root[data-font-size="large"] {
+    font-size: 18px;
+  }
+
+  /* Contrast variants */
+  :root[data-contrast="high"] {
+    --text-primary: 220 10% 100%;
+    --text-secondary: 220 8% 85%;
+    --text-muted: 220 6% 70%;
+    --card-border: 220 8% 40%;
+    --input-border: 220 8% 50%;
+  }
+
+  :root {
 
     --sidebar-background: 0 0% 98%;
 
@@ -91,6 +116,15 @@
     
     --input: 220 8% 94%;
     --input-border: 220 6% 80%;
+  }
+
+  /* High contrast variants for light theme */
+  .light[data-contrast="high"] {
+    --text-primary: 220 15% 0%;
+    --text-secondary: 220 10% 20%;
+    --text-muted: 220 8% 40%;
+    --card-border: 220 8% 60%;
+    --input-border: 220 6% 50%;
   }
 }
 

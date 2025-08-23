@@ -3,12 +3,7 @@ import { ParticleBackground } from '@/components/animations/particle-background'
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { BottomNavigation } from '@/components/layout/bottom-navigation';
-import { DifficultySelector } from '@/components/difficulty-selector';
-import { MemoryMatch } from '@/components/mini-games/memory-match';
-import { QuickQuiz } from '@/components/mini-games/quick-quiz';
-import { TimeTrial } from '@/components/mini-games/time-trial';
-import { WordScramble } from '@/components/mini-games/word-scramble';
-import { SpeedMatch } from '@/components/mini-games/speed-match';
+// Removed game imports - quests don't launch games directly
 import { 
   Trophy, 
   Target, 
@@ -41,8 +36,7 @@ interface QuestsScreenProps {
   onTabChange: (tab: string) => void;
 }
 
-type GameMode = 'memory-match' | 'quick-quiz' | 'time-trial' | 'word-scramble' | 'speed-match' | null;
-type Difficulty = 'Easy' | 'Medium' | 'Hard';
+// Removed game types - quests don't launch games directly
 
 const quests: Quest[] = [
   {
@@ -124,11 +118,7 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
   onTabChange,
 }) => {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'daily' | 'weekly' | 'achievement'>('all');
-  const [showDifficultySelector, setShowDifficultySelector] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<GameMode>(null);
-  const [selectedQuest, setSelectedQuest] = useState<Quest | null>(null);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [gameDifficulty, setGameDifficulty] = useState<Difficulty>('Medium');
+  // Removed game/difficulty state for quests - users select difficulty in minigames themselves
 
   const filteredQuests = selectedFilter === 'all' 
     ? quests 
@@ -157,71 +147,12 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
   };
 
   const handleQuestClick = (quest: Quest) => {
-    setSelectedQuest(quest);
-    
-    // Determine game type based on quest
-    let gameType: GameMode = null;
-    if (quest.id.includes('memory') || quest.title.includes('Memory')) {
-      gameType = 'memory-match';
-    } else if (quest.id.includes('quiz') || quest.title.includes('Quiz')) {
-      gameType = 'quick-quiz';
-    } else if (quest.id.includes('time-trial') || quest.title.includes('Speed')) {
-      gameType = 'time-trial';
-    } else if (quest.id.includes('flashcard')) {
-      gameType = 'word-scramble';
-    } else {
-      gameType = 'speed-match';
-    }
-    
-    setSelectedGame(gameType);
-    setShowDifficultySelector(true);
+    // For quests, just simulate quest completion or show info
+    // Users should go to minigames directly for gameplay
+    console.log('Quest clicked:', quest.title);
   };
 
-  const handleDifficultySelect = (difficulty: Difficulty) => {
-    setGameDifficulty(difficulty);
-    setShowDifficultySelector(false);
-    setGameStarted(true);
-  };
-
-  const handleGameClose = () => {
-    setGameStarted(false);
-    setSelectedGame(null);
-    setSelectedQuest(null);
-  };
-
-  const getGameComponent = () => {
-    if (!selectedGame || !gameStarted) return null;
-
-    const baseSubject = "AP Computer Science A"; // Default subject for quests
-    
-    switch (selectedGame) {
-      case 'memory-match':
-        return <MemoryMatch subject={baseSubject} onClose={handleGameClose} difficulty={gameDifficulty} />;
-      case 'quick-quiz':
-        return <QuickQuiz subject={baseSubject} onClose={handleGameClose} difficulty={gameDifficulty} />;
-      case 'time-trial':
-        return <TimeTrial subject={baseSubject} onClose={handleGameClose} difficulty={gameDifficulty} />;
-      case 'word-scramble':
-        return <WordScramble subject={baseSubject} onClose={handleGameClose} difficulty={gameDifficulty} />;
-      case 'speed-match':
-        return <SpeedMatch subject={baseSubject} onClose={handleGameClose} difficulty={gameDifficulty} />;
-      default:
-        return null;
-    }
-  };
-
-  // If game is started, show the game component
-  if (gameStarted && selectedGame) {
-    return (
-      <div className="min-h-screen bg-background relative pb-20">
-        <ParticleBackground />
-        <div className="relative z-10 p-6">
-          {getGameComponent()}
-        </div>
-        <BottomNavigation activeTab={activeTab} onTabChange={onTabChange} />
-      </div>
-    );
-  }
+  // Removed game component rendering - quests don't launch games directly
 
   return (
     <div className="min-h-screen bg-background relative pb-20">
@@ -359,7 +290,7 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
                       className="w-full"
                       onClick={() => handleQuestClick(quest)}
                     >
-                      {progressPercentage === 100 ? 'Claim Reward' : 'Start Quest'}
+                      {progressPercentage === 100 ? 'Claim Reward' : 'View Progress'}
                     </GradientButton>
                   )}
                 </div>
@@ -381,15 +312,6 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
       </div>
 
       <BottomNavigation activeTab={activeTab} onTabChange={onTabChange} />
-      
-      {/* Difficulty Selector Modal */}
-      {showDifficultySelector && selectedGame && (
-        <DifficultySelector
-          gameType={selectedGame.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-          onSelect={handleDifficultySelect}
-          onClose={() => setShowDifficultySelector(false)}
-        />
-      )}
     </div>
   );
 };

@@ -11,6 +11,8 @@ import { WordScramble } from '@/components/mini-games/word-scramble';
 import { SpeedMatch } from '@/components/mini-games/speed-match';
 import { AITutorScreen } from './ai-tutor-screen';
 import { QuestsScreen } from './quests-screen';
+import { AppSettings } from '@/components/app-settings';
+import { MiniGameLauncher } from '@/components/mini-game-launcher';
 import { useTheme } from '@/contexts/theme-context';
 import {
   Star,
@@ -83,6 +85,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [selectedSubject, setSelectedSubject] = useState(selectedSubjects[0] || '');
   const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
   const [activeGame, setActiveGame] = useState<string | null>(null);
+  const [showAppSettings, setShowAppSettings] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -199,38 +202,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           {activeGame && (
             <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 p-4 overflow-y-auto">
               <div className="max-w-2xl mx-auto">
-                {activeGame === 'quick-quiz' && (
-                  <QuickQuiz 
-                    subject={selectedSubject} 
-                    onClose={() => setActiveGame(null)} 
-                  />
-                )}
-                {activeGame === 'memory-match' && (
-                  <MemoryMatch 
-                    subject={selectedSubject} 
-                    onClose={() => setActiveGame(null)} 
-                  />
-                )}
-                 {activeGame === 'time-trial' && (
-                   <TimeTrial 
-                     subject={selectedSubject} 
-                     onClose={() => setActiveGame(null)} 
-                   />
-                 )}
-                 {activeGame === 'word-scramble' && (
-                   <WordScramble 
-                     subject={selectedSubject} 
-                     onClose={() => setActiveGame(null)} 
-                   />
-                 )}
-                 {activeGame === 'speed-match' && (
-                   <SpeedMatch 
-                     subject={selectedSubject} 
-                     onClose={() => setActiveGame(null)} 
-                   />
-                 )}
+                <MiniGameLauncher
+                  gameId={activeGame}
+                  subject={selectedSubject}
+                  onClose={() => setActiveGame(null)}
+                />
               </div>
             </div>
+          )}
+
+          {/* App Settings Modal */}
+          {showAppSettings && (
+            <AppSettings onClose={() => setShowAppSettings(false)} />
           )}
         </div>
 
@@ -593,12 +576,18 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                 <span className="text-text-primary">Help Center</span>
               </button>
               
-              <button className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
+              <button 
+                onClick={() => window.open(`mailto:adacompanyus@gmail.com?subject=Support Request&body=Hello Ada Team,%0A%0AI need help with:`)}
+                className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors"
+              >
                 <Mail className="w-5 h-5 text-gradient-orange" />
                 <span className="text-text-primary">Contact Support</span>
               </button>
               
-              <button className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors">
+              <button 
+                onClick={() => setShowAppSettings(true)}
+                className="flex items-center gap-3 w-full text-left hover:bg-surface-muted rounded-lg p-2 transition-colors"
+              >
                 <Settings className="w-5 h-5 text-gradient-purple" />
                 <span className="text-text-primary">App Settings</span>
               </button>
