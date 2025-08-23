@@ -71,8 +71,7 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-lg p-[2px] w-full max-w-md">
-        <div className="rounded-lg bg-surface p-6">
+      <GradientCard className="w-full max-w-md">
         <div className="space-y-6">
           <div className="text-center">
             <div className="gradient-outline rounded-full p-1 w-16 h-16 mx-auto mb-4">
@@ -127,8 +126,7 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
             </GradientButton>
           </div>
         </div>
-        </div>
-      </div>
+      </GradientCard>
     </div>
   );
 };
