@@ -182,7 +182,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 pb-44">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -239,8 +239,8 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
 
         {/* Input */}
-        <div className="p-4 sm:p-6 border-t border-card-border bg-surface/80 backdrop-blur-sm">
-          <div className="w-full max-w-none">
+        <div className="fixed bottom-0 left-0 right-0 p-4 sm:p-6 border-t border-card-border bg-surface/95 backdrop-blur-sm">
+          <div className="w-full max-w-4xl mx-auto">
             <div className="flex gap-3">
               <GradientInput
                 value={inputMessage}

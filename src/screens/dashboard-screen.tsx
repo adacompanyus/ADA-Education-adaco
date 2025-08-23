@@ -7,6 +7,8 @@ import { CurriculumFlashcards } from '@/components/curriculum-flashcards';
 import { QuickQuiz } from '@/components/mini-games/quick-quiz';
 import { MemoryMatch } from '@/components/mini-games/memory-match';
 import { TimeTrial } from '@/components/mini-games/time-trial';
+import { WordScramble } from '@/components/mini-games/word-scramble';
+import { SpeedMatch } from '@/components/mini-games/speed-match';
 import { AITutorScreen } from './ai-tutor-screen';
 import { QuestsScreen } from './quests-screen';
 import { useTheme } from '@/contexts/theme-context';
@@ -209,12 +211,24 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     onClose={() => setActiveGame(null)} 
                   />
                 )}
-                {activeGame === 'time-trial' && (
-                  <TimeTrial 
-                    subject={selectedSubject} 
-                    onClose={() => setActiveGame(null)} 
-                  />
-                )}
+                 {activeGame === 'time-trial' && (
+                   <TimeTrial 
+                     subject={selectedSubject} 
+                     onClose={() => setActiveGame(null)} 
+                   />
+                 )}
+                 {activeGame === 'word-scramble' && (
+                   <WordScramble 
+                     subject={selectedSubject} 
+                     onClose={() => setActiveGame(null)} 
+                   />
+                 )}
+                 {activeGame === 'speed-match' && (
+                   <SpeedMatch 
+                     subject={selectedSubject} 
+                     onClose={() => setActiveGame(null)} 
+                   />
+                 )}
               </div>
             </div>
           )}
@@ -263,30 +277,55 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </div>
           </div>
           
-          {/* Themes */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold gradient-text">Themes</h2>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">Ocean Theme</h3>
-                  <p className="text-sm text-text-secondary">Blue gradient interface</p>
-                </div>
-                <GradientButton size="sm">500 🪙</GradientButton>
-              </div>
-            </GradientCard>
-          </div>
-
           {/* Avatars */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold gradient-text">Avatars</h2>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">Scholar Cat</h3>
-                  <p className="text-sm text-text-secondary">Wise feline companion</p>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🐱</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Scholar Cat</h3>
+                    <p className="text-sm text-text-secondary">Wise feline companion</p>
+                  </div>
                 </div>
                 <GradientButton size="sm">300 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🦉</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Wise Owl</h3>
+                    <p className="text-sm text-text-secondary">Nocturnal study buddy</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">400 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🐉</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Study Dragon</h3>
+                    <p className="text-sm text-text-secondary">Mythical learning companion</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">750 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🤖</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">AI Assistant</h3>
+                    <p className="text-sm text-text-secondary">Future tech avatar</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">600 🪙</GradientButton>
               </div>
             </GradientCard>
           </div>
@@ -296,11 +335,67 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             <h2 className="text-lg font-semibold gradient-text">Power-ups</h2>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-medium text-text-primary">Streak Freeze</h3>
-                  <p className="text-sm text-text-secondary">Protect your streak for 1 day</p>
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🛡️</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Streak Freeze</h3>
+                    <p className="text-sm text-text-secondary">Protect your streak for 1 day</p>
+                  </div>
                 </div>
                 <GradientButton size="sm">100 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">⚡</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">XP Booster</h3>
+                    <p className="text-sm text-text-secondary">Double XP for 1 hour</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">150 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">💎</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Gem Multiplier</h3>
+                    <p className="text-sm text-text-secondary">2x tokens for next game</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">200 🪙</GradientButton>
+              </div>
+            </GradientCard>
+          </div>
+
+          {/* Special Items */}
+          <div className="space-y-3">
+            <h2 className="text-lg font-semibold gradient-text">Special Items</h2>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🎯</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Accuracy Badge</h3>
+                    <p className="text-sm text-text-secondary">Perfect score achievement</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">500 🪙</GradientButton>
+              </div>
+            </GradientCard>
+            <GradientCard className="cursor-pointer hover:scale-[1.02]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">👑</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Master Crown</h3>
+                    <p className="text-sm text-text-secondary">Complete subject mastery</p>
+                  </div>
+                </div>
+                <GradientButton size="sm">1000 🪙</GradientButton>
               </div>
             </GradientCard>
           </div>
