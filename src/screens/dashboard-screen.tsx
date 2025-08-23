@@ -230,6 +230,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       <AITutorScreen 
         user={user} 
         selectedSubjects={selectedSubjects}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
       />
     );
   }
