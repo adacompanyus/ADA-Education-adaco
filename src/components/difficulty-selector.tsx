@@ -66,7 +66,7 @@ export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 bg-background/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
