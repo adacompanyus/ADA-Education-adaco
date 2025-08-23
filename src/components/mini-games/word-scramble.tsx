@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, X, RotateCcw } from 'lucide-react';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
 
 interface WordScrambleProps {
   subject: string;
   onClose: () => void;
-  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
 interface Question {
@@ -16,7 +16,8 @@ interface Question {
   hint: string;
 }
 
-export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
+export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose }) => {
+  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
@@ -93,7 +94,7 @@ export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, di
     }));
 
     setQuestions(gameQuestions);
-  }, [subject]);
+  }, [subject, difficulty]);
 
   useEffect(() => {
     if (timeLeft > 0 && !gameOver) {
@@ -140,6 +141,11 @@ export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, di
     setTimeLeft(getTimeByDifficulty());
     setGameOver(false);
     setShowResult(false);
+  };
+
+  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
+    setDifficulty(newDifficulty);
+    // Difficulty change will trigger useEffect to restart the game
   };
 
   const formatTime = (seconds: number) => {
@@ -196,9 +202,21 @@ export const WordScramble: React.FC<WordScrambleProps> = ({ subject, onClose, di
           {/* Header */}
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold gradient-text">Word Scramble</h3>
-            <button onClick={onClose} className="text-text-muted hover:text-text-primary">
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <Select value={difficulty} onValueChange={handleDifficultyChange}>
+                <SelectTrigger className="w-20 h-7 text-xs bg-surface border-card-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-surface border-card-border">
+                  <SelectItem value="Easy">Easy</SelectItem>
+                  <SelectItem value="Medium">Medium</SelectItem>
+                  <SelectItem value="Hard">Hard</SelectItem>
+                </SelectContent>
+              </Select>
+              <button onClick={onClose} className="text-text-muted hover:text-text-primary">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Stats */}

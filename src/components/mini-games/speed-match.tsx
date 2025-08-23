@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, X, RotateCcw, Zap } from 'lucide-react';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
 
 interface SpeedMatchProps {
   subject: string;
   onClose: () => void;
-  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
 interface MatchPair {
@@ -16,7 +16,8 @@ interface MatchPair {
   answer: string;
 }
 
-export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, difficulty = 'Medium' }) => {
+export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose }) => {
+  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
   const [pairs, setPairs] = useState<MatchPair[]>([]);
   const [currentPair, setCurrentPair] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
@@ -55,7 +56,7 @@ export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, diffic
 
     const shuffled = allFlashcards.sort(() => Math.random() - 0.5).slice(0, 20);
     setPairs(shuffled);
-  }, [subject]);
+  }, [subject, difficulty]);
 
   useEffect(() => {
     if (timeLeft > 0 && !gameOver && pairs.length > 0) {
@@ -114,6 +115,11 @@ export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, diffic
     setMaxStreak(0);
     setShowResult(false);
     setSelectedAnswers([]);
+  };
+
+  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
+    setDifficulty(newDifficulty);
+    // Difficulty change will trigger useEffect to restart the game
   };
 
   const formatTime = (seconds: number) => {
@@ -184,9 +190,21 @@ export const SpeedMatch: React.FC<SpeedMatchProps> = ({ subject, onClose, diffic
           {/* Header */}
           <div className="flex items-center justify-between">
             <h3 className="text-xl font-bold gradient-text">Speed Match</h3>
-            <button onClick={onClose} className="text-text-muted hover:text-text-primary">
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              <Select value={difficulty} onValueChange={handleDifficultyChange}>
+                <SelectTrigger className="w-20 h-7 text-xs bg-surface border-card-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-surface border-card-border">
+                  <SelectItem value="Easy">Easy</SelectItem>
+                  <SelectItem value="Medium">Medium</SelectItem>
+                  <SelectItem value="Hard">Hard</SelectItem>
+                </SelectContent>
+              </Select>
+              <button onClick={onClose} className="text-text-muted hover:text-text-primary">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
