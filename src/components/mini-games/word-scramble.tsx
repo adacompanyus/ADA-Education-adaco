@@ -158,7 +158,7 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
   }
   if (gameOver) {
     const percentage = Math.round(score / (questions.length * 10) * 100);
-    return <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    return <div className="fixed inset-0 flex items-center justify-center z-50 p-4 bg-black/[0.33] py-[300px]">
         <GradientCard className="w-full max-w-md">
           <div className="text-center space-y-4">
             <h3 className="text-2xl font-bold gradient-text">Game Over!</h3>
