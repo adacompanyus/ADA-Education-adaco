@@ -180,7 +180,7 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
         </GradientCard>
       </div>;
   }
-  return <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 py-[150px]">
+  return <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 py-[114px]">
       <GradientCard className="w-full max-w-md">
         <div className="space-y-4">
           {/* Header */}
