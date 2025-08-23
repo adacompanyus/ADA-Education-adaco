@@ -4,6 +4,7 @@ import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { ParticleBackground } from '@/components/animations/particle-background';
 import { AITutorChat } from '@/components/ai-tutor-chat';
+import { AIFlashcardGenerator } from '@/components/ai-flashcard-generator';
 import { useTheme } from '@/contexts/theme-context';
 import {
   Star,
@@ -208,62 +209,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
 
           {/* AI Flashcards */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-text-primary">AI Flashcards</h2>
-            
-            <div className="relative">
-              <div className="gradient-outline rounded-xl p-1">
-                <div 
-                  className="bg-background rounded-xl min-h-48 cursor-pointer perspective-1000"
-                  onClick={flipCard}
-                >
-                  <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-48`}>
-                    {/* Front */}
-                    <div className="absolute inset-0 backface-hidden rounded-xl bg-surface">
-                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                        <Star className="w-8 h-8 text-gradient-purple" />
-                        <p className="text-lg text-text-primary font-medium">
-                          {currentCard.front}
-                        </p>
-                        <p className="text-sm text-text-muted">Tap to reveal answer</p>
-                      </div>
-                    </div>
-                    
-                    {/* Back */}
-                    <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl bg-surface">
-                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                        <Target className="w-8 h-8 text-gradient-orange" />
-                        <p className="text-lg text-text-primary font-medium">
-                          {currentCard.back}
-                        </p>
-                        <p className="text-sm text-gaming-success">Great job!</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center mt-4">
-                <button
-                  onClick={() => setFlashcardIndex(prev => prev === 0 ? currentSubjectCards.length - 1 : prev - 1)}
-                  className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  Previous
-                </button>
-                <span className="text-sm text-text-muted">
-                  Card {flashcardIndex + 1} of {currentSubjectCards.length}
-                </span>
-                <button
-                  onClick={() => setFlashcardIndex(prev => prev === currentSubjectCards.length - 1 ? 0 : prev + 1)}
-                  className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors"
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <AIFlashcardGenerator selectedSubject={selectedSubject} />
 
           {/* AI Tutor */}
           <div className="space-y-4">
