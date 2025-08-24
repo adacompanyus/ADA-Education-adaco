@@ -199,8 +199,8 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
 
         {/* Input */}
         <div className="fixed bottom-20 left-0 right-0 p-2 border-t border-card-border bg-surface/95 backdrop-blur-sm z-40 rounded-t-lg">
-          <div className="max-w-4xl mx-auto px-2">
-            <div className="flex gap-3">
+          <div className="flex justify-center w-full">
+            <div className="flex gap-3 max-w-4xl w-full px-4">
               <GradientInput 
                 value={inputMessage} 
                 onChange={e => setInputMessage(e.target.value)} 
@@ -216,9 +216,11 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </GradientButton>
             </div>
-          
-            {/* Quick Actions */}
-            <div className="flex gap-2 mt-3 flex-wrap">
+          </div>
+        
+          {/* Quick Actions */}
+          <div className="flex justify-center w-full mt-3">
+            <div className="flex gap-2 flex-wrap max-w-4xl px-4">
               <button onClick={() => setInputMessage('Explain the main concepts I should know for the upcoming test')} className="text-xs px-3 py-1 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all">
                 <MessageCircle className="w-3 h-3 inline mr-1" />
                 Test prep help
