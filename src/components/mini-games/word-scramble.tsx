@@ -227,7 +227,7 @@ export const WordScramble: React.FC<WordScrambleProps> = ({
 
           {/* Input */}
           <div className="space-y-3">
-            <input type="text" value={userAnswer} onChange={e => setUserAnswer(e.target.value)} onKeyPress={handleKeyPress} placeholder="Unscramble the word..." className="w-full px-4 py-3 rounded-lg border border-input bg-background text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-gradient-purple" disabled={showResult} />
+            <input type="text" value={userAnswer} onChange={e => setUserAnswer(e.target.value)} onKeyPress={handleKeyPress} placeholder="Unscramble the word..." className="w-full px-4 py-3 rounded-lg border border-input bg-background text-center text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-gradient-purple" disabled={showResult} />
             
             {showResult && <div className={`text-center py-2 px-4 rounded-lg ${isCorrect ? 'bg-gaming-success/20 text-gaming-success' : 'bg-gaming-error/20 text-gaming-error'}`}>
                 {isCorrect ? '✓ Correct!' : `✗ Wrong! It was "${questions[currentQuestion]?.original}"`}

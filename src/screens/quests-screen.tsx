@@ -152,10 +152,8 @@ export const QuestsScreen: React.FC<QuestsScreenProps> = ({
     // Route to appropriate activity based on quest type
     if (quest.id.includes('flashcard') || quest.id.includes('subject-explorer')) {
       onTabChange('flashcards');
-    } else if (quest.id.includes('quiz')) {
-      onTabChange('games'); // User can then select quiz games
-    } else if (quest.id.includes('time-trial') || quest.id.includes('memory')) {
-      onTabChange('games'); // User can then select specific games
+    } else if (quest.id.includes('quiz') || quest.id.includes('time-trial') || quest.id.includes('memory') || quest.id.includes('game')) {
+      onTabChange('games'); // All minigame quests go to games section
     } else {
       onTabChange('ai-tutor'); // Default to AI tutor for study activities
     }
