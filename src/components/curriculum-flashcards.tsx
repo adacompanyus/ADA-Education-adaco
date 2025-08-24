@@ -208,45 +208,47 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
           <div className="relative">
             <div className="gradient-outline rounded-xl p-1">
               <div 
-                className="bg-background rounded-xl min-h-48 cursor-pointer perspective-1000 hover:gradient-glow transition-all duration-300"
+                className="bg-background rounded-xl min-h-48 cursor-pointer hover:scale-[1.02] transition-all duration-300"
                 onClick={flipCard}
               >
-                <div className={`relative transition-all duration-700 ease-in-out transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-48`}>
-                  {/* Front */}
-                  <div className="absolute inset-0 backface-hidden rounded-xl bg-surface hover:bg-surface-elevated transition-colors duration-300">
-                    <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                      <Star className="w-8 h-8 text-gradient-purple animate-pulse" />
-                      <p className="text-lg text-text-primary font-medium">
-                        {currentCard.front}
-                      </p>
-                      <p className="text-sm text-text-muted">Tap to reveal answer</p>
-                      <div className="absolute top-3 right-3">
-                        <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-1">
-                          <span className="text-xs text-gradient-purple font-medium">
-                            {currentCard.unit}
-                          </span>
+                <div className="relative h-48">
+                  {!isFlipped ? (
+                    /* Front */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                        <Star className="w-8 h-8 text-gradient-purple" />
+                        <p className="text-lg text-text-primary font-medium">
+                          {currentCard.front}
+                        </p>
+                        <p className="text-sm text-text-muted">Tap to reveal answer</p>
+                        <div className="absolute top-3 right-3">
+                          <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-1">
+                            <span className="text-xs text-gradient-purple font-medium">
+                              {currentCard.unit}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  {/* Back */}
-                  <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl bg-surface hover:bg-surface-elevated transition-colors duration-300">
-                    <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                      <Target className="w-8 h-8 text-gradient-orange animate-bounce" />
-                      <p className="text-lg text-text-primary font-medium">
-                        {currentCard.back}
-                      </p>
-                      <p className="text-sm text-gaming-success animate-fade-in">Excellent!</p>
-                      <div className="absolute top-3 right-3">
-                        <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-1">
-                          <span className="text-xs text-gradient-orange font-medium">
-                            Answer
-                          </span>
+                  ) : (
+                    /* Back */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                        <Target className="w-8 h-8 text-gradient-orange" />
+                        <p className="text-lg text-text-primary font-medium">
+                          {currentCard.back}
+                        </p>
+                        <p className="text-sm text-gaming-success">Excellent!</p>
+                        <div className="absolute top-3 right-3">
+                          <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-1">
+                            <span className="text-xs text-gradient-orange font-medium">
+                              Answer
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
