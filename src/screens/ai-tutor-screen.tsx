@@ -210,6 +210,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                 className="flex-1" 
                 multiline={true}
                 rows={4}
+                cols={80}
               />
               <GradientButton onClick={sendMessage} disabled={isLoading || !inputMessage.trim()} size="sm" className="shrink-0">
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
