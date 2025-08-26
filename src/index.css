@@ -189,14 +189,6 @@
   }
 
   /* Input Variants */
-  .input-gradient {
-    @apply gradient-outline focus-within:gradient-glow;
-  }
-
-  .input-gradient-content {
-    @apply gradient-outline-content px-4 py-3 bg-transparent border-none outline-none text-white placeholder:text-gray-400;
-  }
-
   /* Animation Classes */
   .animate-float {
     animation: float 3s ease-in-out infinite;

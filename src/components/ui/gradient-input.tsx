@@ -27,21 +27,23 @@ export const GradientInput = React.forwardRef<HTMLInputElement | HTMLTextAreaEle
         {label && <label className="text-sm font-medium text-text-secondary">
             {label}
           </label>}
-        <div className="input-gradient px-0 mx-0">
+        <div className="gradient-outline rounded-lg p-1">
+          <div className="gradient-outline-content rounded-lg">
           {multiline ? (
             <textarea 
               ref={ref as React.Ref<HTMLTextAreaElement>} 
-              className={cn('input-gradient-content w-full resize-none', error && 'border-gaming-error', className)} 
+              className={cn('w-full resize-none bg-surface text-text-primary placeholder-text-muted px-4 py-3 rounded-lg border-none outline-none focus:ring-2 focus:ring-gradient-purple/20', error && 'border-gaming-error', className)} 
               rows={(props as GradientTextareaProps).rows || 3}
               {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} 
             />
           ) : (
             <input 
               ref={ref as React.Ref<HTMLInputElement>} 
-              className={cn('input-gradient-content w-full', error && 'border-gaming-error', className)} 
+              className={cn('w-full bg-surface text-text-primary placeholder-text-muted px-4 py-3 rounded-lg border-none outline-none focus:ring-2 focus:ring-gradient-purple/20', error && 'border-gaming-error', className)} 
               {...(props as React.InputHTMLAttributes<HTMLInputElement>)} 
             />
           )}
+          </div>
         </div>
         {error && <p className="text-sm text-gaming-error animate-fade-in">
             {error}
