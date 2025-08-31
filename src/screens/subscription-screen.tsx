@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { ParticleBackground } from '@/components/animations/particle-background';
-import { Check, Zap, Crown, Building } from 'lucide-react';
+import { Check, Zap, Crown, Building, Loader2 } from 'lucide-react';
+import { STRIPE_PRODUCTS, getProductsByMode } from '@/stripe-config';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
 
 interface SubscriptionScreenProps {
   onSelectPlan: (plan: string, billing: 'monthly' | 'yearly') => void;
@@ -13,8 +16,6 @@ const plans = [
     id: 'personal',
     name: 'Personal',
     icon: Zap,
-    monthlyPrice: 14.99,
-    yearlyPrice: 149.99,
     features: [
       'Access to all AP subjects',
       'Personalized learning tracking',
@@ -28,8 +29,6 @@ const plans = [
     id: 'personal-plus',
     name: 'Personal+',
     icon: Crown,
-    monthlyPrice: 24.99,
-    yearlyPrice: 249.99,
     features: [
       'Everything in Personal',
       'AI tutoring & explanations',
@@ -44,8 +43,6 @@ const plans = [
     id: 'enterprise',
     name: 'Enterprise',
     icon: Building,
-    monthlyPrice: null,
-    yearlyPrice: null,
     features: [
       'Everything in Personal+',
       'Team licenses',
@@ -63,21 +60,106 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
 }) => {
   const [selectedPlan, setSelectedPlan] = useState('');
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  const subscriptionProducts = getProductsByMode('subscription');
 
   const handlePlanSelect = (planId: string) => {
     setSelectedPlan(planId);
   };
 
-  const handleContinue = () => {
-    if (selectedPlan) {
-      onSelectPlan(selectedPlan, billingCycle);
+  const handleContinue = async () => {
+    if (!selectedPlan) return;
+
+    setLoading(true);
+    
+    try {
+      // Find the matching product based on plan and billing cycle
+      let productName = '';
+      if (selectedPlan === 'personal') {
+        productName = billingCycle === 'monthly' 
+          ? 'ADA Education Personal Plan (Monthly)'
+          : 'ADA Education Personal Plan (Yearly)';
+      } else if (selectedPlan === 'personal-plus') {
+        productName = billingCycle === 'monthly'
+          ? 'ADA Education Personal+ Plan (Monthly)'
+          : 'ADA Education Personal+ Plan (Yearly)';
+      }
+
+      const product = subscriptionProducts.find(p => p.name === productName);
+      
+      if (!product) {
+        throw new Error('Product not found');
+      }
+
+      // Get current user session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      // Create checkout session
+      const { data, error } = await supabase.functions.invoke('stripe-checkout', {
+        body: {
+          price_id: product.priceId,
+          mode: product.mode,
+          success_url: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/subscription`
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error: any) {
+      console.error('Checkout error:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to start checkout process",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const yearlyDiscount = (monthly: number) => {
-    const yearly = monthly * 12;
-    const discounted = plans.find(p => p.monthlyPrice === monthly)?.yearlyPrice || 0;
-    return Math.round(((yearly - discounted) / yearly) * 100);
+  const getProductForPlan = (planId: string, billing: 'monthly' | 'yearly') => {
+    let productName = '';
+    if (planId === 'personal') {
+      productName = billing === 'monthly' 
+        ? 'ADA Education Personal Plan (Monthly)'
+        : 'ADA Education Personal Plan (Yearly)';
+    } else if (planId === 'personal-plus') {
+      productName = billing === 'monthly'
+        ? 'ADA Education Personal+ Plan (Monthly)'
+        : 'ADA Education Personal+ Plan (Yearly)';
+    }
+    
+    return subscriptionProducts.find(p => p.name === productName);
+  };
+
+  const yearlyDiscount = (planId: string) => {
+    const monthlyProduct = getProductForPlan(planId, 'monthly');
+    const yearlyProduct = getProductForPlan(planId, 'yearly');
+    
+    if (!monthlyProduct || !yearlyProduct) return 0;
+    
+    const yearlyPrice = yearlyProduct.price;
+    const monthlyYearlyPrice = monthlyProduct.price * 12;
+    
+    return Math.round(((monthlyYearlyPrice - yearlyPrice) / monthlyYearlyPrice) * 100);
   };
 
   return (
@@ -115,7 +197,7 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
               >
                 Yearly
                 <span className="ml-1 text-xs bg-gaming-success text-white px-2 py-0.5 rounded-full">
-                  Save 17%
+                  Save up to 17%
                 </span>
               </button>
             </div>
@@ -128,14 +210,15 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
             const Icon = plan.icon;
             const isSelected = selectedPlan === plan.id;
             const isEnterprise = plan.id === 'enterprise';
+            const product = getProductForPlan(plan.id, billingCycle);
             
             return (
               <GradientCard
                 key={plan.id}
                 selectable
                 selected={isSelected}
-                onClick={() => handlePlanSelect(plan.id)}
-                className={`cursor-pointer relative ${plan.popular ? 'gradient-glow' : ''}`}
+                onClick={() => !isEnterprise && handlePlanSelect(plan.id)}
+                className={`cursor-pointer relative ${plan.popular ? 'gradient-glow' : ''} ${isEnterprise ? 'opacity-75' : ''}`}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -156,10 +239,10 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
                       </div>
                       <div>
                         <h3 className="font-bold text-lg text-text-primary">{plan.name}</h3>
-                        {!isEnterprise && (
+                        {!isEnterprise && product && (
                           <div className="flex items-center gap-2">
                             <span className="text-2xl font-bold gradient-text">
-                              ${billingCycle === 'monthly' ? plan.monthlyPrice : (plan.yearlyPrice! / 12).toFixed(2)}
+                              ${billingCycle === 'monthly' ? product.price : (product.price / 12).toFixed(2)}
                             </span>
                             <span className="text-sm text-text-muted">
                               /{billingCycle === 'monthly' ? 'month' : 'month'}
@@ -169,16 +252,16 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
                       </div>
                     </div>
                     {isEnterprise && (
-                      <GradientButton size="sm">
-                        Contact Sales
+                      <GradientButton size="sm" disabled>
+                        Coming Soon
                       </GradientButton>
                     )}
                   </div>
 
                   {/* Yearly Savings */}
-                  {!isEnterprise && billingCycle === 'yearly' && (
+                  {!isEnterprise && billingCycle === 'yearly' && product && (
                     <div className="text-sm text-gaming-success bg-gaming-success/10 px-3 py-2 rounded-lg">
-                      Save ${(plan.monthlyPrice! * 12 - plan.yearlyPrice!).toFixed(0)} per year
+                      Save ${((getProductForPlan(plan.id, 'monthly')?.price || 0) * 12 - product.price).toFixed(0)} per year ({yearlyDiscount(plan.id)}% off)
                     </div>
                   )}
 
@@ -204,8 +287,16 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
               size="lg"
               className="w-full"
               onClick={handleContinue}
+              disabled={loading}
             >
-              Continue with {plans.find(p => p.id === selectedPlan)?.name}
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                `Continue with ${plans.find(p => p.id === selectedPlan)?.name}`
+              )}
             </GradientButton>
           </div>
         )}

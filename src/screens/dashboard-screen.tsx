@@ -14,7 +14,10 @@ import { QuestsScreen } from './quests-screen';
 import { AppSettings } from '@/components/app-settings';
 import { MiniGameLauncher } from '@/components/mini-game-launcher';
 import { useTheme } from '@/contexts/theme-context';
-import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { getProductByPriceId } from '@/stripe-config';
+import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut, Crown } from 'lucide-react';
+
 interface DashboardScreenProps {
   user: {
     name: string;
@@ -22,6 +25,7 @@ interface DashboardScreenProps {
   selectedSubjects: string[];
   onLogout: () => void;
 }
+
 const minigames = [{
   id: 'quick-quiz',
   title: 'Quick Quiz',
@@ -58,6 +62,7 @@ const minigames = [{
   xpReward: 40,
   difficulty: 'Hard'
 }];
+
 export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   user,
   selectedSubjects,
@@ -69,17 +74,47 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
   const [activeGame, setActiveGame] = useState<string | null>(null);
   const [showAppSettings, setShowAppSettings] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState<any>(null);
+
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
+
+  // Fetch subscription data
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      try {
+        const { data } = await supabase
+          .from('stripe_user_subscriptions')
+          .select('*')
+          .maybeSingle();
+        
+        setSubscriptionData(data);
+      } catch (error) {
+        console.error('Error fetching subscription:', error);
+      }
+    };
+
+    fetchSubscription();
+  }, []);
+
   const getGreeting = () => {
     const hour = currentTime.getHours();
     if (hour < 12) return 'Good Morning';
     if (hour < 17) return 'Good Afternoon';
     return 'Good Evening';
   };
+
+  const getSubscriptionInfo = () => {
+    if (!subscriptionData?.price_id) return null;
+    const product = getProductByPriceId(subscriptionData.price_id);
+    return product;
+  };
+
   if (activeTab === 'dashboard') {
+    const subscriptionInfo = getSubscriptionInfo();
+    
     return <div className="min-h-screen bg-background relative pb-20">
         <ParticleBackground />
         
@@ -90,6 +125,20 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               {getGreeting()}, {user.name}
             </h1>
             <p className="text-text-secondary">Ready to level up your knowledge?</p>
+            
+            {/* Subscription Status */}
+            {subscriptionInfo && (
+              <div className="mt-4 flex justify-center">
+                <div className="gradient-outline rounded-full p-1">
+                  <div className="gradient-outline-content rounded-full px-4 py-2 flex items-center gap-2">
+                    <Crown className="w-4 h-4 text-gradient-orange" />
+                    <span className="text-sm font-semibold gradient-text">
+                      {subscriptionInfo.name.includes('Personal+') ? 'Personal+' : 'Personal'} Plan
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {/* Streak Counter */}
             <div className="mt-4 flex justify-center">
@@ -343,6 +392,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
     theme,
     toggleTheme
   } = useTheme();
+  const subscriptionInfo = getSubscriptionInfo();
+  
   return <div className="min-h-screen bg-background relative pb-20">
       <ParticleBackground />
       
@@ -355,7 +406,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </div>
           </div>
           <div>
-            <h1 className="text-2xl font-bold gradient-text">John Doe</h1>
+            <h1 className="text-2xl font-bold gradient-text">{user.name}</h1>
             <p className="text-text-secondary">Student • Level 12</p>
             <div className="flex items-center justify-center gap-4 mt-2">
               <div className="text-center">
@@ -374,6 +425,50 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
         </div>
 
+        {/* Subscription Status */}
+        {subscriptionInfo && (
+          <GradientCard>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold gradient-text">Subscription</h2>
+                <Crown className="w-5 h-5 text-gradient-orange" />
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-text-primary">Plan</span>
+                  <span className="font-semibold text-gradient-purple">
+                    {subscriptionInfo.name.includes('Personal+') ? 'Personal+' : 'Personal'}
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-text-primary">Price</span>
+                  <span className="text-gaming-success font-semibold">
+                    ${subscriptionInfo.price}/{subscriptionInfo.interval}
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-text-primary">Status</span>
+                  <span className="text-gaming-success font-medium capitalize">
+                    {subscriptionData?.subscription_status || 'Active'}
+                  </span>
+                </div>
+                
+                {subscriptionData?.current_period_end && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-text-primary">Next billing</span>
+                    <span className="text-text-secondary text-sm">
+                      {new Date(subscriptionData.current_period_end * 1000).toLocaleDateString()}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </GradientCard>
+        )}
+
         {/* Personal Information */}
         <GradientCard>
           <div className="space-y-4">
@@ -387,15 +482,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                 <Mail className="w-5 h-5 text-gradient-purple" />
                 <div>
                   <p className="text-sm text-text-muted">Email</p>
-                  <p className="text-text-primary">john.doe@email.com</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-gradient-orange" />
-                <div>
-                  <p className="text-sm text-text-muted">Phone</p>
-                  <p className="text-text-primary">+1 (555) 123-4567</p>
+                  <p className="text-text-primary">{user.name}@email.com</p>
                 </div>
               </div>
               
@@ -404,14 +491,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                 <div>
                   <p className="text-sm text-text-muted">Member Since</p>
                   <p className="text-text-primary">January 2024</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-gradient-orange" />
-                <div>
-                  <p className="text-sm text-text-muted">Location</p>
-                  <p className="text-text-primary">New York, NY</p>
                 </div>
               </div>
             </div>
@@ -424,17 +503,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             <h2 className="text-lg font-semibold gradient-text">Account Settings</h2>
             
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <CreditCard className="w-5 h-5 text-gradient-purple" />
-                  <span className="text-text-primary">Subscription</span>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-gaming-success font-semibold">Personal+</p>
-                  <p className="text-xs text-text-muted">$24.99/month</p>
-                </div>
-              </div>
-              
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Bell className="w-5 h-5 text-gradient-orange" />
