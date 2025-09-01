@@ -78,32 +78,30 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
   const adminLogin = async () => {
     setLoading(true);
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
+    
+    // Simulate admin login for development
+    setTimeout(() => {
+      // Store mock admin data
+      const adminUserData = {
+        name: 'Admin User',
         email: 'admin@ada.dev',
-        password: 'dev123',
-      });
-
-      if (error) {
-        throw error;
-      }
-
+        usage: 'test_prep',
+        subjects: ['AP Computer Science A', 'AP Physics 1'],
+        theme: 'dark'
+      };
+      
+      localStorage.setItem('ada-user-data', JSON.stringify(adminUserData));
+      localStorage.setItem('ada-admin-mode', 'true');
+      
       toast({
         title: "Success",
         description: "Admin login successful!",
       });
       
-      onLogin();
-    } catch (error: any) {
-      console.error('Admin login error:', error);
-      toast({
-        title: "Admin Login Failed",
-        description: error.message || "Invalid admin credentials",
-        variant: "destructive"
-      });
-    } finally {
       setLoading(false);
-    }
+      // Force reload to trigger auth check with admin mode
+      window.location.reload();
+    }, 500);
   };
 
   return (

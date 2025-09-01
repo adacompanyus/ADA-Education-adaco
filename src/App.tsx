@@ -39,10 +39,22 @@ const App = () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         
-        if (session?.user) {
+        // Check if admin mode is active (bypasses auth)
+        const isAdminMode = localStorage.getItem('ada-admin-mode') === 'true';
+        
+        if (isAdminMode) {
+          // Admin mode - go directly to dashboard
+          const savedUserData = localStorage.getItem('ada-user-data');
+          if (savedUserData) {
+            setUserData(JSON.parse(savedUserData));
+            setCurrentScreen('dashboard');
+          } else {
+            setCurrentScreen('questionnaire');
+          }
+        } else if (session?.user) {
           setUser(session.user);
           
-          // Check if user has completed questionnaire
+          // Regular user flow
           const savedUserData = localStorage.getItem('ada-user-data');
           if (savedUserData) {
             setUserData(JSON.parse(savedUserData));
@@ -88,6 +100,7 @@ const App = () => {
         setUser(null);
         setUserData(null);
         localStorage.removeItem('ada-user-data');
+        localStorage.removeItem('ada-admin-mode');
         setCurrentScreen('login');
       }
     });
