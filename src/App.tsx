@@ -129,13 +129,7 @@ const App = () => {
     
     setUserData(newUserData);
     localStorage.setItem('ada-user-data', JSON.stringify(newUserData));
-    
-    // In admin mode, skip the loading and subscription screens
-    if (isAdminMode) {
-      setCurrentScreen('dashboard');
-    } else {
-      setCurrentScreen('loading');
-    }
+    setCurrentScreen('loading');
   };
 
   const handleAILoadingComplete = () => {
