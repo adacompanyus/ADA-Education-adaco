@@ -29,7 +29,7 @@ export const SuccessScreen: React.FC<SuccessScreenProps> = ({ onContinue }) => {
           return;
         }
 
-        setSubscriptionData(data);
+        setSubscriptionData(data as any);
       } catch (err) {
         console.error('Unexpected error:', err);
         setError('An unexpected error occurred');

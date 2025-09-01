@@ -90,7 +90,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           .select('*')
           .maybeSingle();
         
-        setSubscriptionData(data);
+        setSubscriptionData(data as any);
       } catch (error) {
         console.error('Error fetching subscription:', error);
       }

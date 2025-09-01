@@ -53,7 +53,7 @@ const App = () => {
               .select('*')
               .maybeSingle();
             
-            if (subscription && subscription.subscription_status === 'active') {
+            if (subscription && (subscription as any).subscription_status === 'active') {
               setCurrentScreen('dashboard');
             } else {
               // Check URL for success redirect
