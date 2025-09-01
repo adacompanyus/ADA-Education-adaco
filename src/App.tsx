@@ -43,7 +43,7 @@ const App = () => {
         const isAdminMode = localStorage.getItem('ada-admin-mode') === 'true';
         
         if (isAdminMode) {
-          // Admin mode - go directly to dashboard
+          // Admin mode - check if questionnaire completed
           const savedUserData = localStorage.getItem('ada-user-data');
           if (savedUserData) {
             setUserData(JSON.parse(savedUserData));
@@ -117,9 +117,11 @@ const App = () => {
   };
 
   const handleQuestionnaireComplete = (data: { usage: string; subjects: string[]; theme: string }) => {
+    const isAdminMode = localStorage.getItem('ada-admin-mode') === 'true';
+    
     const newUserData = {
-      name: user?.email?.split('@')[0] || 'User',
-      email: user?.email || '',
+      name: isAdminMode ? 'Admin User' : (user?.email?.split('@')[0] || 'User'),
+      email: isAdminMode ? 'admin@ada.dev' : (user?.email || ''),
       usage: data.usage,
       subjects: data.subjects,
       theme: data.theme
@@ -127,7 +129,13 @@ const App = () => {
     
     setUserData(newUserData);
     localStorage.setItem('ada-user-data', JSON.stringify(newUserData));
-    setCurrentScreen('loading');
+    
+    // In admin mode, skip the loading and subscription screens
+    if (isAdminMode) {
+      setCurrentScreen('dashboard');
+    } else {
+      setCurrentScreen('loading');
+    }
   };
 
   const handleAILoadingComplete = () => {

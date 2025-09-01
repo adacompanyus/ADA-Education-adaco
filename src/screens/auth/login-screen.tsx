@@ -81,16 +81,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
     
     // Simulate admin login for development
     setTimeout(() => {
-      // Store mock admin data
-      const adminUserData = {
-        name: 'Admin User',
-        email: 'admin@ada.dev',
-        usage: 'test_prep',
-        subjects: ['AP Computer Science A', 'AP Physics 1'],
-        theme: 'dark'
-      };
-      
-      localStorage.setItem('ada-user-data', JSON.stringify(adminUserData));
+      // Set admin mode but don't set user data yet - let questionnaire handle it
       localStorage.setItem('ada-admin-mode', 'true');
       
       toast({
