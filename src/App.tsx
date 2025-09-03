@@ -96,6 +96,32 @@ const App = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
         setUser(session.user);
+        
+        // Navigate user after successful login
+        const savedUserData = localStorage.getItem('ada-user-data');
+        if (savedUserData) {
+          setUserData(JSON.parse(savedUserData));
+          
+          // Check subscription status
+          const { data: subscription } = await supabase
+            .from('stripe_user_subscriptions')
+            .select('*')
+            .maybeSingle();
+          
+          if (subscription && (subscription as any).subscription_status === 'active') {
+            setCurrentScreen('dashboard');
+          } else {
+            // Check URL for success redirect
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('session_id')) {
+              setCurrentScreen('success');
+            } else {
+              setCurrentScreen('subscription');
+            }
+          }
+        } else {
+          setCurrentScreen('questionnaire');
+        }
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
         setUserData(null);
