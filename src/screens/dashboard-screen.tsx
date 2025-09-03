@@ -121,10 +121,26 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         <div className="relative z-10 p-6 space-y-6">
           {/* Greeting Header */}
           <div className="text-center animate-fade-in">
-            <h1 className="text-2xl font-bold text-text-primary">
-              {getGreeting()}, {user.name}
-            </h1>
-            <p className="text-text-secondary">Ready to level up your knowledge?</p>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex-1" />
+              <div className="flex-1">
+                <h1 className="text-2xl font-bold text-text-primary">
+                  {getGreeting()}, {user.name}
+                </h1>
+                <p className="text-text-secondary">Ready to level up your knowledge?</p>
+              </div>
+              <div className="flex-1 flex justify-end">
+                <button
+                  onClick={onLogout}
+                  className="gradient-outline rounded-lg p-1 hover:scale-105 transition-transform"
+                  title="Log Out"
+                >
+                  <div className="gradient-outline-content rounded-lg p-2">
+                    <LogOut className="w-5 h-5 text-gradient-purple" />
+                  </div>
+                </button>
+              </div>
+            </div>
             
             {/* Subscription Status */}
             {subscriptionInfo && (
@@ -180,27 +196,25 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-text-primary">Minigames</h2>
             
-            <div className="grid gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {minigames.map(game => {
               const Icon = game.icon;
-              return <GradientCard key={game.id} className="cursor-pointer hover:scale-[1.02]">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="gradient-outline rounded-lg p-2">
-                          <div className="gradient-outline-content rounded-lg p-2">
-                            <Icon className="w-6 h-6 text-gradient-purple" />
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-text-primary">{game.title}</h3>
-                          <p className="text-sm text-text-secondary">{game.description}</p>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs text-gaming-xp">+{game.xpReward} XP</span>
-                            <span className="text-xs text-text-muted">• {game.difficulty}</span>
-                          </div>
+              return <GradientCard key={game.id} className="cursor-pointer hover:scale-[1.02] transition-transform">
+                    <div className="flex flex-col items-center text-center space-y-3 p-2">
+                      <div className="gradient-outline rounded-lg p-2">
+                        <div className="gradient-outline-content rounded-lg p-2">
+                          <Icon className="w-8 h-8 text-gradient-purple" />
                         </div>
                       </div>
-                      <GradientButton size="sm" onClick={() => setActiveGame(game.id)}>
+                      <div className="space-y-1">
+                        <h3 className="font-semibold text-text-primary text-sm">{game.title}</h3>
+                        <p className="text-xs text-text-secondary">{game.description}</p>
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-xs text-gaming-xp">+{game.xpReward} XP</span>
+                          <span className="text-xs text-text-muted">• {game.difficulty}</span>
+                        </div>
+                      </div>
+                      <GradientButton size="sm" onClick={() => setActiveGame(game.id)} className="w-full">
                         Play
                       </GradientButton>
                     </div>
