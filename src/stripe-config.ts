@@ -32,7 +32,7 @@ export const STRIPE_PRODUCTS: StripeProduct[] = [
   },
   {
     id: 'prod_SyDki7DezmfksB',
-    priceId: 'price_1S2HIgHw9Rfrc8PbQVFP5Lgh',
+    priceId: 'price_1S37LuHw9Rfrc8PbrwuDrUyJ',
     name: 'ADA Education Personal+ Plan (Monthly)',
     description: 'Unlock everything ADA offers with Personal+. Includes advanced features, extra mini-games, and premium study tools. Billed monthly.',
     mode: 'subscription',
@@ -42,7 +42,7 @@ export const STRIPE_PRODUCTS: StripeProduct[] = [
   },
   {
     id: 'prod_SyDkRngehS843U',
-    priceId: 'price_1S2HIWHw9Rfrc8PbAR7M1y7B',
+    priceId: 'price_1S37MaHw9Rfrc8Pb1fDD3ywv',
     name: 'ADA Education Personal+ Plan (Yearly)',
     description: 'Best value. Enjoy years of ADA Personal+ premium learning features, advanced tools, and extra mini-games at a reduced annual price.',
     mode: 'subscription',
