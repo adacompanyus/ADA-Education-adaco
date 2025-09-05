@@ -134,6 +134,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_prompt_usage: {
+        Row: {
+          created_at: string
+          daily_prompts_used: number
+          date: string
+          id: string
+          monthly_prompts_used: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          daily_prompts_used?: number
+          date?: string
+          id?: string
+          monthly_prompts_used?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          daily_prompts_used?: number
+          date?: string
+          id?: string
+          monthly_prompts_used?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       stripe_user_orders: {
