@@ -4,15 +4,19 @@ import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { GradientInput } from '@/components/ui/gradient-input';
 import { BottomNavigation } from '@/components/layout/bottom-navigation';
+import { UpgradePromptModal } from '@/components/upgrade-prompt-modal';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { usePromptLimits } from '@/hooks/use-prompt-limits';
 import { Bot, Send, User, Loader2, Brain, Sparkles, MessageCircle, Check } from 'lucide-react';
+
 interface Message {
   id: string;
   content: string;
   isUser: boolean;
   timestamp: Date;
 }
+
 interface AITutorScreenProps {
   user: {
     name: string;
@@ -20,21 +24,28 @@ interface AITutorScreenProps {
   selectedSubjects: string[];
   activeTab: string;
   onTabChange: (tab: string) => void;
+  subscriptionTier?: string;
+  onUpgrade?: () => void;
 }
+
 export const AITutorScreen: React.FC<AITutorScreenProps> = ({
   user,
   selectedSubjects,
   activeTab,
-  onTabChange
+  onTabChange,
+  subscriptionTier,
+  onUpgrade
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [focusSubjects, setFocusSubjects] = useState<string[]>(selectedSubjects);
-  const {
-    toast
-  } = useToast();
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  const { usage, incrementUsage, hasUnlimitedPrompts } = usePromptLimits(subscriptionTier);
+
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good Morning';
@@ -60,8 +71,22 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
       behavior: 'smooth'
     });
   }, [messages]);
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    // Check prompt limits for Personal plan users
+    if (!hasUnlimitedPrompts && !usage.canUsePrompt) {
+      setShowUpgradeModal(true);
+      return;
+    }
+
+    // Track usage for Personal plan users
+    if (!hasUnlimitedPrompts) {
+      const success = await incrementUsage();
+      if (!success) return;
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       content: inputMessage,
@@ -71,18 +96,18 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
     setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsLoading(true);
+
     try {
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('ai-tutor', {
+      const { data, error } = await supabase.functions.invoke('ai-tutor', {
         body: {
           type: 'explanation',
           subject: focusSubjects.join(', '),
           prompt: inputMessage
         }
       });
+
       if (error) throw error;
+
       if (data.success) {
         const aiMessage: Message = {
           id: (Date.now() + 1).toString(),
@@ -105,13 +130,16 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
       setIsLoading(false);
     }
   };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
-  return <div className="min-h-screen bg-background relative pb-20">
+
+  return (
+    <div className="min-h-screen bg-background relative pb-20">
       <ParticleBackground />
       
       <div className="relative z-10 flex flex-col h-screen">
@@ -123,43 +151,69 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                 <Bot className="w-6 h-6 text-gradient-purple" />
               </div>
             </div>
-            <div>
+            <div className="flex-1">
               <h1 className="text-xl font-bold text-text-primary">AI Tutor</h1>
               <p className="text-sm text-text-secondary">Focus Subjects: {focusSubjects.join(', ')}</p>
             </div>
+            {!hasUnlimitedPrompts && (
+              <div className="text-right">
+                <p className="text-xs text-text-muted">Daily: {usage.dailyUsed}/{usage.dailyLimit}</p>
+                <p className="text-xs text-text-muted">Monthly: {usage.monthlyUsed}/{usage.monthlyLimit}</p>
+              </div>
+            )}
           </div>
           
           {/* Subject Selection */}
           <div className="space-y-2">
             <p className="text-sm font-medium text-text-primary">Select subjects to focus on:</p>
             <div className="flex flex-wrap gap-2">
-              <button onClick={() => setFocusSubjects(selectedSubjects)} className={`px-3 py-1 rounded-full text-xs transition-all ${focusSubjects.length === selectedSubjects.length ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'}`}>
+              <button 
+                onClick={() => setFocusSubjects(selectedSubjects)} 
+                className={`px-3 py-1 rounded-full text-xs transition-all ${
+                  focusSubjects.length === selectedSubjects.length 
+                    ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' 
+                    : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'
+                }`}
+              >
                 <Check className="w-3 h-3 inline mr-1" />
                 ALL
               </button>
-              {selectedSubjects.map(subject => <button key={subject} onClick={() => {
-              if (focusSubjects.includes(subject)) {
-                setFocusSubjects(focusSubjects.filter(s => s !== subject));
-              } else {
-                setFocusSubjects([...focusSubjects, subject]);
-              }
-            }} className={`px-3 py-1 rounded-full text-xs transition-all ${focusSubjects.includes(subject) ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'}`}>
+              {selectedSubjects.map(subject => (
+                <button 
+                  key={subject} 
+                  onClick={() => {
+                    if (focusSubjects.includes(subject)) {
+                      setFocusSubjects(focusSubjects.filter(s => s !== subject));
+                    } else {
+                      setFocusSubjects([...focusSubjects, subject]);
+                    }
+                  }} 
+                  className={`px-3 py-1 rounded-full text-xs transition-all ${
+                    focusSubjects.includes(subject) 
+                      ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' 
+                      : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'
+                  }`}
+                >
                   <Check className="w-3 h-3 inline mr-1" />
                   {subject}
-                </button>)}
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4 pb-52">
-          {messages.map(message => <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+          {messages.map(message => (
+            <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex items-start gap-3 max-w-[80%]`}>
-                {!message.isUser && <div className="gradient-outline rounded-full p-1 flex-shrink-0">
+                {!message.isUser && (
+                  <div className="gradient-outline rounded-full p-1 flex-shrink-0">
                     <div className="gradient-outline-content rounded-full p-2">
                       <Brain className="w-5 h-5 text-gradient-purple" />
                     </div>
-                  </div>}
+                  </div>
+                )}
                 
                 <GradientCard className={`${message.isUser ? 'bg-gradient-to-r from-purple-500/10 to-orange-500/10' : ''}`}>
                   <div className="space-y-2">
@@ -170,15 +224,19 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                   </div>
                 </GradientCard>
 
-                {message.isUser && <div className="gradient-outline rounded-full p-1 flex-shrink-0">
+                {message.isUser && (
+                  <div className="gradient-outline rounded-full p-1 flex-shrink-0">
                     <div className="gradient-outline-content rounded-full p-2 bg-surface">
                       <User className="w-5 h-5 text-gradient-orange" />
                     </div>
-                  </div>}
+                  </div>
+                )}
               </div>
-            </div>)}
+            </div>
+          ))}
           
-          {isLoading && <div className="flex justify-start">
+          {isLoading && (
+            <div className="flex justify-start">
               <div className="flex items-start gap-3">
                 <div className="gradient-outline rounded-full p-1">
                   <div className="gradient-outline-content rounded-full p-2">
@@ -192,7 +250,8 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                   </div>
                 </GradientCard>
               </div>
-            </div>}
+            </div>
+          )}
           
           <div ref={messagesEndRef} />
         </div>
@@ -212,7 +271,12 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                 rows={4}
                 cols={80}
               />
-              <GradientButton onClick={sendMessage} disabled={isLoading || !inputMessage.trim()} size="sm" className="shrink-0">
+              <GradientButton 
+                onClick={sendMessage} 
+                disabled={isLoading || !inputMessage.trim()} 
+                size="sm" 
+                className="shrink-0"
+              >
                 {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               </GradientButton>
             </div>
@@ -221,15 +285,24 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
           {/* Quick Actions */}
           <div className="flex justify-center w-full mt-3">
             <div className="flex gap-2 flex-wrap max-w-4xl px-4 justify-center">
-              <button onClick={() => setInputMessage('Explain the main concepts I should know for the upcoming test')} className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap">
+              <button 
+                onClick={() => setInputMessage('Explain the main concepts I should know for the upcoming test')} 
+                className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap"
+              >
                 <MessageCircle className="w-3 h-3 inline mr-1" />
                 Test prep help
               </button>
-              <button onClick={() => setInputMessage('Give me practice problems to work on')} className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap">
+              <button 
+                onClick={() => setInputMessage('Give me practice problems to work on')} 
+                className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap"
+              >
                 <Sparkles className="w-3 h-3 inline mr-1" />
                 Practice problems
               </button>
-              <button onClick={() => setInputMessage('What are the most important topics I should focus on?')} className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap">
+              <button 
+                onClick={() => setInputMessage('What are the most important topics I should focus on?')} 
+                className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap"
+              >
                 <Brain className="w-3 h-3 inline mr-1" />
                 Study guide
               </button>
@@ -238,6 +311,16 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
       </div>
       
+      <UpgradePromptModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        onUpgrade={() => {
+          setShowUpgradeModal(false);
+          onUpgrade?.();
+        }}
+      />
+      
       <BottomNavigation activeTab={activeTab} onTabChange={onTabChange} />
-    </div>;
+    </div>
+  );
 };

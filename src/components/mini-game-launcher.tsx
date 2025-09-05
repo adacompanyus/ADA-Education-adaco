@@ -4,6 +4,8 @@ import { MemoryMatch } from './mini-games/memory-match';
 import { TimeTrial } from './mini-games/time-trial';
 import { WordScramble } from './mini-games/word-scramble';
 import { SpeedMatch } from './mini-games/speed-match';
+import { PatternPuzzle } from './mini-games/pattern-puzzle';
+import { LogicGrid } from './mini-games/logic-grid';
 
 interface MiniGameLauncherProps {
   gameId: string;
@@ -28,6 +30,10 @@ export const MiniGameLauncher: React.FC<MiniGameLauncherProps> = ({
         return <WordScramble subject={subject} onClose={onClose} />;
       case 'speed-match':
         return <SpeedMatch subject={subject} onClose={onClose} />;
+      case 'pattern-puzzle':
+        return <PatternPuzzle subject={subject} onClose={onClose} />;
+      case 'logic-grid':
+        return <LogicGrid subject={subject} onClose={onClose} />;
       default:
         return null;
     }

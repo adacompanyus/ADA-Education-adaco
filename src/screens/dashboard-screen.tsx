@@ -16,7 +16,7 @@ import { MiniGameLauncher } from '@/components/mini-game-launcher';
 import { useTheme } from '@/contexts/theme-context';
 import { supabase } from '@/integrations/supabase/client';
 import { getProductByPriceId } from '@/stripe-config';
-import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut, Crown } from 'lucide-react';
+import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut, Crown, Sparkles, Grid } from 'lucide-react';
 
 interface DashboardScreenProps {
   user: {
@@ -26,42 +26,71 @@ interface DashboardScreenProps {
   onLogout: () => void;
 }
 
-const minigames = [{
-  id: 'quick-quiz',
-  title: 'Quick Quiz',
-  description: 'Rapid-fire questions',
-  icon: Zap,
-  xpReward: 25,
-  difficulty: 'Easy'
-}, {
-  id: 'memory-match',
-  title: 'Memory Match',
-  description: 'Match concepts',
-  icon: Brain,
-  xpReward: 35,
-  difficulty: 'Medium'
-}, {
-  id: 'time-trial',
-  title: 'Time Trial',
-  description: 'Beat the clock',
-  icon: Timer,
-  xpReward: 50,
-  difficulty: 'Hard'
-}, {
-  id: 'word-scramble',
-  title: 'Word Scramble',
-  description: 'Unscramble terms',
-  icon: Shuffle,
-  xpReward: 30,
-  difficulty: 'Medium'
-}, {
-  id: 'speed-match',
-  title: 'Speed Match',
-  description: 'Quick matching',
-  icon: Flame,
-  xpReward: 40,
-  difficulty: 'Hard'
-}];
+const minigames = [
+  {
+    id: 'quick-quiz',
+    title: 'Quick Quiz',
+    description: 'Rapid-fire questions',
+    icon: Zap,
+    xpReward: 25,
+    difficulty: 'Easy',
+    requiresPremium: false
+  },
+  {
+    id: 'memory-match',
+    title: 'Memory Match',
+    description: 'Match concepts',
+    icon: Brain,
+    xpReward: 35,
+    difficulty: 'Medium',
+    requiresPremium: false
+  },
+  {
+    id: 'time-trial',
+    title: 'Time Trial',
+    description: 'Beat the clock',
+    icon: Timer,
+    xpReward: 50,
+    difficulty: 'Hard',
+    requiresPremium: false
+  },
+  {
+    id: 'word-scramble',
+    title: 'Word Scramble',
+    description: 'Unscramble terms',
+    icon: Shuffle,
+    xpReward: 30,
+    difficulty: 'Medium',
+    requiresPremium: false
+  },
+  {
+    id: 'speed-match',
+    title: 'Speed Match',
+    description: 'Quick matching',
+    icon: Flame,
+    xpReward: 40,
+    difficulty: 'Hard',
+    requiresPremium: false
+  },
+  {
+    id: 'pattern-puzzle',
+    title: 'Pattern Puzzle',
+    description: 'Solve number patterns',
+    icon: Sparkles,
+    xpReward: 60,
+    difficulty: 'Hard',
+    requiresPremium: true
+  },
+  {
+    id: 'logic-grid',
+    title: 'Logic Grid',
+    description: 'Mini Sudoku puzzles',
+    icon: Grid,
+    xpReward: 70,
+    difficulty: 'Expert',
+    requiresPremium: true
+  }
+];
 
 export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   user,
@@ -198,9 +227,22 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             
             <div className="grid grid-cols-2 gap-3">
               {minigames.map(game => {
-              const Icon = game.icon;
-              return <GradientCard key={game.id} className="cursor-pointer hover:scale-[1.02] transition-transform">
-                    <div className="flex flex-col items-center text-center space-y-3 p-2">
+                const Icon = game.icon;
+                const subscriptionInfo = getSubscriptionInfo();
+                const hasPersonalPlus = subscriptionInfo?.name.includes('Personal+') || subscriptionInfo?.name.includes('Enterprise');
+                const isLocked = game.requiresPremium && !hasPersonalPlus;
+                
+                return (
+                  <GradientCard 
+                    key={game.id} 
+                    className={`cursor-pointer hover:scale-[1.02] transition-transform ${isLocked ? 'opacity-60' : ''}`}
+                  >
+                    <div className="flex flex-col items-center text-center space-y-3 p-2 relative">
+                      {isLocked && (
+                        <div className="absolute top-2 right-2">
+                          <Crown className="w-4 h-4 text-gradient-orange" />
+                        </div>
+                      )}
                       <div className="gradient-outline rounded-lg p-2">
                         <div className="gradient-outline-content rounded-lg p-2">
                           <Icon className="w-8 h-8 text-gradient-purple" />
@@ -213,13 +255,22 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                           <span className="text-xs text-gaming-xp">+{game.xpReward} XP</span>
                           <span className="text-xs text-text-muted">• {game.difficulty}</span>
                         </div>
+                        {game.requiresPremium && (
+                          <p className="text-xs text-gradient-orange">Personal+ Exclusive</p>
+                        )}
                       </div>
-                      <GradientButton size="sm" onClick={() => setActiveGame(game.id)} className="w-full">
-                        Play
+                      <GradientButton 
+                        size="sm" 
+                        onClick={() => isLocked ? null : setActiveGame(game.id)} 
+                        className="w-full"
+                        disabled={isLocked}
+                      >
+                        {isLocked ? 'Upgrade to Play' : 'Play'}
                       </GradientButton>
                     </div>
-                  </GradientCard>;
-            })}
+                  </GradientCard>
+                );
+              })}
             </div>
           </div>
 
@@ -240,11 +291,24 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
   // AI Tutor Tab
   if (activeTab === 'ai-tutor') {
-    return <>
-        <AITutorScreen user={user} selectedSubjects={selectedSubjects} activeTab={activeTab} onTabChange={setActiveTab} />
+    const subscriptionInfo = getSubscriptionInfo();
+    const subscriptionTier = subscriptionInfo?.name.includes('Personal+') ? 'Premium' : 
+                            subscriptionInfo?.name.includes('Enterprise') ? 'Enterprise' : 'Basic';
+    
+    return (
+      <>
+        <AITutorScreen 
+          user={user} 
+          selectedSubjects={selectedSubjects} 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
+          subscriptionTier={subscriptionTier}
+          onUpgrade={() => setActiveTab('profile')} // Navigate to profile for subscription management
+        />
         {/* App Settings Modal - Global */}
         {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
-      </>;
+      </>
+    );
   }
 
   // Quests Tab
