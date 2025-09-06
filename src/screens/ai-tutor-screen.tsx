@@ -4,7 +4,7 @@ import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { GradientInput } from '@/components/ui/gradient-input';
 import { BottomNavigation } from '@/components/layout/bottom-navigation';
-import { UpgradePromptModal } from '@/components/upgrade-prompt-modal';
+import { MiniGameUpgradeModal } from '@/components/mini-game-upgrade-modal';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { usePromptLimits } from '@/hooks/use-prompt-limits';
@@ -156,9 +156,25 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
               <p className="text-sm text-text-secondary">Focus Subjects: {focusSubjects.join(', ')}</p>
             </div>
             {!hasUnlimitedPrompts && (
-              <div className="text-right">
-                <p className="text-xs text-text-muted">Daily: {usage.dailyUsed}/{usage.dailyLimit}</p>
-                <p className="text-xs text-text-muted">Monthly: {usage.monthlyUsed}/{usage.monthlyLimit}</p>
+              <div className="text-right space-y-1">
+                <div className="gradient-outline rounded-lg p-1">
+                  <div className="gradient-outline-content px-3 py-2 bg-surface/50 rounded-lg">
+                    <div className="flex flex-col items-end space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-gradient-purple">Daily</span>
+                        <div className="bg-surface rounded-full px-2 py-0.5">
+                          <span className="text-xs font-bold text-text-primary">{usage.dailyUsed}/{usage.dailyLimit}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-gradient-orange">Monthly</span>
+                        <div className="bg-surface rounded-full px-2 py-0.5">
+                          <span className="text-xs font-bold text-text-primary">{usage.monthlyUsed}/{usage.monthlyLimit}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -311,13 +327,9 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
       </div>
       
-      <UpgradePromptModal
+      <MiniGameUpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        onUpgrade={() => {
-          setShowUpgradeModal(false);
-          onUpgrade?.();
-        }}
       />
       
       <BottomNavigation activeTab={activeTab} onTabChange={onTabChange} />
