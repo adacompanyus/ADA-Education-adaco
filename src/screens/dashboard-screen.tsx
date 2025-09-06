@@ -13,6 +13,7 @@ import { AITutorScreen } from './ai-tutor-screen';
 import { QuestsScreen } from './quests-screen';
 import { AppSettings } from '@/components/app-settings';
 import { MiniGameLauncher } from '@/components/mini-game-launcher';
+import { MiniGameUpgradeModal } from '@/components/mini-game-upgrade-modal';
 import { useTheme } from '@/contexts/theme-context';
 import { supabase } from '@/integrations/supabase/client';
 import { getProductByPriceId } from '@/stripe-config';
@@ -102,6 +103,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [selectedSubject, setSelectedSubject] = useState(selectedSubjects[0] || '');
   const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
   const [activeGame, setActiveGame] = useState<string | null>(null);
+  const [showMiniGameUpgrade, setShowMiniGameUpgrade] = useState(false);
   const [showAppSettings, setShowAppSettings] = useState(false);
   const [subscriptionData, setSubscriptionData] = useState<any>(null);
 
@@ -261,9 +263,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                       </div>
                       <GradientButton 
                         size="sm" 
-                        onClick={() => isLocked ? null : setActiveGame(game.id)} 
+                        onClick={() => isLocked ? setShowMiniGameUpgrade(true) : setActiveGame(game.id)} 
                         className="w-full"
-                        disabled={isLocked}
                       >
                         {isLocked ? 'Upgrade to Play' : 'Play'}
                       </GradientButton>
@@ -283,6 +284,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
           {/* App Settings Modal - Show on any tab */}
           {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+
+          {/* Mini Game Upgrade Modal */}
+          <MiniGameUpgradeModal 
+            isOpen={showMiniGameUpgrade} 
+            onClose={() => setShowMiniGameUpgrade(false)} 
+          />
         </div>
 
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
