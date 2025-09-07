@@ -220,55 +220,87 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
         </GradientCard>
       ) : currentCard ? (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* AI Flashcard */}
-            <div className="lg:col-span-3">
-              <div className="relative">
-                <div className="gradient-outline rounded-2xl p-1">
+            <div className="lg:col-span-2">
+              <div className="relative max-w-md mx-auto">
+                <div className="gradient-outline rounded-xl p-1">
                   <div 
-                    className="bg-background rounded-2xl aspect-[3/2] cursor-pointer perspective-1000 shadow-lg hover:scale-[1.01] transition-all duration-300"
+                    className="bg-background rounded-xl w-full h-48 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.02] transition-all duration-300"
                     onClick={flipCard}
                   >
                     <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-full`}>
                       {/* Front */}
-                      <div className="absolute inset-0 backface-hidden rounded-2xl bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-6 p-8">
-                          <Star className="w-10 h-10 text-gradient-purple" />
-                          <p className="text-xl text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rounded-xl bg-surface">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                          <Star className="w-6 h-6 text-gradient-purple" />
+                          <p className="text-base text-text-primary font-medium leading-relaxed">
                             {currentCard.front}
                           </p>
-                          <p className="text-sm text-text-muted">Tap to reveal answer</p>
-                          <div className="absolute top-4 right-4">
-                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-3 py-1">
-                              <span className="text-xs text-gradient-purple font-medium">🤖 AI Generated</span>
+                          <p className="text-xs text-text-muted">Tap to reveal answer</p>
+                          <div className="absolute top-3 right-3">
+                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-1">
+                              <span className="text-xs text-gradient-purple font-medium">🤖 AI</span>
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Back */}
-                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-6 p-8">
-                          <Target className="w-10 h-10 text-gradient-orange" />
-                          <p className="text-xl text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl bg-surface">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
+                          <Target className="w-6 h-6 text-gradient-orange" />
+                          <p className="text-base text-text-primary font-medium leading-relaxed">
                             {currentCard.back}
                           </p>
-                          <p className="text-sm text-gaming-success font-medium">Excellent! 🎉</p>
+                          <p className="text-xs text-gaming-success font-medium">Excellent! 🎉</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                
+                {/* Navigation buttons under flashcard */}
+                <div className="flex justify-between items-center mt-4">
+                  <GradientButton
+                    onClick={prevCard}
+                    disabled={currentIndex === 0}
+                    variant="secondary"
+                    size="sm"
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    Previous
+                  </GradientButton>
+                  
+                  <div className="text-center">
+                    <span className="text-sm text-text-muted">
+                      {currentIndex + 1} / {flashcards.length}
+                    </span>
+                    {isGenerating && (
+                      <div className="text-xs text-gradient-purple mt-1">
+                        🤖 Generating...
+                      </div>
+                    )}
+                  </div>
+                  
+                  <GradientButton
+                    onClick={nextCard}
+                    size="sm"
+                  >
+                    Next
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </GradientButton>
+                </div>
               </div>
             </div>
 
-            {/* AI Gamification Panel */}
-            <div className="lg:col-span-1 space-y-4">
+            {/* Enhanced Gamification Panel */}
+            <div className="lg:col-span-1 space-y-3">
               <div className="gradient-outline rounded-xl p-1">
-                <div className="gradient-outline-content p-4 space-y-4">
-                  <h4 className="font-semibold text-text-primary flex items-center gap-2">
+                <div className="gradient-outline-content p-3 space-y-3">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
                     <Sparkles className="w-4 h-4 text-gradient-purple" />
-                    AI Stats
+                    Study Stats
                   </h4>
                   
                   <div className="space-y-3">
@@ -287,26 +319,14 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                     </div>
 
                     <div className="gradient-outline rounded-lg p-1">
-                      <div className="gradient-outline-content p-3 text-center space-y-2">
+                      <div className="gradient-outline-content p-2 text-center space-y-1">
                         <div className="flex items-center justify-center gap-2">
-                          <Brain className="w-4 h-4 text-gradient-orange" />
-                          <span className="text-sm font-medium text-text-primary">AI Knowledge</span>
+                          <Brain className="w-3 h-3 text-gradient-orange" />
+                          <span className="text-xs font-medium text-text-primary">Knowledge</span>
                         </div>
-                        <div className="text-2xl font-bold text-gradient-purple">
+                        <div className="text-lg font-bold text-gradient-purple">
                           {Math.floor((currentIndex + 1) / flashcards.length * 100)}%
                         </div>
-                        <div className="text-xs text-text-muted">topics mastered</div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs">
-                        <div className="w-2 h-2 rounded-full bg-gaming-success"></div>
-                        <span className="text-text-secondary">Understood: {Math.ceil(currentIndex * 0.9)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs">
-                        <div className="w-2 h-2 rounded-full bg-gaming-warning"></div>
-                        <span className="text-text-secondary">Learning: {Math.floor(currentIndex * 0.1)}</span>
                       </div>
                     </div>
                   </div>
@@ -314,62 +334,90 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
               </div>
 
               <div className="gradient-outline rounded-xl p-1">
-                <div className="gradient-outline-content p-4 space-y-3">
-                  <h4 className="font-semibold text-text-primary flex items-center gap-2">
+                <div className="gradient-outline-content p-3 space-y-3">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
+                    <Target className="w-4 h-4 text-gradient-orange" />
+                    Achievements
+                  </h4>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs">
+                      <div className={`w-2 h-2 rounded-full ${flashcards.length >= 5 ? 'bg-gaming-success' : 'bg-surface-muted'}`}></div>
+                      <span className="text-text-secondary">First 5 Cards</span>
+                      {flashcards.length >= 5 && <span className="text-gaming-success">✓</span>}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <div className={`w-2 h-2 rounded-full ${flashcards.length >= 10 ? 'bg-gaming-success' : 'bg-surface-muted'}`}></div>
+                      <span className="text-text-secondary">Study Streak</span>
+                      {flashcards.length >= 10 && <span className="text-gaming-success">✓</span>}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <div className={`w-2 h-2 rounded-full ${currentIndex >= 5 ? 'bg-gaming-success' : 'bg-surface-muted'}`}></div>
+                      <span className="text-text-secondary">Quick Learner</span>
+                      {currentIndex >= 5 && <span className="text-gaming-success">✓</span>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="gradient-outline rounded-xl p-1">
+                <div className="gradient-outline-content p-3 space-y-3">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
                     <RefreshCw className="w-4 h-4 text-gradient-orange" />
-                    AI Actions
+                    Quick Actions
                   </h4>
                   
                   <div className="space-y-2">
                     <button 
                       onClick={flipCard}
-                      className="w-full text-sm px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                      className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
                     >
-                      🤖 AI Reveal
+                      🤖 Flip Card
                     </button>
                     
                     <button 
                       onClick={generateMoreCards}
                       disabled={isGenerating}
-                      className="w-full text-sm px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all disabled:opacity-50"
+                      className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all disabled:opacity-50"
                     >
-                      {isGenerating ? '⏳ Generating...' : '✨ More AI Cards'}
+                      {isGenerating ? '⏳ AI Working...' : '✨ Generate More'}
+                    </button>
+                    
+                    <button 
+                      onClick={() => setIsFlipped(false)}
+                      className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                    >
+                      🔄 Reset View
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="flex justify-between items-center mt-6">
-            <GradientButton
-              onClick={prevCard}
-              disabled={currentIndex === 0}
-              variant="secondary"
-              size="sm"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
-            </GradientButton>
-            
-            <div className="text-center">
-              <span className="text-sm text-text-muted">
-                Card {currentIndex + 1} of {flashcards.length}
-              </span>
-              {isGenerating && (
-                <div className="text-xs text-gradient-purple mt-1">
-                  🤖 Generating more...
+              <div className="gradient-outline rounded-xl p-1">
+                <div className="gradient-outline-content p-3 space-y-2">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
+                    <Star className="w-4 h-4 text-gradient-purple" />
+                    Study Level
+                  </h4>
+                  
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-gradient-orange mb-1">
+                      {Math.floor(flashcards.length / 5) + 1}
+                    </div>
+                    <div className="text-xs text-text-muted">
+                      {flashcards.length < 5 ? 'Beginner' : 
+                       flashcards.length < 15 ? 'Intermediate' : 'Advanced'}
+                    </div>
+                    <div className="w-full bg-surface-muted rounded-full h-1 mt-2">
+                      <div 
+                        className="bg-gradient-to-r from-orange-500 to-purple-500 h-1 rounded-full transition-all duration-300"
+                        style={{ width: `${(flashcards.length % 5) * 20}%` }}
+                      />
+                    </div>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
-            
-            <GradientButton
-              onClick={nextCard}
-              size="sm"
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </GradientButton>
           </div>
 
           <div className="text-center mt-4">
