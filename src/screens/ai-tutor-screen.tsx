@@ -157,7 +157,10 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
             </div>
             {!hasUnlimitedPrompts && (
               <div className="text-right space-y-1">
-                <div className="gradient-outline rounded-lg p-1">
+                <button 
+                  onClick={() => setShowUpgradeModal(true)}
+                  className="gradient-outline rounded-lg p-1 hover:scale-105 transition-transform cursor-pointer"
+                >
                   <div className="gradient-outline-content px-3 py-2 bg-surface/50 rounded-lg">
                     <div className="flex flex-col items-end space-y-1">
                       <div className="flex items-center gap-2">
@@ -174,7 +177,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </button>
               </div>
             )}
           </div>

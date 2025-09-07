@@ -18,6 +18,8 @@ import { useTheme } from '@/contexts/theme-context';
 import { supabase } from '@/integrations/supabase/client';
 import { getProductByPriceId } from '@/stripe-config';
 import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut, Crown, Sparkles, Grid } from 'lucide-react';
+import { NotificationSettingsModal } from '@/components/notification-settings-modal';
+import { PrivacySettingsModal } from '@/components/privacy-settings-modal';
 
 interface DashboardScreenProps {
   user: {
@@ -105,6 +107,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [activeGame, setActiveGame] = useState<string | null>(null);
   const [showMiniGameUpgrade, setShowMiniGameUpgrade] = useState(false);
   const [showAppSettings, setShowAppSettings] = useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const [showPrivacySettings, setShowPrivacySettings] = useState(false);
   const [subscriptionData, setSubscriptionData] = useState<any>(null);
 
   useEffect(() => {
@@ -593,7 +597,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                   <Bell className="w-5 h-5 text-gradient-orange" />
                   <span className="text-text-primary">Notifications</span>
                 </div>
-                <button className="text-sm gradient-text font-medium">Manage</button>
+                <button 
+                  onClick={() => setShowNotificationSettings(true)}
+                  className="text-sm gradient-text font-medium hover:scale-105 transition-transform"
+                >
+                  Manage
+                </button>
               </div>
               
               <div className="flex items-center justify-between">
@@ -601,7 +610,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                   <Shield className="w-5 h-5 text-gradient-purple" />
                   <span className="text-text-primary">Privacy & Security</span>
                 </div>
-                <button className="text-sm gradient-text font-medium">Settings</button>
+                <button 
+                  onClick={() => setShowPrivacySettings(true)}
+                  className="text-sm gradient-text font-medium hover:scale-105 transition-transform"
+                >
+                  Settings
+                </button>
               </div>
               
               <div className="flex items-center justify-between">
@@ -703,5 +717,17 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
       
       {/* App Settings Modal - Global */}
       {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      
+      {/* Notification Settings Modal */}
+      <NotificationSettingsModal
+        isOpen={showNotificationSettings}
+        onClose={() => setShowNotificationSettings(false)}
+      />
+      
+      {/* Privacy Settings Modal */}
+      <PrivacySettingsModal
+        isOpen={showPrivacySettings}
+        onClose={() => setShowPrivacySettings(false)}
+      />
     </div>;
 };

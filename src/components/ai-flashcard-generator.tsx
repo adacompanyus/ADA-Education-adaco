@@ -223,37 +223,37 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* AI Flashcard */}
             <div className="lg:col-span-2">
-              <div className="relative max-w-md mx-auto">
-                <div className="gradient-outline rounded-xl p-1">
+              <div className="relative max-w-sm mx-auto">
+                <div className="gradient-outline rounded-lg p-1">
                   <div 
-                    className="bg-background rounded-xl w-full h-48 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.02] transition-all duration-300"
+                    className="bg-background rounded-lg w-full h-32 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.02] transition-all duration-300"
                     onClick={flipCard}
                   >
                     <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-full`}>
                       {/* Front */}
-                      <div className="absolute inset-0 backface-hidden rounded-xl bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                          <Star className="w-6 h-6 text-gradient-purple" />
-                          <p className="text-base text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rounded-lg bg-surface">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
+                          <Star className="w-4 h-4 text-gradient-purple" />
+                          <p className="text-sm text-text-primary font-medium leading-relaxed">
                             {currentCard.front}
                           </p>
-                          <p className="text-xs text-text-muted">Tap to reveal answer</p>
-                          <div className="absolute top-3 right-3">
-                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-1">
-                              <span className="text-xs text-gradient-purple font-medium">🤖 AI</span>
+                          <p className="text-xs text-text-muted">Tap to reveal</p>
+                          <div className="absolute top-2 right-2">
+                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-1.5 py-0.5">
+                              <span className="text-xs text-gradient-purple font-medium">🤖</span>
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Back */}
-                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-6">
-                          <Target className="w-6 h-6 text-gradient-orange" />
-                          <p className="text-base text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-lg bg-surface">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
+                          <Target className="w-4 h-4 text-gradient-orange" />
+                          <p className="text-sm text-text-primary font-medium leading-relaxed">
                             {currentCard.back}
                           </p>
-                          <p className="text-xs text-gaming-success font-medium">Excellent! 🎉</p>
+                          <p className="text-xs text-gaming-success font-medium">Great! 🎉</p>
                         </div>
                       </div>
                     </div>
@@ -261,24 +261,25 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                 </div>
                 
                 {/* Navigation buttons under flashcard */}
-                <div className="flex justify-between items-center mt-4">
+                <div className="flex justify-center items-center gap-3 mt-3 max-w-sm mx-auto">
                   <GradientButton
                     onClick={prevCard}
                     disabled={currentIndex === 0}
                     variant="secondary"
                     size="sm"
+                    className="px-3 py-1.5 text-xs"
                   >
-                    <ChevronLeft className="w-4 h-4 mr-1" />
-                    Previous
+                    <ChevronLeft className="w-3 h-3 mr-1" />
+                    Prev
                   </GradientButton>
                   
-                  <div className="text-center">
-                    <span className="text-sm text-text-muted">
-                      {currentIndex + 1} / {flashcards.length}
+                  <div className="text-center px-2">
+                    <span className="text-xs text-text-muted">
+                      {currentIndex + 1}/{flashcards.length}
                     </span>
                     {isGenerating && (
-                      <div className="text-xs text-gradient-purple mt-1">
-                        🤖 Generating...
+                      <div className="text-xs text-gradient-purple mt-0.5">
+                        🤖 AI...
                       </div>
                     )}
                   </div>
@@ -286,9 +287,10 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                   <GradientButton
                     onClick={nextCard}
                     size="sm"
+                    className="px-3 py-1.5 text-xs"
                   >
                     Next
-                    <ChevronRight className="w-4 h-4 ml-1" />
+                    <ChevronRight className="w-3 h-3 ml-1" />
                   </GradientButton>
                 </div>
               </div>
