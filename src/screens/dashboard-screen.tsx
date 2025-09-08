@@ -10,6 +10,7 @@ import { TimeTrial } from '@/components/mini-games/time-trial';
 import { WordScramble } from '@/components/mini-games/word-scramble';
 import { SpeedMatch } from '@/components/mini-games/speed-match';
 import { AITutorScreen } from './ai-tutor-screen';
+import { LearnScreen } from './learn-screen';
 import { QuestsScreen } from './quests-screen';
 import { AppSettings } from '@/components/app-settings';
 import { MiniGameLauncher } from '@/components/mini-game-launcher';
@@ -316,6 +317,23 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           subscriptionTier={subscriptionTier}
           onUpgrade={() => setActiveTab('profile')} // Navigate to profile for subscription management
         />
+        {/* App Settings Modal - Global */}
+        {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      </>
+    );
+  }
+
+  // Learn Mode Tab
+  if (activeTab === 'learn') {
+    return (
+      <>
+        <div className="min-h-screen bg-background relative pb-20">
+          <ParticleBackground />
+          <div className="relative z-10 p-6">
+            <LearnScreen />
+          </div>
+        </div>
+        <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
         {/* App Settings Modal - Global */}
         {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
       </>

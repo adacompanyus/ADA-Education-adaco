@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Trophy, ShoppingBag, User } from 'lucide-react';
+import { Home, Trophy, ShoppingBag, User, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BottomNavigationProps {
@@ -10,8 +10,8 @@ interface BottomNavigationProps {
 const tabs = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
   { id: 'ai-tutor', label: 'AI Tutor', icon: Trophy },
+  { id: 'learn', label: 'Learn', icon: BookOpen },
   { id: 'quests', label: 'Quests', icon: ShoppingBag },
-  { id: 'store', label: 'Store', icon: ShoppingBag },
   { id: 'profile', label: 'Profile', icon: User },
 ];
 

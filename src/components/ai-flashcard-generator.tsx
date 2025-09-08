@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { GradientCard } from './ui/gradient-card';
 import { GradientButton } from './ui/gradient-button';
 import { supabase } from '@/integrations/supabase/client';
@@ -11,7 +11,12 @@ import {
   RefreshCw,
   Star,
   Target,
-  Loader2
+  Loader2,
+  Play,
+  Pause,
+  Settings,
+  Check,
+  BookOpen
 } from 'lucide-react';
 
 interface Flashcard {
@@ -19,6 +24,7 @@ interface Flashcard {
   back: string;
   subject: string;
   id: string;
+  studied?: boolean;
 }
 
 interface AIFlashcardGeneratorProps {
@@ -57,6 +63,10 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isAutoPlay, setIsAutoPlay] = useState(false);
+  const [autoPlaySpeed, setAutoPlaySpeed] = useState(3000); // 3 seconds default
+  const [showSpeedSettings, setShowSpeedSettings] = useState(false);
+  const [studiedCards, setStudiedCards] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   const generateFlashcards = async (topic?: string) => {
@@ -125,11 +135,34 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
     }
   };
 
+  // Auto-play functionality
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    if (isAutoPlay && flashcards.length > 0) {
+      interval = setInterval(() => {
+        setCurrentIndex(prev => {
+          const nextIndex = prev + 1;
+          if (nextIndex < flashcards.length) {
+            setIsFlipped(false);
+            return nextIndex;
+          } else {
+            setIsAutoPlay(false); // Stop at end
+            return prev;
+          }
+        });
+      }, autoPlaySpeed);
+    }
+    
+    return () => clearInterval(interval);
+  }, [isAutoPlay, autoPlaySpeed, flashcards.length]);
+
   // Generate initial flashcards when component mounts or subject changes
   useEffect(() => {
     setFlashcards([]);
     setCurrentIndex(0);
     setIsFlipped(false);
+    setStudiedCards(new Set());
     generateFlashcards();
   }, [selectedSubject]);
 
@@ -162,6 +195,34 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
 
   const generateMoreCards = () => {
     generateFlashcards();
+  };
+
+  const toggleAutoPlay = () => {
+    setIsAutoPlay(!isAutoPlay);
+  };
+
+  const markAsStudied = useCallback(() => {
+    if (currentCard) {
+      setStudiedCards(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(currentCard.id)) {
+          newSet.delete(currentCard.id);
+        } else {
+          newSet.add(currentCard.id);
+        }
+        return newSet;
+      });
+      
+      // Auto advance to next card
+      setTimeout(() => {
+        nextCard();
+      }, 500);
+    }
+  }, [currentCard]);
+
+  const getProgressPercentage = () => {
+    if (flashcards.length === 0) return 0;
+    return Math.round((studiedCards.size / flashcards.length) * 100);
   };
 
   if (!currentCard && !isGenerating) {
@@ -220,77 +281,153 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
         </GradientCard>
       ) : currentCard ? (
         <>
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-text-secondary">Progress</span>
+              <span className="text-sm text-gradient-purple font-medium">{getProgressPercentage()}%</span>
+            </div>
+            <div className="w-full bg-surface-muted rounded-full h-3">
+              <div 
+                className="bg-gradient-to-r from-purple-500 to-orange-500 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${getProgressPercentage()}%` }}
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* AI Flashcard */}
+            {/* AI Flashcard - Quizlet Style */}
             <div className="lg:col-span-2">
-              <div className="relative max-w-sm mx-auto">
-                <div className="gradient-outline rounded-lg p-1">
+              <div className="relative max-w-2xl mx-auto">
+                <div className="gradient-outline rounded-2xl p-1">
                   <div 
-                    className="bg-background rounded-lg w-full h-32 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.02] transition-all duration-300"
+                    className="bg-surface rounded-2xl w-full h-80 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.01] transition-all duration-300 relative"
                     onClick={flipCard}
                   >
+                    {/* Answer button in top right when not flipped */}
+                    {!isFlipped && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <GradientButton
+                          size="sm"
+                          variant="secondary"
+                          className="px-3 py-1.5 text-xs"
+                        >
+                          Answer
+                        </GradientButton>
+                      </div>
+                    )}
+                    
                     <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-full`}>
                       {/* Front */}
-                      <div className="absolute inset-0 backface-hidden rounded-lg bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
-                          <Star className="w-4 h-4 text-gradient-purple" />
-                          <p className="text-sm text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rounded-2xl">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-8">
+                          <div className="text-6xl font-bold text-gradient-purple mb-4">
+                            {currentIndex + 1}
+                          </div>
+                          <div className="text-lg text-text-primary font-medium leading-relaxed max-w-lg">
                             {currentCard.front}
-                          </p>
-                          <p className="text-xs text-text-muted">Tap to reveal</p>
-                          <div className="absolute top-2 right-2">
-                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-1.5 py-0.5">
-                              <span className="text-xs text-gradient-purple font-medium">🤖</span>
-                            </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Back */}
-                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-lg bg-surface">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
-                          <Target className="w-4 h-4 text-gradient-orange" />
-                          <p className="text-sm text-text-primary font-medium leading-relaxed">
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-8">
+                          <div className="text-lg text-text-primary font-medium leading-relaxed max-w-lg">
                             {currentCard.back}
-                          </p>
-                          <p className="text-xs text-gaming-success font-medium">Great! 🎉</p>
+                          </div>
+                          
+                          {/* Mark Studied Button */}
+                          <GradientButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              markAsStudied();
+                            }}
+                            className={`mt-6 ${studiedCards.has(currentCard.id) ? 'bg-gaming-success' : ''}`}
+                          >
+                            <Check className="w-4 h-4 mr-2" />
+                            {studiedCards.has(currentCard.id) ? 'Studied' : 'Mark Studied'}
+                          </GradientButton>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Navigation buttons under flashcard */}
-                <div className="flex justify-center items-center gap-3 mt-3 max-w-sm mx-auto">
+                {/* Navigation and Controls */}
+                <div className="flex justify-between items-center mt-6 max-w-2xl mx-auto">
                   <GradientButton
                     onClick={prevCard}
                     disabled={currentIndex === 0}
                     variant="secondary"
-                    size="sm"
-                    className="px-3 py-1.5 text-xs"
+                    className="px-6 py-3"
                   >
-                    <ChevronLeft className="w-3 h-3 mr-1" />
-                    Prev
+                    <ChevronLeft className="w-4 h-4 mr-2" />
+                    Previous
                   </GradientButton>
                   
-                  <div className="text-center px-2">
-                    <span className="text-xs text-text-muted">
-                      {currentIndex + 1}/{flashcards.length}
-                    </span>
-                    {isGenerating && (
-                      <div className="text-xs text-gradient-purple mt-0.5">
-                        🤖 AI...
+                  <div className="text-center">
+                    <div className="text-sm text-text-muted mb-2">
+                      Card {currentIndex + 1} of {flashcards.length}
+                    </div>
+                    
+                    {/* Auto-play Controls */}
+                    <div className="flex items-center gap-2">
+                      <GradientButton
+                        onClick={toggleAutoPlay}
+                        variant="secondary"
+                        size="sm"
+                        className="px-4 py-2"
+                      >
+                        {isAutoPlay ? <Pause className="w-4 h-4 mr-1" /> : <Play className="w-4 h-4 mr-1" />}
+                        Auto-play
+                      </GradientButton>
+                      
+                      <div className="relative">
+                        <GradientButton
+                          onClick={() => setShowSpeedSettings(!showSpeedSettings)}
+                          variant="secondary"
+                          size="sm"
+                          className="px-3 py-2"
+                        >
+                          <Settings className="w-4 h-4" />
+                        </GradientButton>
+                        
+                        {showSpeedSettings && (
+                          <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-surface border border-card-border rounded-lg p-3 shadow-lg z-10 min-w-[160px]">
+                            <div className="text-xs text-text-secondary mb-2">Speed</div>
+                            {[
+                              { label: 'Slow', value: 5000 },
+                              { label: 'Normal', value: 3000 },
+                              { label: 'Fast', value: 1500 }
+                            ].map(speed => (
+                              <button
+                                key={speed.value}
+                                onClick={() => {
+                                  setAutoPlaySpeed(speed.value);
+                                  setShowSpeedSettings(false);
+                                }}
+                                className={`block w-full text-left px-2 py-1 text-xs rounded ${
+                                  autoPlaySpeed === speed.value 
+                                    ? 'bg-gradient-to-r from-purple-500/20 to-orange-500/20 text-gradient-purple' 
+                                    : 'text-text-secondary hover:bg-surface-muted'
+                                }`}
+                              >
+                                {speed.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                   
                   <GradientButton
                     onClick={nextCard}
-                    size="sm"
-                    className="px-3 py-1.5 text-xs"
+                    className="px-6 py-3"
                   >
                     Next
-                    <ChevronRight className="w-3 h-3 ml-1" />
+                    <ChevronRight className="w-4 h-4 ml-2" />
                   </GradientButton>
                 </div>
               </div>
