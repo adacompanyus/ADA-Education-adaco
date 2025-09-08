@@ -298,19 +298,19 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* AI Flashcard - Quizlet Style */}
             <div className="lg:col-span-2">
-              <div className="relative max-w-2xl mx-auto">
-                <div className="gradient-outline rounded-2xl p-1">
+              <div className="relative max-w-lg mx-auto">
+                <div className="gradient-outline rounded-xl p-1">
                   <div 
-                    className="bg-surface rounded-2xl w-full h-80 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.01] transition-all duration-300 relative"
+                    className="bg-surface rounded-xl w-full h-48 cursor-pointer perspective-1000 shadow-lg hover:scale-[1.01] transition-all duration-300 relative"
                     onClick={flipCard}
                   >
                     {/* Answer button in top right when not flipped */}
                     {!isFlipped && (
-                      <div className="absolute top-4 right-4 z-10">
+                      <div className="absolute top-3 right-3 z-10">
                         <GradientButton
                           size="sm"
                           variant="secondary"
-                          className="px-3 py-1.5 text-xs"
+                          className="px-2 py-1 text-xs"
                         >
                           Answer
                         </GradientButton>
@@ -319,21 +319,21 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                     
                     <div className={`relative transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''} h-full`}>
                       {/* Front */}
-                      <div className="absolute inset-0 backface-hidden rounded-2xl">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-8">
-                          <div className="text-6xl font-bold text-gradient-purple mb-4">
+                      <div className="absolute inset-0 backface-hidden rounded-xl">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-6">
+                          <div className="text-4xl font-bold text-gradient-purple mb-2">
                             {currentIndex + 1}
                           </div>
-                          <div className="text-lg text-text-primary font-medium leading-relaxed max-w-lg">
+                          <div className="text-base text-text-primary font-medium leading-relaxed max-w-md">
                             {currentCard.front}
                           </div>
                         </div>
                       </div>
                       
                       {/* Back */}
-                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-4 p-8">
-                          <div className="text-lg text-text-primary font-medium leading-relaxed max-w-lg">
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-xl">
+                        <div className="h-full flex flex-col justify-center items-center text-center space-y-3 p-6">
+                          <div className="text-base text-text-primary font-medium leading-relaxed max-w-md">
                             {currentCard.back}
                           </div>
                           
@@ -343,7 +343,8 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                               e.stopPropagation();
                               markAsStudied();
                             }}
-                            className={`mt-6 ${studiedCards.has(currentCard.id) ? 'bg-gaming-success' : ''}`}
+                            size="sm"
+                            className={`mt-4 ${studiedCards.has(currentCard.id) ? 'bg-gaming-success' : ''}`}
                           >
                             <Check className="w-4 h-4 mr-2" />
                             {studiedCards.has(currentCard.id) ? 'Studied' : 'Mark Studied'}
@@ -354,33 +355,23 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                   </div>
                 </div>
                 
-                {/* Navigation and Controls */}
-                <div className="flex justify-between items-center mt-6 max-w-2xl mx-auto">
-                  <GradientButton
-                    onClick={prevCard}
-                    disabled={currentIndex === 0}
-                    variant="secondary"
-                    className="px-6 py-3"
-                  >
-                    <ChevronLeft className="w-4 h-4 mr-2" />
-                    Previous
-                  </GradientButton>
-                  
+                {/* Navigation and Controls - Centered under flashcard */}
+                <div className="flex flex-col items-center gap-4 mt-6 max-w-lg mx-auto">
                   <div className="text-center">
                     <div className="text-sm text-text-muted mb-2">
                       Card {currentIndex + 1} of {flashcards.length}
                     </div>
                     
                     {/* Auto-play Controls */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 justify-center">
                       <GradientButton
                         onClick={toggleAutoPlay}
                         variant="secondary"
                         size="sm"
-                        className="px-4 py-2"
+                        className="px-3 py-2"
                       >
                         {isAutoPlay ? <Pause className="w-4 h-4 mr-1" /> : <Play className="w-4 h-4 mr-1" />}
-                        Auto-play
+                        Auto
                       </GradientButton>
                       
                       <div className="relative">
@@ -422,13 +413,28 @@ export const AIFlashcardGenerator: React.FC<AIFlashcardGeneratorProps> = ({ sele
                     </div>
                   </div>
                   
-                  <GradientButton
-                    onClick={nextCard}
-                    className="px-6 py-3"
-                  >
-                    Next
-                    <ChevronRight className="w-4 h-4 ml-2" />
-                  </GradientButton>
+                  {/* Navigation Buttons */}
+                  <div className="flex items-center gap-4">
+                    <GradientButton
+                      onClick={prevCard}
+                      disabled={currentIndex === 0}
+                      variant="secondary"
+                      size="sm"
+                      className="px-4 py-2"
+                    >
+                      <ChevronLeft className="w-4 h-4 mr-1" />
+                      Previous
+                    </GradientButton>
+                    
+                    <GradientButton
+                      onClick={nextCard}
+                      size="sm"
+                      className="px-4 py-2"
+                    >
+                      Next
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </GradientButton>
+                  </div>
                 </div>
               </div>
             </div>
