@@ -212,21 +212,20 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
               <div className="relative">
                 <div className="gradient-outline rounded-2xl p-1">
                   <div 
-                    className="bg-background rounded-2xl aspect-[3/2] cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg"
+                    className="bg-background rounded-lg h-24 cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg max-w-md mx-auto"
                     onClick={flipCard}
                   >
                     <div className="relative h-full">
                       {!isFlipped ? (
                         /* Front */
-                        <div className="absolute inset-0 rounded-2xl bg-surface animate-fade-in">
-                          <div className="h-full flex flex-col justify-center items-center text-center space-y-6 p-8">
-                            <Star className="w-10 h-10 text-gradient-purple" />
-                            <p className="text-xl text-text-primary font-medium leading-relaxed">
+                        <div className="absolute inset-0 rounded-lg bg-surface animate-fade-in">
+                          <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
+                            <Star className="w-4 h-4 text-gradient-purple" />
+                            <p className="text-sm text-text-primary font-medium leading-tight line-clamp-2">
                               {currentCard.front}
                             </p>
-                            <p className="text-sm text-text-muted">Tap to reveal answer</p>
-                            <div className="absolute top-4 right-4">
-                              <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-3 py-1">
+                            <div className="absolute top-2 right-2">
+                              <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-0.5">
                                 <span className="text-xs text-gradient-purple font-medium">
                                   {currentCard.unit}
                                 </span>
@@ -236,15 +235,14 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
                         </div>
                       ) : (
                         /* Back */
-                        <div className="absolute inset-0 rounded-2xl bg-surface animate-fade-in">
-                          <div className="h-full flex flex-col justify-center items-center text-center space-y-6 p-8">
-                            <Target className="w-10 h-10 text-gradient-orange" />
-                            <p className="text-xl text-text-primary font-medium leading-relaxed">
+                        <div className="absolute inset-0 rounded-lg bg-surface animate-fade-in">
+                          <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
+                            <Target className="w-4 h-4 text-gradient-orange" />
+                            <p className="text-sm text-text-primary font-medium leading-tight line-clamp-3">
                               {currentCard.back}
                             </p>
-                            <p className="text-sm text-gaming-success font-medium">Excellent! 🎉</p>
-                            <div className="absolute top-4 right-4">
-                              <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-3 py-1">
+                            <div className="absolute top-2 right-2">
+                              <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-0.5">
                                 <span className="text-xs text-gradient-orange font-medium">
                                   Answer
                                 </span>
@@ -342,6 +340,7 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
               disabled={currentIndex === 0}
               variant="secondary"
               size="sm"
+              className="h-8 px-3 text-xs"
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
               Previous
@@ -362,6 +361,7 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
               onClick={nextCard}
               disabled={currentIndex === flashcards.length - 1}
               size="sm"
+              className="h-8 px-3 text-xs"
             >
               Next
               <ChevronRight className="w-4 h-4 ml-1" />
@@ -372,6 +372,14 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
             <p className="text-xs text-text-muted">
               {selectedUnit ? `Unit: ${currentCard.unit}` : `From ${currentCard.unit}`} • Complete AP Curriculum
             </p>
+            <GradientButton 
+              onClick={() => {/* Navigate to learn mode */}} 
+              size="sm" 
+              className="mt-2 h-7 px-3 text-xs"
+            >
+              <BookOpen className="w-3 h-3 mr-1" />
+              Go to Learn Mode
+            </GradientButton>
           </div>
         </>
       ) : (

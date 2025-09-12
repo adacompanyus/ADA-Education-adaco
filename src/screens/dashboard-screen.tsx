@@ -15,10 +15,12 @@ import { QuestsScreen } from './quests-screen';
 import { AppSettings } from '@/components/app-settings';
 import { MiniGameLauncher } from '@/components/mini-game-launcher';
 import { MiniGameUpgradeModal } from '@/components/mini-game-upgrade-modal';
+import { GamesScreen } from './games-screen';
 import { useTheme } from '@/contexts/theme-context';
 import { supabase } from '@/integrations/supabase/client';
 import { getProductByPriceId } from '@/stripe-config';
 import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, User, Settings, CreditCard, Bell, Shield, HelpCircle, Moon, Sun, Mail, Phone, Calendar, MapPin, Edit, LogOut, Crown, Sparkles, Grid } from 'lucide-react';
+import { Gamepad2 } from 'lucide-react';
 import { NotificationSettingsModal } from '@/components/notification-settings-modal';
 import { PrivacySettingsModal } from '@/components/privacy-settings-modal';
 
@@ -111,6 +113,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showPrivacySettings, setShowPrivacySettings] = useState(false);
   const [subscriptionData, setSubscriptionData] = useState<any>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -226,11 +229,34 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
 
           {/* Curriculum Flashcards */}
-          <CurriculumFlashcards selectedSubject={selectedSubject} />
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-text-primary">Quick Study</h2>
+              <GradientButton 
+                onClick={() => setActiveTab('learn')} 
+                size="sm"
+                className="h-8 px-3 text-xs"
+              >
+                <BookOpen className="w-3 h-3 mr-1" />
+                Learn Mode
+              </GradientButton>
+            </div>
+            <CurriculumFlashcards selectedSubject={selectedSubject} />
+          </div>
 
           {/* Minigames */}
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-text-primary">Minigames</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-text-primary">Quick Games</h2>
+              <GradientButton 
+                onClick={() => setActiveTab('games')} 
+                size="sm"
+                className="h-8 px-3 text-xs"
+              >
+                <Gamepad2 className="w-3 h-3 mr-1" />
+                All Games
+              </GradientButton>
+            </div>
             
             <div className="grid grid-cols-2 gap-3">
               {minigames.map(game => {
@@ -350,7 +376,45 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   }
 
   // Store Tab
+  if (activeTab === 'games') {
+    const subscriptionInfo = getSubscriptionInfo();
+    const subscriptionTier = subscriptionInfo?.name.includes('Personal+') ? 'Premium' : 
+                            subscriptionInfo?.name.includes('Enterprise') ? 'Enterprise' : 'Basic';
+    
+    return (
+      <>
+        <GamesScreen 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
+          selectedSubjects={selectedSubjects}
+          subscriptionTier={subscriptionTier}
+        />
+        {/* App Settings Modal - Global */}
+        {showAppSettings && <AppSettings onClose={() => setShowAppSettings(false)} />}
+      </>
+    );
+  }
+
+  // Store Tab
   if (activeTab === 'store') {
+    const [userTokens, setUserTokens] = useState(1250);
+    
+    const handlePurchase = (cost: number, itemName: string) => {
+      if (userTokens >= cost) {
+        setUserTokens(prev => prev - cost);
+        toast({
+          title: "Purchase Successful!",
+          description: `You bought ${itemName} for ${cost} tokens`,
+        });
+      } else {
+        toast({
+          title: "Insufficient Tokens",
+          description: `You need ${cost - userTokens} more tokens`,
+          variant: "destructive"
+        });
+      }
+    };
+
     return <div className="min-h-screen bg-background relative pb-20">
         <ParticleBackground />
         <div className="relative z-10 p-6 space-y-6">
@@ -359,7 +423,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           <div className="text-center">
             <div className="gradient-outline rounded-full p-1 inline-block mt-2">
               <div className="gradient-outline-content rounded-full px-4 py-1">
-                <span className="gradient-text font-semibold">🪙 1,250 Tokens</span>
+                <span className="gradient-text font-semibold">🪙 {userTokens.toLocaleString()} Tokens</span>
               </div>
             </div>
           </div>
@@ -376,7 +440,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Wise feline companion</p>
                   </div>
                 </div>
-                <GradientButton size="sm">300 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(300, 'Scholar Cat')}
+                  disabled={userTokens < 300}
+                >
+                  300 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -388,7 +458,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Nocturnal study buddy</p>
                   </div>
                 </div>
-                <GradientButton size="sm">400 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(400, 'Wise Owl')}
+                  disabled={userTokens < 400}
+                >
+                  400 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -400,7 +476,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Mythical learning companion</p>
                   </div>
                 </div>
-                <GradientButton size="sm">750 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(750, 'Study Dragon')}
+                  disabled={userTokens < 750}
+                >
+                  750 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -412,7 +494,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Future tech avatar</p>
                   </div>
                 </div>
-                <GradientButton size="sm">600 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(600, 'AI Assistant')}
+                  disabled={userTokens < 600}
+                >
+                  600 🪙
+                </GradientButton>
               </div>
             </GradientCard>
           </div>
@@ -429,7 +517,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Protect your streak for 1 day</p>
                   </div>
                 </div>
-                <GradientButton size="sm">100 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(100, 'Streak Freeze')}
+                  disabled={userTokens < 100}
+                >
+                  100 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -441,7 +535,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Double XP for 1 hour</p>
                   </div>
                 </div>
-                <GradientButton size="sm">150 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(150, 'XP Booster')}
+                  disabled={userTokens < 150}
+                >
+                  150 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -453,7 +553,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">2x tokens for next game</p>
                   </div>
                 </div>
-                <GradientButton size="sm">200 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(200, 'Gem Multiplier')}
+                  disabled={userTokens < 200}
+                >
+                  200 🪙
+                </GradientButton>
               </div>
             </GradientCard>
           </div>
@@ -470,7 +576,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Perfect score achievement</p>
                   </div>
                 </div>
-                <GradientButton size="sm">500 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(500, 'Accuracy Badge')}
+                  disabled={userTokens < 500}
+                >
+                  500 🪙
+                </GradientButton>
               </div>
             </GradientCard>
             <GradientCard className="cursor-pointer hover:scale-[1.02]">
@@ -482,7 +594,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     <p className="text-sm text-text-secondary">Complete subject mastery</p>
                   </div>
                 </div>
-                <GradientButton size="sm">1000 🪙</GradientButton>
+                <GradientButton 
+                  size="sm"
+                  onClick={() => handlePurchase(1000, 'Master Crown')}
+                  disabled={userTokens < 1000}
+                >
+                  1000 🪙
+                </GradientButton>
               </div>
             </GradientCard>
           </div>
