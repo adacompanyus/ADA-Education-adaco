@@ -206,70 +206,102 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
       {/* Flashcard Display */}
       {currentCard ? (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Flashcard */}
-            <div className="lg:col-span-3">
-              <div className="relative">
-                <div className="gradient-outline rounded-2xl p-1">
-                  <div 
-                    className="bg-background rounded-lg h-24 cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg max-w-md mx-auto"
-                    onClick={flipCard}
-                  >
-                    <div className="relative h-full">
-                      {!isFlipped ? (
-                        /* Front */
-                        <div className="absolute inset-0 rounded-lg bg-surface animate-fade-in">
-                          <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
-                            <Star className="w-4 h-4 text-gradient-purple" />
-                            <p className="text-sm text-text-primary font-medium leading-tight line-clamp-2">
-                              {currentCard.front}
-                            </p>
-                            <div className="absolute top-2 right-2">
-                              <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-0.5">
-                                <span className="text-xs text-gradient-purple font-medium">
-                                  {currentCard.unit}
-                                </span>
-                              </div>
-                            </div>
+          {/* Flashcard */}
+          <div className="max-w-md mx-auto">
+            <div className="gradient-outline rounded-2xl p-1">
+              <div 
+                className="gradient-outline-content rounded-xl h-24 cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg"
+                onClick={flipCard}
+              >
+                <div className="relative h-full">
+                  {!isFlipped ? (
+                    /* Front */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
+                        <Star className="w-4 h-4 text-gradient-purple" />
+                        <p className="text-sm text-text-primary font-medium leading-tight line-clamp-2">
+                          {currentCard.front}
+                        </p>
+                        <div className="absolute top-2 right-2">
+                          <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-0.5">
+                            <span className="text-xs text-gradient-purple font-medium">
+                              {currentCard.unit}
+                            </span>
                           </div>
                         </div>
-                      ) : (
-                        /* Back */
-                        <div className="absolute inset-0 rounded-lg bg-surface animate-fade-in">
-                          <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
-                            <Target className="w-4 h-4 text-gradient-orange" />
-                            <p className="text-sm text-text-primary font-medium leading-tight line-clamp-3">
-                              {currentCard.back}
-                            </p>
-                            <div className="absolute top-2 right-2">
-                              <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-0.5">
-                                <span className="text-xs text-gradient-orange font-medium">
-                                  Answer
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    /* Back */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-3">
+                        <Target className="w-4 h-4 text-gradient-orange" />
+                        <p className="text-sm text-text-primary font-medium leading-tight line-clamp-3">
+                          {currentCard.back}
+                        </p>
+                        <div className="absolute top-2 right-2">
+                          <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-0.5">
+                            <span className="text-xs text-gradient-orange font-medium">
+                              Answer
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Gamification Panel */}
-            <div className="lg:col-span-1 space-y-4">
+            {/* Navigation Buttons - Right under flashcard */}
+            <div className="flex justify-between items-center mt-4 max-w-md">
+              <GradientButton
+                onClick={prevCard}
+                disabled={currentIndex === 0}
+                variant="secondary"
+                size="sm"
+                className="h-8 px-3 text-xs"
+              >
+                <ChevronLeft className="w-4 h-4 mr-1" />
+                Previous
+              </GradientButton>
+              
+              <div className="text-center">
+                <span className="text-sm text-text-muted">
+                  Card {currentIndex + 1} of {flashcards.length}
+                </span>
+                {isShuffled && (
+                  <div className="text-xs text-gradient-purple mt-1">
+                    🎲 Shuffled
+                  </div>
+                )}
+              </div>
+              
+              <GradientButton
+                onClick={nextCard}
+                disabled={currentIndex === flashcards.length - 1}
+                size="sm"
+                className="h-8 px-3 text-xs"
+              >
+                Next
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </GradientButton>
+            </div>
+
+            {/* Progress and Actions - Two square boxes */}
+            <div className="grid grid-cols-2 gap-4 mt-4 max-w-md">
+              {/* Progress Box */}
               <div className="gradient-outline rounded-xl p-1">
-                <div className="gradient-outline-content p-4 space-y-4">
-                  <h4 className="font-semibold text-text-primary flex items-center gap-2">
+                <div className="gradient-outline-content p-4 space-y-3">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
                     <Star className="w-4 h-4 text-gradient-purple" />
                     Progress
                   </h4>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-text-secondary">Cards Studied</span>
+                        <span className="text-text-secondary">Cards</span>
                         <span className="text-gradient-purple font-medium">{currentIndex + 1}/{flashcards.length}</span>
                       </div>
                       <div className="w-full bg-surface-muted rounded-full h-2">
@@ -279,37 +311,21 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
                         />
                       </div>
                     </div>
-
-                    <div className="gradient-outline rounded-lg p-1">
-                      <div className="gradient-outline-content p-3 text-center space-y-2">
-                        <div className="flex items-center justify-center gap-2">
-                          <Sparkles className="w-4 h-4 text-gradient-orange" />
-                          <span className="text-sm font-medium text-text-primary">Study Streak</span>
-                        </div>
-                        <div className="text-2xl font-bold text-gradient-purple">
-                          {Math.min(currentIndex + 1, 7)}
-                        </div>
-                        <div className="text-xs text-text-muted">cards in a row</div>
+                    
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-gradient-purple">
+                        {Math.min(currentIndex + 1, 7)}
                       </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs">
-                        <div className="w-2 h-2 rounded-full bg-gaming-success"></div>
-                        <span className="text-text-secondary">Mastered: {Math.floor((currentIndex + 1) * 0.8)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs">
-                        <div className="w-2 h-2 rounded-full bg-gaming-warning"></div>
-                        <span className="text-text-secondary">Review: {Math.floor((currentIndex + 1) * 0.2)}</span>
-                      </div>
+                      <div className="text-xs text-text-muted">streak</div>
                     </div>
                   </div>
                 </div>
               </div>
 
+              {/* Actions Box */}
               <div className="gradient-outline rounded-xl p-1">
                 <div className="gradient-outline-content p-4 space-y-3">
-                  <h4 className="font-semibold text-text-primary flex items-center gap-2">
+                  <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
                     <Target className="w-4 h-4 text-gradient-orange" />
                     Actions
                   </h4>
@@ -317,69 +333,35 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
                   <div className="space-y-2">
                     <button 
                       onClick={flipCard}
-                      className="w-full text-sm px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                      className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
                     >
-                      💡 Reveal Answer
+                      💡 Flip Card
                     </button>
                     
                     <button 
                       onClick={isShuffled ? resetOrder : shuffleCards}
-                      className="w-full text-sm px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                      className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
                     >
-                      {isShuffled ? '🔄 Reset Order' : '🎲 Shuffle Cards'}
+                      {isShuffled ? '🔄 Reset' : '🎲 Shuffle'}
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex justify-between items-center mt-6">
-            <GradientButton
-              onClick={prevCard}
-              disabled={currentIndex === 0}
-              variant="secondary"
-              size="sm"
-              className="h-8 px-3 text-xs"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
-            </GradientButton>
-            
-            <div className="text-center">
-              <span className="text-sm text-text-muted">
-                Card {currentIndex + 1} of {flashcards.length}
-              </span>
-              {isShuffled && (
-                <div className="text-xs text-gradient-purple mt-1">
-                  🎲 Shuffled
-                </div>
-              )}
+            <div className="text-center mt-4">
+              <p className="text-xs text-text-muted mb-2">
+                {selectedUnit ? `Unit: ${currentCard.unit}` : `From ${currentCard.unit}`} • Complete AP Curriculum
+              </p>
+              <GradientButton 
+                onClick={() => {/* Navigate to learn mode */}} 
+                size="sm" 
+                className="h-7 px-3 text-xs"
+              >
+                <BookOpen className="w-3 h-3 mr-1" />
+                Go to Learn Mode
+              </GradientButton>
             </div>
-            
-            <GradientButton
-              onClick={nextCard}
-              disabled={currentIndex === flashcards.length - 1}
-              size="sm"
-              className="h-8 px-3 text-xs"
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </GradientButton>
-          </div>
-
-          <div className="text-center mt-4">
-            <p className="text-xs text-text-muted">
-              {selectedUnit ? `Unit: ${currentCard.unit}` : `From ${currentCard.unit}`} • Complete AP Curriculum
-            </p>
-            <GradientButton 
-              onClick={() => {/* Navigate to learn mode */}} 
-              size="sm" 
-              className="mt-2 h-7 px-3 text-xs"
-            >
-              <BookOpen className="w-3 h-3 mr-1" />
-              Go to Learn Mode
-            </GradientButton>
           </div>
         </>
       ) : (
