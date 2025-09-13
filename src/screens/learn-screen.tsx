@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Brain, Target, Sparkles, Play, Users, Trophy, CheckCircle, XCircle } from 'lucide-react';
-import { CheckCircle, XCircle } from 'lucide-react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { AP_CURRICULUM } from '@/data/ap-curriculum';
@@ -36,12 +35,6 @@ export const LearnScreen: React.FC = () => {
   const [streak, setStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
   const { toast } = useToast();
-
-  const congratulations = [
-    "Excellent! 🎉", "Perfect! ⭐", "Outstanding! 🚀", "Brilliant! 💡", 
-    "Amazing! 🌟", "Fantastic! 🎊", "Superb! 👏", "Incredible! 🔥",
-    "Well done! 🎯", "Awesome! ⚡", "Magnificent! 🏆", "Spectacular! ✨"
-  ];
 
   const congratulations = [
     "Excellent! 🎉", "Perfect! ⭐", "Outstanding! 🚀", "Brilliant! 💡", 
