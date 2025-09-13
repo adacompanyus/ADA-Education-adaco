@@ -23,6 +23,7 @@ import { Star, Target, Trophy, Zap, Brain, Timer, Shuffle, Flame, Award, RotateC
 import { Gamepad2 } from 'lucide-react';
 import { NotificationSettingsModal } from '@/components/notification-settings-modal';
 import { PrivacySettingsModal } from '@/components/privacy-settings-modal';
+import { useToast } from '@/hooks/use-toast';
 
 interface DashboardScreenProps {
   user: {
