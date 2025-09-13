@@ -114,6 +114,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showPrivacySettings, setShowPrivacySettings] = useState(false);
   const [subscriptionData, setSubscriptionData] = useState<any>(null);
+  const [userTokens, setUserTokens] = useState(1250);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -398,8 +399,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
   // Store Tab
   if (activeTab === 'store') {
-    const [userTokens, setUserTokens] = useState(1250);
-    
     const handlePurchase = (cost: number, itemName: string) => {
       if (userTokens >= cost) {
         setUserTokens(prev => prev - cost);
