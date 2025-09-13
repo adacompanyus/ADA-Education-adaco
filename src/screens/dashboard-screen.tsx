@@ -116,6 +116,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   const [subscriptionData, setSubscriptionData] = useState<any>(null);
   const [userTokens, setUserTokens] = useState(1250);
   const { toast } = useToast();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -613,10 +614,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   }
 
   // Profile Tab (default)
-  const {
-    theme,
-    toggleTheme
-  } = useTheme();
   const subscriptionInfo = getSubscriptionInfo();
   
   return <div className="min-h-screen bg-background relative pb-20">
