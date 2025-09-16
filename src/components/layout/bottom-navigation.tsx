@@ -22,8 +22,8 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   onTabChange,
 }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-surface-elevated border-t border-card-border z-50">
-      <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 bg-surface-elevated/95 backdrop-blur-sm border-t border-card-border z-50">
+      <div className="flex justify-between items-center py-1 px-2 max-w-lg mx-auto">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -32,26 +32,26 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className="flex flex-col items-center gap-1 py-2 px-3 transition-all duration-300 hover:bg-surface-muted rounded-lg"
+              className="flex flex-col items-center gap-0.5 py-1.5 px-1 transition-all duration-300 hover:bg-surface-muted rounded-lg flex-1"
             >
               <div className={cn(
-                'p-2 rounded-lg transition-all duration-300',
+                'p-1.5 rounded-lg transition-all duration-300',
                 isActive ? 'gradient-outline' : ''
               )}>
                 <div className={cn(
-                  'p-1 rounded-lg transition-all duration-300',
+                  'p-0.5 rounded-lg transition-all duration-300',
                   isActive && 'gradient-outline-content'
                 )}>
                   <Icon 
                     className={cn(
-                      'w-5 h-5 transition-colors duration-300',
+                      'w-4 h-4 transition-colors duration-300',
                       isActive ? 'text-gradient-purple' : 'text-text-muted'
                     )} 
                   />
                 </div>
               </div>
               <span className={cn(
-                'text-xs font-medium transition-colors duration-300',
+                'text-xs font-medium transition-colors duration-300 text-center',
                 isActive ? 'gradient-text' : 'text-text-muted'
               )}>
                 {tab.label}

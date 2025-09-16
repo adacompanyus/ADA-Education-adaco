@@ -144,7 +144,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
       
       <div className="relative z-10 flex flex-col h-screen">
         {/* Header */}
-        <div className="p-6 border-b border-card-border bg-surface/80 backdrop-blur-sm">
+        <div className="p-4 border-b border-card-border bg-surface/80 backdrop-blur-sm">
           <div className="flex items-center gap-3 mb-4">
             <div className="gradient-outline rounded-full p-1">
               <div className="gradient-outline-content rounded-full p-2">
@@ -152,8 +152,8 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
               </div>
             </div>
             <div className="flex-1">
-              <h1 className="text-xl font-bold text-text-primary">AI Tutor</h1>
-              <p className="text-sm text-text-secondary">Focus Subjects: {focusSubjects.join(', ')}</p>
+              <h1 className="text-lg font-bold text-text-primary">AI Tutor</h1>
+              <p className="text-xs text-text-secondary">Focus Subjects: {focusSubjects.join(', ')}</p>
             </div>
             {!hasUnlimitedPrompts && (
               <div className="text-right space-y-1">
@@ -183,12 +183,12 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
           </div>
           
           {/* Subject Selection */}
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-text-primary">Select subjects to focus on:</p>
+          <div className="space-y-1">
+            <p className="text-xs font-medium text-text-primary">Select subjects to focus on:</p>
             <div className="flex flex-wrap gap-2">
               <button 
                 onClick={() => setFocusSubjects(selectedSubjects)} 
-                className={`px-3 py-1 rounded-full text-xs transition-all ${
+                className={`px-2 py-1 rounded-full text-xs transition-all ${
                   focusSubjects.length === selectedSubjects.length 
                     ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' 
                     : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'
@@ -207,7 +207,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
                       setFocusSubjects([...focusSubjects, subject]);
                     }
                   }} 
-                  className={`px-3 py-1 rounded-full text-xs transition-all ${
+                  className={`px-2 py-1 rounded-full text-xs transition-all ${
                     focusSubjects.includes(subject) 
                       ? 'bg-gradient-to-r from-purple-500 to-orange-500 text-white' 
                       : 'bg-surface-muted text-text-secondary hover:bg-surface-hover'
@@ -276,7 +276,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         </div>
 
         {/* Input */}
-        <div className="fixed bottom-20 left-0 right-0 p-2 border-t border-card-border bg-surface/95 backdrop-blur-sm z-40 rounded-t-lg">
+        <div className="fixed bottom-16 left-0 right-0 p-2 border-t border-card-border bg-surface/95 backdrop-blur-sm z-40 rounded-t-lg">
           <div className="flex justify-center w-full">
             <div className="flex gap-4 max-w-4xl w-full px-4">
               <GradientInput 
@@ -303,7 +303,7 @@ export const AITutorScreen: React.FC<AITutorScreenProps> = ({
         
           {/* Quick Actions */}
           <div className="flex justify-center w-full mt-3">
-            <div className="flex gap-2 flex-wrap max-w-4xl px-4 justify-center">
+            <div className="flex gap-2 flex-wrap max-w-4xl px-4 justify-center mb-2">
               <button 
                 onClick={() => setInputMessage('Explain the main concepts I should know for the upcoming test')} 
                 className="text-xs px-4 py-2 rounded-full bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all whitespace-nowrap"

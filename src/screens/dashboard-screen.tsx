@@ -238,10 +238,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               <GradientButton 
                 onClick={() => setActiveTab('learn')} 
                 size="sm"
-                className="h-8 px-3 text-xs"
+                className="h-8 px-3 text-xs gradient-outline"
               >
-                <BookOpen className="w-3 h-3 mr-1" />
-                Learn Mode
+                <div className="gradient-outline-content px-2 py-1 rounded-lg flex items-center gap-1">
+                  <BookOpen className="w-3 h-3" />
+                  <span>Learn Mode</span>
+                </div>
               </GradientButton>
             </div>
             <CurriculumFlashcards selectedSubject={selectedSubject} />
@@ -254,10 +256,12 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
               <GradientButton 
                 onClick={() => setActiveTab('games')} 
                 size="sm"
-                className="h-8 px-3 text-xs"
+                className="h-8 px-3 text-xs gradient-outline"
               >
-                <Gamepad2 className="w-3 h-3 mr-1" />
-                All Games
+                <div className="gradient-outline-content px-2 py-1 rounded-lg flex items-center gap-1">
+                  <Gamepad2 className="w-3 h-3" />
+                  <span>All Games</span>
+                </div>
               </GradientButton>
             </div>
             
