@@ -56,6 +56,39 @@ serve(async (req) => {
 
     const aiResponse = data.choices[0].message.content;
 
+    // For JSON responses, validate and clean the response
+    if (type === 'flashcard' || type === 'quiz') {
+      try {
+        // Remove markdown code block fences if present
+        let cleanedResponse = aiResponse.trim();
+        if (cleanedResponse.startsWith('```json')) {
+          cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (cleanedResponse.startsWith('```')) {
+          cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+        
+        // Parse and re-stringify to ensure valid JSON
+        const parsedJson = JSON.parse(cleanedResponse);
+        const validJsonString = JSON.stringify(parsedJson);
+        
+        return new Response(JSON.stringify({ 
+          success: true, 
+          response: validJsonString 
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      } catch (jsonError) {
+        console.error('JSON parsing error:', jsonError);
+        return new Response(JSON.stringify({ 
+          error: 'Failed to parse AI response as valid JSON',
+          success: false 
+        }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     return new Response(JSON.stringify({ 
       success: true, 
       response: aiResponse 
