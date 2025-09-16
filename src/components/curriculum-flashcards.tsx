@@ -206,161 +206,160 @@ export const CurriculumFlashcards: React.FC<CurriculumFlashcardsProps> = ({ sele
       {/* Flashcard Display */}
       {currentCard ? (
         <>
-          {/* Flashcard - Centered */}
-          <div className="flex justify-center">
-            <div className="w-full max-w-sm">
-              <div className="gradient-outline rounded-2xl p-1">
-                <div 
-                  className="gradient-outline-content rounded-xl h-32 cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg"
-                  onClick={flipCard}
-                >
-                  <div className="relative h-full">
-                    {!isFlipped ? (
-                      /* Front */
-                      <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
-                          <Star className="w-5 h-5 text-gradient-purple" />
-                          <p className="text-base text-text-primary font-medium leading-tight">
-                            {currentCard.front}
-                          </p>
-                          <div className="absolute top-2 right-2">
-                            <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-0.5">
-                              <span className="text-xs text-gradient-purple font-medium">
-                                {currentCard.unit}
-                              </span>
-                            </div>
+          {/* Flashcard */}
+          <div className="w-full max-w-sm mx-auto">
+            <div className="gradient-outline rounded-2xl p-1">
+              <div 
+                className="gradient-outline-content rounded-xl h-40 cursor-pointer hover:scale-[1.01] transition-all duration-300 shadow-lg"
+                onClick={flipCard}
+              >
+                <div className="relative h-full">
+                  {!isFlipped ? (
+                    /* Front */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
+                        <Star className="w-5 h-5 text-gradient-purple" />
+                        <p className="text-base text-text-primary font-medium leading-tight">
+                          {currentCard.front}
+                        </p>
+                        <div className="absolute top-2 right-2">
+                          <div className="bg-gradient-to-r from-purple-500/20 to-orange-500/20 rounded-full px-2 py-0.5">
+                            <span className="text-xs text-gradient-purple font-medium">
+                              {currentCard.unit}
+                            </span>
                           </div>
                         </div>
                       </div>
-                    ) : (
-                      /* Back */
-                      <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
-                        <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
-                          <Target className="w-5 h-5 text-gradient-orange" />
-                          <p className="text-base text-text-primary font-medium leading-tight">
-                            {currentCard.back}
-                          </p>
-                          <div className="absolute top-2 right-2">
-                            <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-0.5">
-                              <span className="text-xs text-gradient-orange font-medium">
-                                Answer
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Navigation Buttons - Right under flashcard */}
-              <div className="flex justify-between items-center mt-4">
-                <div className="gradient-outline rounded-lg p-1">
-                  <button
-                    onClick={prevCard}
-                    disabled={currentIndex === 0}
-                    className="gradient-outline-content px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform"
-                  >
-                    <div className="flex items-center gap-2">
-                      <ChevronLeft className="w-4 h-4 text-gradient-purple" />
-                      <span className="text-sm font-medium text-text-primary">Previous</span>
                     </div>
-                  </button>
-                </div>
-                
-                <div className="text-center">
-                  <span className="text-sm text-text-muted">
-                    Card {currentIndex + 1} of {flashcards.length}
-                  </span>
-                  {isShuffled && (
-                    <div className="text-xs text-gradient-purple mt-1">
-                      🎲 Shuffled
+                  ) : (
+                    /* Back */
+                    <div className="absolute inset-0 rounded-xl bg-surface animate-fade-in">
+                      <div className="h-full flex flex-col justify-center items-center text-center space-y-2 p-4">
+                        <Target className="w-5 h-5 text-gradient-orange" />
+                        <p className="text-base text-text-primary font-medium leading-tight">
+                          {currentCard.back}
+                        </p>
+                        <div className="absolute top-2 right-2">
+                          <div className="bg-gradient-to-r from-orange-500/20 to-purple-500/20 rounded-full px-2 py-0.5">
+                            <span className="text-xs text-gradient-orange font-medium">
+                              Answer
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center mt-4 max-w-sm mx-auto">
+            <div className="gradient-outline rounded-lg p-1">
+              <button
+                onClick={prevCard}
+                disabled={currentIndex === 0}
+                className="gradient-outline-content px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform"
+              >
+                <div className="flex items-center gap-2">
+                  <ChevronLeft className="w-4 h-4 text-gradient-purple" />
+                  <span className="text-sm font-medium text-text-primary">Previous</span>
+                </div>
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <span className="text-sm text-text-muted">
+                Card {currentIndex + 1} of {flashcards.length}
+              </span>
+              {isShuffled && (
+                <div className="text-xs text-gradient-purple mt-1">
+                  🎲 Shuffled
+                </div>
+              )}
+            </div>
+            
+            <div className="gradient-outline rounded-lg p-1">
+              <button
+                onClick={nextCard}
+                disabled={currentIndex === flashcards.length - 1}
+                className="gradient-outline-content px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-text-primary">Next</span>
+                  <ChevronRight className="w-4 h-4 text-gradient-orange" />
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* Progress and Actions - Two square boxes */}
+          <div className="grid grid-cols-2 gap-4 mt-4 max-w-sm mx-auto">
+            {/* Progress Box */}
+            <div className="gradient-outline rounded-xl p-1">
+              <div className="gradient-outline-content p-4 space-y-3">
+                <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
+                  <Star className="w-4 h-4 text-gradient-purple" />
+                  Progress
+                </h4>
                 
-                <div className="gradient-outline rounded-lg p-1">
-                  <button
-                    onClick={nextCard}
-                    disabled={currentIndex === flashcards.length - 1}
-                    className="gradient-outline-content px-4 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-text-primary">Next</span>
-                      <ChevronRight className="w-4 h-4 text-gradient-orange" />
+                <div className="space-y-2">
+                  <div>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-text-secondary">Cards</span>
+                      <span className="text-gradient-purple font-medium">{currentIndex + 1}/{flashcards.length}</span>
                     </div>
+                    <div className="w-full bg-surface-muted rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${((currentIndex + 1) / flashcards.length) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-gradient-purple">
+                      {Math.min(currentIndex + 1, 7)}
+                    </div>
+                    <div className="text-xs text-text-muted">streak</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Actions Box */}
+            <div className="gradient-outline rounded-xl p-1">
+              <div className="gradient-outline-content p-4 space-y-3">
+                <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
+                  <Target className="w-4 h-4 text-gradient-orange" />
+                  Actions
+                </h4>
+                
+                <div className="space-y-2">
+                  <button 
+                    onClick={flipCard}
+                    className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                  >
+                    💡 Flip Card
+                  </button>
+                  
+                  <button 
+                    onClick={isShuffled ? resetOrder : shuffleCards}
+                    className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
+                  >
+                    {isShuffled ? '🔄 Reset' : '🎲 Shuffle'}
                   </button>
                 </div>
               </div>
-
-              {/* Progress and Actions - Two square boxes */}
-              <div className="grid grid-cols-2 gap-4 mt-4">
-                {/* Progress Box */}
-                <div className="gradient-outline rounded-xl p-1">
-                  <div className="gradient-outline-content p-4 space-y-3">
-                    <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
-                      <Star className="w-4 h-4 text-gradient-purple" />
-                      Progress
-                    </h4>
-                    
-                    <div className="space-y-2">
-                      <div>
-                        <div className="flex justify-between text-xs mb-1">
-                          <span className="text-text-secondary">Cards</span>
-                          <span className="text-gradient-purple font-medium">{currentIndex + 1}/{flashcards.length}</span>
-                        </div>
-                        <div className="w-full bg-surface-muted rounded-full h-2">
-                          <div 
-                            className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${((currentIndex + 1) / flashcards.length) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-gradient-purple">
-                          {Math.min(currentIndex + 1, 7)}
-                        </div>
-                        <div className="text-xs text-text-muted">streak</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Actions Box */}
-                <div className="gradient-outline rounded-xl p-1">
-                  <div className="gradient-outline-content p-4 space-y-3">
-                    <h4 className="font-semibold text-text-primary flex items-center gap-2 text-sm">
-                      <Target className="w-4 h-4 text-gradient-orange" />
-                      Actions
-                    </h4>
-                    
-                    <div className="space-y-2">
-                      <button 
-                        onClick={flipCard}
-                        className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
-                      >
-                        💡 Flip Card
-                      </button>
-                      
-                      <button 
-                        onClick={isShuffled ? resetOrder : shuffleCards}
-                        className="w-full text-xs px-3 py-2 rounded-lg bg-surface-muted text-text-secondary hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-orange-500/10 hover:text-gradient-purple transition-all"
-                      >
-                        {isShuffled ? '🔄 Reset' : '🎲 Shuffle'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center mt-4">
-                <p className="text-xs text-text-muted">
-                  {selectedUnit ? `Unit: ${currentCard.unit}` : `From ${currentCard.unit}`} • Complete AP Curriculum
-                </p>
-              </div>
             </div>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center mt-4">
+            <p className="text-xs text-text-muted">
+              {selectedUnit ? `Unit: ${currentCard.unit}` : `From ${currentCard.unit}`} • Complete AP Curriculum
+            </p>
           </div>
         </>
       ) : (
