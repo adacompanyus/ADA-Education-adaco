@@ -359,7 +359,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
         <div className="min-h-screen bg-background relative pb-20">
           <ParticleBackground />
           <div className="relative z-10 p-6">
-            <LearnScreen />
+            <LearnScreen selectedSubjects={selectedSubjects} />
           </div>
         </div>
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
