@@ -379,25 +379,28 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
           
           {isFlipped && (
             <div className="flex gap-4 justify-center">
-              <GradientButton 
-                onClick={() => {
-                  setSession(prev => ({ ...prev, incorrect: prev.incorrect + 1, streak: 0 }));
-                  handleNextQuestion();
-                }}
-                variant="secondary"
-                className="px-8"
-              >
-                😅 Hard
-              </GradientButton>
-              <GradientButton 
-                onClick={() => {
-                  setSession(prev => ({ ...prev, correct: prev.correct + 1, streak: prev.streak + 1 }));
-                  handleNextQuestion();
-                }}
-                className="px-8"
-              >
-                😊 Easy
-              </GradientButton>
+              <div className="gradient-outline rounded-lg p-1">
+                <button
+                  onClick={() => {
+                    setSession(prev => ({ ...prev, incorrect: prev.incorrect + 1, streak: 0 }));
+                    handleNextQuestion();
+                  }}
+                  className="gradient-outline-content px-8 py-2 rounded-lg hover:scale-105 transition-transform"
+                >
+                  <span className="text-text-primary font-medium">😅 Hard</span>
+                </button>
+              </div>
+              <div className="gradient-outline rounded-lg p-1">
+                <button
+                  onClick={() => {
+                    setSession(prev => ({ ...prev, correct: prev.correct + 1, streak: prev.streak + 1 }));
+                    handleNextQuestion();
+                  }}
+                  className="gradient-outline-content px-8 py-2 rounded-lg hover:scale-105 transition-transform"
+                >
+                  <span className="text-text-primary font-medium">😊 Easy</span>
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -443,20 +446,26 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
                 <div className="space-y-4">
                   {question.type === 'true-false' ? (
                     <div className="flex gap-4 justify-center">
-                      <GradientButton 
-                        onClick={() => { setUserAnswer('true'); }}
-                        variant={userAnswer === 'true' ? 'primary' : 'secondary'}
-                        className="px-12 py-4 text-lg"
-                      >
-                        True
-                      </GradientButton>
-                      <GradientButton 
-                        onClick={() => { setUserAnswer('false'); }}
-                        variant={userAnswer === 'false' ? 'primary' : 'secondary'}
-                        className="px-12 py-4 text-lg"
-                      >
-                        False
-                      </GradientButton>
+                      <div className="gradient-outline rounded-lg p-1">
+                        <button 
+                          onClick={() => { setUserAnswer('true'); }}
+                          className={`gradient-outline-content px-12 py-4 text-lg rounded-lg transition-all ${
+                            userAnswer === 'true' ? 'bg-gradient-to-r from-purple-500/20 to-orange-500/20' : ''
+                          }`}
+                        >
+                          <span className="text-text-primary font-semibold">True</span>
+                        </button>
+                      </div>
+                      <div className="gradient-outline rounded-lg p-1">
+                        <button 
+                          onClick={() => { setUserAnswer('false'); }}
+                          className={`gradient-outline-content px-12 py-4 text-lg rounded-lg transition-all ${
+                            userAnswer === 'false' ? 'bg-gradient-to-r from-purple-500/20 to-orange-500/20' : ''
+                          }`}
+                        >
+                          <span className="text-text-primary font-semibold">False</span>
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <input
@@ -473,17 +482,18 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
               )}
               
               <div className="flex justify-center">
-                <GradientButton 
-                  onClick={checkAnswer} 
-                  disabled={
-                    (question.type === 'multiple-choice' && selectedOption === null) ||
-                    ((question.type === 'typing' || question.type === 'true-false') && !userAnswer.trim())
-                  }
-                  size="lg"
-                  className="px-12"
-                >
-                  Submit Answer
-                </GradientButton>
+                <div className="gradient-outline rounded-lg p-1">
+                  <button 
+                    onClick={checkAnswer} 
+                    disabled={
+                      (question.type === 'multiple-choice' && selectedOption === null) ||
+                      ((question.type === 'typing' || question.type === 'true-false') && !userAnswer.trim())
+                    }
+                    className="gradient-outline-content px-12 py-3 text-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform"
+                  >
+                    <span className="text-text-primary font-semibold">Submit Answer</span>
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
@@ -510,14 +520,17 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
                 <div className="space-y-4">
                   {!aiExplanation && !loadingExplanation && (
                     <div className="flex justify-center">
-                      <GradientButton 
-                        onClick={() => getAIExplanation(question, userAnswer || selectedOption?.toString() || '')}
-                        variant="secondary"
-                        className="px-6"
-                      >
-                        <Lightbulb className="w-4 h-4 mr-2" />
-                        Get AI Explanation
-                      </GradientButton>
+                      <div className="gradient-outline rounded-lg p-1">
+                        <button 
+                          onClick={() => getAIExplanation(question, userAnswer || selectedOption?.toString() || '')}
+                          className="gradient-outline-content px-6 py-2 rounded-lg hover:scale-105 transition-transform"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Lightbulb className="w-4 h-4 text-gradient-orange" />
+                            <span className="text-text-primary font-medium">Get AI Explanation</span>
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -541,9 +554,14 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
               )}
 
               <div className="flex justify-center">
-                <GradientButton onClick={handleNextQuestion} size="lg" className="px-12">
-                  Continue
-                </GradientButton>
+                <div className="gradient-outline rounded-lg p-1">
+                  <button 
+                    onClick={handleNextQuestion} 
+                    className="gradient-outline-content px-12 py-3 text-lg rounded-lg hover:scale-105 transition-transform"
+                  >
+                    <span className="text-text-primary font-semibold">Continue</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -698,19 +716,22 @@ export const LearnModeLauncher: React.FC<LearnModeLauncherProps> = ({
               </div>
               
               <div className="flex gap-3">
-                <GradientButton 
-                  onClick={cancelExit} 
-                  variant="secondary" 
-                  className="flex-1"
-                >
-                  No, Continue
-                </GradientButton>
-                <GradientButton 
-                  onClick={confirmExit} 
-                  className="flex-1"
-                >
-                  Yes, End Session
-                </GradientButton>
+                <div className="gradient-outline rounded-lg p-1 flex-1">
+                  <button 
+                    onClick={cancelExit} 
+                    className="gradient-outline-content w-full py-3 rounded-lg hover:scale-105 transition-transform"
+                  >
+                    <span className="text-text-primary font-medium">No, Continue</span>
+                  </button>
+                </div>
+                <div className="gradient-outline rounded-lg p-1 flex-1">
+                  <button 
+                    onClick={confirmExit} 
+                    className="gradient-outline-content w-full py-3 rounded-lg hover:scale-105 transition-transform"
+                  >
+                    <span className="text-text-primary font-medium">Yes, End Session</span>
+                  </button>
+                </div>
               </div>
             </div>
           </GradientCard>
