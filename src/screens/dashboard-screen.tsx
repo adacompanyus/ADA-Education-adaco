@@ -3,7 +3,6 @@ import { BottomNavigation } from '@/components/layout/bottom-navigation';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { ParticleBackground } from '@/components/animations/particle-background';
-import { CurriculumFlashcards } from '@/components/curriculum-flashcards';
 import { QuickQuiz } from '@/components/mini-games/quick-quiz';
 import { MemoryMatch } from '@/components/mini-games/memory-match';
 import { TimeTrial } from '@/components/mini-games/time-trial';
@@ -232,22 +231,6 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
 
           {/* Curriculum Flashcards */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-text-primary">Quick Study</h2>
-              <GradientButton 
-                onClick={() => setActiveTab('learn')} 
-                size="sm"
-                className="h-8 px-3 text-xs gradient-outline"
-              >
-                <div className="gradient-outline-content px-2 py-1 rounded-lg flex items-center gap-1">
-                  <BookOpen className="w-3 h-3" />
-                  <span>Learn Mode</span>
-                </div>
-              </GradientButton>
-            </div>
-            <CurriculumFlashcards selectedSubject={selectedSubject} />
-          </div>
 
           {/* Minigames */}
           <div className="space-y-4">

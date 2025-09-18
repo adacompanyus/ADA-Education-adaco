@@ -3,6 +3,7 @@ import { BookOpen, Brain, Target, Sparkles, Clock, MessageCircle, Grid } from 'l
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { LearnModeLauncher } from '@/components/learn-mode-launcher';
+import { FlashcardStudy } from '@/components/flashcard-study';
 
 type StudyMode = 'flashcards' | 'learn' | 'test' | 'match' | 'spaced-repetition' | 'write';
 
@@ -60,6 +61,15 @@ export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects }) =>
     }
   ];
 
+  // Handle flashcards mode separately with new component
+  if (activeLauncher === 'flashcards') {
+    return (
+      <FlashcardStudy 
+        selectedSubject={selectedSubject} 
+        onClose={() => setActiveLauncher(null)} 
+      />
+    );
+  }
   if (activeLauncher) {
     return (
       <LearnModeLauncher 
