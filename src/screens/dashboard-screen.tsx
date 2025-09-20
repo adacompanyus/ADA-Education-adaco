@@ -209,91 +209,274 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
             </div>
           </div>
 
-          {/* Subject Selector */}
-          <div className="relative">
-            <button onClick={() => setShowSubjectDropdown(!showSubjectDropdown)} className="w-full gradient-outline rounded-lg p-1">
-              <div className="gradient-outline-content px-4 py-3 flex items-center justify-between">
-                <span className="font-medium text-text-primary">{selectedSubject}</span>
-                <ChevronDown className="w-5 h-5 text-gradient-purple" />
-              </div>
-            </button>
-
-            {showSubjectDropdown && <div className="absolute top-full left-0 right-0 mt-2 gradient-outline rounded-lg p-1 z-50 animate-scale-in">
-                <div className="gradient-outline-content rounded-lg max-h-48 overflow-y-auto">
-                  {selectedSubjects.map(subject => <button key={subject} onClick={() => {
-                setSelectedSubject(subject);
-                setShowSubjectDropdown(false);
-              }} className="w-full text-left px-4 py-3 hover:bg-surface-muted transition-colors text-text-primary">
-                      {subject}
-                    </button>)}
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 gap-4">
+            <GradientCard className="cursor-pointer hover:scale-[1.02] transition-transform">
+              <div 
+                className="flex flex-col items-center text-center space-y-4 p-6"
+                onClick={() => setActiveTab('learn')}
+              >
+                <div className="gradient-outline rounded-xl p-1">
+                  <div className="gradient-outline-content rounded-xl p-4">
+                    <BookOpen className="w-12 h-12 text-gradient-purple" />
+                  </div>
                 </div>
-              </div>}
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-text-primary">Start Learning</h3>
+                  <p className="text-sm text-text-secondary">Flashcards, quizzes & more</p>
+                </div>
+              </div>
+            </GradientCard>
+
+            <GradientCard className="cursor-pointer hover:scale-[1.02] transition-transform">
+              <div 
+                className="flex flex-col items-center text-center space-y-4 p-6"
+                onClick={() => setActiveTab('games')}
+              >
+                <div className="gradient-outline rounded-xl p-1">
+                  <div className="gradient-outline-content rounded-xl p-4">
+                    <Gamepad2 className="w-12 h-12 text-gradient-orange" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-text-primary">All Games</h3>
+                  <p className="text-sm text-text-secondary">Mini-games & challenges</p>
+                </div>
+              </div>
+            </GradientCard>
           </div>
 
-          {/* Curriculum Flashcards */}
-
-          {/* Minigames */}
+          {/* Progress Overview */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-text-primary">Quick Games</h2>
-              <GradientButton 
-                onClick={() => setActiveTab('games')} 
-                size="sm"
-                className="h-8 px-3 text-xs gradient-outline"
-              >
-                <div className="gradient-outline-content px-2 py-1 rounded-lg flex items-center gap-1">
-                  <Gamepad2 className="w-3 h-3" />
-                  <span>All Games</span>
+            <h2 className="text-xl font-semibold text-text-primary flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-gradient-orange" />
+              Your Progress
+            </h2>
+            
+            {/* Weekly Progress Chart */}
+            <GradientCard>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-text-primary">This Week</h3>
+                  <span className="text-sm text-gradient-purple font-medium">7 days active</span>
                 </div>
-              </GradientButton>
+                
+                <div className="flex items-end justify-between gap-2 h-24">
+                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => {
+                    const height = [60, 80, 45, 90, 75, 100, 85][index];
+                    return (
+                      <div key={day} className="flex flex-col items-center gap-2 flex-1">
+                        <div 
+                          className="w-full bg-gradient-to-t from-purple-500 to-orange-500 rounded-t-lg transition-all duration-500"
+                          style={{ height: `${height}%` }}
+                        />
+                        <span className="text-xs text-text-muted">{day}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                <div className="text-center">
+                  <p className="text-sm text-text-secondary">
+                    <span className="text-gaming-xp font-semibold">+420 XP</span> earned this week
+                  </p>
+                </div>
+              </div>
+            </GradientCard>
+            
+            {/* Subject Progress */}
+            <GradientCard>
+              <div className="space-y-4">
+                <h3 className="font-semibold text-text-primary">Subject Mastery</h3>
+                
+                <div className="space-y-3">
+                  {selectedSubjects.slice(0, 4).map((subject, index) => {
+                    const progress = [85, 72, 91, 68][index] || 75;
+                    return (
+                      <div key={subject} className="space-y-2">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium text-text-primary">{subject}</span>
+                          <span className="text-sm text-gradient-purple font-semibold">{progress}%</span>
+                        </div>
+                        <div className="gradient-outline rounded-full p-1">
+                          <div className="gradient-outline-content rounded-full">
+                            <div className="w-full bg-surface-muted rounded-full h-2">
+                              <div 
+                                className="bg-gradient-to-r from-purple-500 to-orange-500 h-2 rounded-full transition-all duration-700"
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {selectedSubjects.length > 4 && (
+                  <div className="text-center">
+                    <button 
+                      onClick={() => setActiveTab('profile')}
+                      className="text-sm text-gradient-purple font-medium hover:underline"
+                    >
+                      View all {selectedSubjects.length} subjects →
+                    </button>
+                  </div>
+                )}
+              </div>
+            </GradientCard>
+            
+            {/* Study Statistics */}
+            <div className="grid grid-cols-2 gap-4">
+              <GradientCard>
+                <div className="text-center space-y-3 p-4">
+                  <div className="gradient-outline rounded-full p-1 w-16 h-16 mx-auto">
+                    <div className="gradient-outline-content rounded-full w-full h-full bg-surface flex items-center justify-center">
+                      <BookOpen className="w-8 h-8 text-gradient-purple" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gradient-purple">142</p>
+                    <p className="text-sm text-text-muted">Cards Studied</p>
+                  </div>
+                </div>
+              </GradientCard>
+              
+              <GradientCard>
+                <div className="text-center space-y-3 p-4">
+                  <div className="gradient-outline rounded-full p-1 w-16 h-16 mx-auto">
+                    <div className="gradient-outline-content rounded-full w-full h-full bg-surface flex items-center justify-center">
+                      <Target className="w-8 h-8 text-gradient-orange" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gradient-orange">89%</p>
+                    <p className="text-sm text-text-muted">Accuracy Rate</p>
+                  </div>
+                </div>
+              </GradientCard>
             </div>
             
-            <div className="grid grid-cols-2 gap-3">
-              {minigames.map(game => {
-                const Icon = game.icon;
-                const subscriptionInfo = getSubscriptionInfo();
-                const hasPersonalPlus = subscriptionInfo?.name.includes('Personal+') || subscriptionInfo?.name.includes('Enterprise');
-                const isLocked = game.requiresPremium && !hasPersonalPlus;
+            {/* Recent Achievements */}
+            <GradientCard>
+              <div className="space-y-4">
+                <h3 className="font-semibold text-text-primary flex items-center gap-2">
+                  <Award className="w-5 h-5 text-gradient-orange" />
+                  Recent Achievements
+                </h3>
                 
-                return (
-                  <GradientCard 
-                    key={game.id} 
-                    className={`cursor-pointer hover:scale-[1.02] transition-transform ${isLocked ? 'opacity-60' : ''}`}
-                  >
-                    <div className="flex flex-col items-center text-center space-y-3 p-2 relative">
-                      {isLocked && (
-                        <div className="absolute top-2 right-2">
-                          <Crown className="w-4 h-4 text-gradient-orange" />
-                        </div>
-                      )}
-                      <div className="gradient-outline rounded-lg p-2">
-                        <div className="gradient-outline-content rounded-lg p-2">
-                          <Icon className="w-8 h-8 text-gradient-purple" />
-                        </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-muted">
+                    <div className="gradient-outline rounded-full p-1">
+                      <div className="gradient-outline-content rounded-full p-2">
+                        <Flame className="w-5 h-5 text-gradient-orange" />
                       </div>
-                      <div className="space-y-1">
-                        <h3 className="font-semibold text-text-primary text-sm">{game.title}</h3>
-                        <p className="text-xs text-text-secondary">{game.description}</p>
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="text-xs text-gaming-xp">+{game.xpReward} XP</span>
-                          <span className="text-xs text-text-muted">• {game.difficulty}</span>
-                        </div>
-                        {game.requiresPremium && (
-                          <p className="text-xs text-gradient-orange">Personal+ Exclusive</p>
-                        )}
-                      </div>
-                      <GradientButton 
-                        size="sm" 
-                        onClick={() => isLocked ? setShowMiniGameUpgrade(true) : setActiveGame(game.id)} 
-                        className="w-full"
-                      >
-                        {isLocked ? 'Upgrade to Play' : 'Play'}
-                      </GradientButton>
                     </div>
-                  </GradientCard>
-                );
-              })}
-            </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-text-primary">7-Day Streak!</p>
+                      <p className="text-sm text-text-secondary">Keep up the momentum</p>
+                    </div>
+                    <span className="text-xs text-gaming-xp font-semibold">+50 XP</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-muted">
+                    <div className="gradient-outline rounded-full p-1">
+                      <div className="gradient-outline-content rounded-full p-2">
+                        <Star className="w-5 h-5 text-gradient-purple" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-text-primary">Quiz Master</p>
+                      <p className="text-sm text-text-secondary">Scored 90%+ on 5 quizzes</p>
+                    </div>
+                    <span className="text-xs text-gaming-xp font-semibold">+100 XP</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-muted">
+                    <div className="gradient-outline rounded-full p-1">
+                      <div className="gradient-outline-content rounded-full p-2">
+                        <Brain className="w-5 h-5 text-gradient-orange" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-text-primary">Study Champion</p>
+                      <p className="text-sm text-text-secondary">Studied 100+ flashcards</p>
+                    </div>
+                    <span className="text-xs text-gaming-xp font-semibold">+75 XP</span>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <button 
+                    onClick={() => setActiveTab('profile')}
+                    className="text-sm text-gradient-purple font-medium hover:underline"
+                  >
+                    View all achievements →
+                  </button>
+                </div>
+              </div>
+            </GradientCard>
+            
+            {/* Study Goals */}
+            <GradientCard>
+              <div className="space-y-4">
+                <h3 className="font-semibold text-text-primary flex items-center gap-2">
+                  <Target className="w-5 h-5 text-gradient-purple" />
+                  Today's Goals
+                </h3>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-gaming-success flex items-center justify-center">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="text-sm text-text-primary">Study 20 flashcards</span>
+                    </div>
+                    <span className="text-xs text-gaming-success font-semibold">20/20</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="gradient-outline rounded-full p-1">
+                        <div className="gradient-outline-content rounded-full p-1">
+                          <div className="w-4 h-4 rounded-full bg-gradient-to-r from-purple-500 to-orange-500" />
+                        </div>
+                      </div>
+                      <span className="text-sm text-text-primary">Complete 2 quizzes</span>
+                    </div>
+                    <span className="text-xs text-gradient-purple font-semibold">1/2</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full border-2 border-surface-muted flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-surface-muted" />
+                      </div>
+                      <span className="text-sm text-text-primary">Play 1 mini-game</span>
+                    </div>
+                    <span className="text-xs text-text-muted font-semibold">0/1</span>
+                  </div>
+                </div>
+                
+                <div className="gradient-outline rounded-full p-1">
+                  <div className="gradient-outline-content rounded-full">
+                    <div className="w-full bg-surface-muted rounded-full h-3">
+                      <div 
+                        className="bg-gradient-to-r from-purple-500 to-orange-500 h-3 rounded-full transition-all duration-500"
+                        style={{ width: '67%' }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <p className="text-sm text-text-secondary">
+                    <span className="text-gradient-purple font-semibold">2/3</span> goals completed today
+                  </p>
+                </div>
+              </div>
+            </GradientCard>
           </div>
 
           {/* Active Game Modal */}
