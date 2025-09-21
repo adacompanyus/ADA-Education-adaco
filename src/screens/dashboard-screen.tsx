@@ -210,37 +210,37 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </div>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <GradientCard className="cursor-pointer hover:scale-[1.02] transition-transform">
               <div 
-                className="flex flex-col items-center text-center space-y-4 p-6"
+                className="flex items-center gap-3 p-4"
                 onClick={() => setActiveTab('learn')}
               >
-                <div className="gradient-outline rounded-xl p-1">
-                  <div className="gradient-outline-content rounded-xl p-4">
-                    <BookOpen className="w-12 h-12 text-gradient-purple" />
+                <div className="gradient-outline rounded-lg p-1">
+                  <div className="gradient-outline-content rounded-lg p-2">
+                    <BookOpen className="w-6 h-6 text-gradient-purple" />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-text-primary">Start Learning</h3>
-                  <p className="text-sm text-text-secondary">Flashcards, quizzes & more</p>
+                <div>
+                  <h3 className="text-base font-semibold text-text-primary">Start Learning</h3>
+                  <p className="text-xs text-text-secondary">Study tools & modes</p>
                 </div>
               </div>
             </GradientCard>
 
             <GradientCard className="cursor-pointer hover:scale-[1.02] transition-transform">
               <div 
-                className="flex flex-col items-center text-center space-y-4 p-6"
+                className="flex items-center gap-3 p-4"
                 onClick={() => setActiveTab('games')}
               >
-                <div className="gradient-outline rounded-xl p-1">
-                  <div className="gradient-outline-content rounded-xl p-4">
-                    <Gamepad2 className="w-12 h-12 text-gradient-orange" />
+                <div className="gradient-outline rounded-lg p-1">
+                  <div className="gradient-outline-content rounded-lg p-2">
+                    <Gamepad2 className="w-6 h-6 text-gradient-orange" />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-text-primary">All Games</h3>
-                  <p className="text-sm text-text-secondary">Mini-games & challenges</p>
+                <div>
+                  <h3 className="text-base font-semibold text-text-primary">All Games</h3>
+                  <p className="text-xs text-text-secondary">Mini-games & challenges</p>
                 </div>
               </div>
             </GradientCard>
@@ -524,12 +524,19 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
 
   // Learn Mode Tab
   if (activeTab === 'learn') {
+    const subscriptionInfo = getSubscriptionInfo();
+    const subscriptionTier = subscriptionInfo?.name.includes('Personal+') ? 'Premium' : 
+                            subscriptionInfo?.name.includes('Enterprise') ? 'Enterprise' : 'Basic';
+    
     return (
       <>
         <div className="min-h-screen bg-background relative pb-20">
           <ParticleBackground />
           <div className="relative z-10 p-6">
-            <LearnScreen selectedSubjects={selectedSubjects} />
+            <LearnScreen 
+              selectedSubjects={selectedSubjects} 
+              subscriptionTier={subscriptionTier}
+            />
           </div>
         </div>
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
