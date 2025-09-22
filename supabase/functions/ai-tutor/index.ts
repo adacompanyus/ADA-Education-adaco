@@ -59,13 +59,33 @@ serve(async (req) => {
     // For JSON responses, validate and clean the response
     if (type === 'flashcard' || type === 'quiz') {
       try {
-        // Remove markdown code block fences if present
+        // More robust JSON extraction - find the actual JSON content
         let cleanedResponse = aiResponse.trim();
-        if (cleanedResponse.startsWith('```json')) {
-          cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-        } else if (cleanedResponse.startsWith('```')) {
-          cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        
+        // Find the first opening bracket and last closing bracket
+        const openBracketIndex = Math.max(
+          cleanedResponse.indexOf('['),
+          cleanedResponse.indexOf('{')
+        );
+        
+        if (openBracketIndex === -1) {
+          throw new Error('No JSON structure found in AI response');
         }
+        
+        // Determine if it's an array or object and find the matching closing bracket
+        let closeBracketIndex = -1;
+        if (cleanedResponse[openBracketIndex] === '[') {
+          closeBracketIndex = cleanedResponse.lastIndexOf(']');
+        } else if (cleanedResponse[openBracketIndex] === '{') {
+          closeBracketIndex = cleanedResponse.lastIndexOf('}');
+        }
+        
+        if (closeBracketIndex === -1 || closeBracketIndex <= openBracketIndex) {
+          throw new Error('No matching closing bracket found in AI response');
+        }
+        
+        // Extract only the JSON portion
+        cleanedResponse = cleanedResponse.substring(openBracketIndex, closeBracketIndex + 1);
         
         // Parse and re-stringify to ensure valid JSON
         const parsedJson = JSON.parse(cleanedResponse);
