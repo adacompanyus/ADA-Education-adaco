@@ -33,7 +33,7 @@ interface Question {
 }
 
 interface LearnModeLauncherProps {
-  mode: 'flashcards' | 'learn' | 'test' | 'match' | 'spaced-repetition' | 'write';
+  mode: 'learn' | 'test' | 'match' | 'spaced-repetition' | 'write' | 'practice';
   subject: string;
   onClose: () => void;
 }

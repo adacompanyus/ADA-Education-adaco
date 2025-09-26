@@ -1,65 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Brain, Target, Sparkles, Clock, MessageCircle, Grid } from 'lucide-react';
+import { BookOpen, Brain, Target, Sparkles, Clock, MessageCircle, Grid, Lightbulb, PenTool, Crown } from 'lucide-react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { LearnModeLauncher } from '@/components/learn-mode-launcher';
+import { FlashcardStudy } from '@/components/flashcard-study';
+import { MiniGameUpgradeModal } from '@/components/mini-game-upgrade-modal';
 
-type StudyMode = 'flashcards' | 'learn' | 'test' | 'match' | 'spaced-repetition' | 'write';
+type StudyMode = 'learn' | 'test' | 'match' | 'spaced-repetition' | 'write' | 'practice';
 
 interface LearnScreenProps {
   selectedSubjects: string[];
+  subscriptionTier?: string;
 }
 
-export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects }) => {
+export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects, subscriptionTier }) => {
   const [selectedSubject, setSelectedSubject] = useState(selectedSubjects[0] || '');
-  const [studyMode, setStudyMode] = useState<StudyMode>('flashcards');
+  const [studyMode, setStudyMode] = useState<StudyMode>('learn');
   const [activeLauncher, setActiveLauncher] = useState<StudyMode | null>(null);
+  const [activeFlashcards, setActiveFlashcards] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
+  const hasPersonalPlus = subscriptionTier === 'Premium' || subscriptionTier === 'Enterprise';
 
   const studyModes = [
-    {
-      id: 'flashcards',
-      name: 'Flashcards',
-      description: 'Classic card review',
-      icon: BookOpen,
-      color: 'text-gradient-purple'
-    },
     {
       id: 'learn',
       name: 'Learn',
       description: 'Adaptive learning with feedback',
       icon: Brain,
-      color: 'text-gradient-orange'
+      color: 'text-gradient-orange',
+      requiresPremium: false
     },
     {
       id: 'test',
       name: 'Test',
       description: 'Quiz yourself without hints',
       icon: Target,
-      color: 'text-gaming-error'
+      color: 'text-gaming-error',
+      requiresPremium: false
     },
     {
       id: 'match',
       name: 'Match',
       description: 'Match terms with definitions',
       icon: Grid,
-      color: 'text-gaming-success'
+      color: 'text-gaming-success',
+      requiresPremium: false
     },
     {
       id: 'spaced-repetition',
       name: 'Spaced Repetition',
       description: 'Scientifically optimized review',
       icon: Clock,
-      color: 'text-gradient-purple'
+      color: 'text-gradient-purple',
+      requiresPremium: true
     },
     {
       id: 'write',
       name: 'Write',
       description: 'Type out the answers',
       icon: MessageCircle,
-      color: 'text-gradient-orange'
+      color: 'text-gradient-orange',
+      requiresPremium: false
+    },
+    {
+      id: 'practice',
+      name: 'Practice',
+      description: 'Mixed practice problems',
+      icon: PenTool,
+      color: 'text-gradient-purple',
+      requiresPremium: true
     }
   ];
 
+  // Handle flashcards separately with new component
+  if (activeFlashcards) {
+    return (
+      <FlashcardStudy 
+        selectedSubject={selectedSubject} 
+        onClose={() => setActiveFlashcards(false)} 
+      />
+    );
+  }
+  
   if (activeLauncher) {
     return (
       <LearnModeLauncher 
@@ -71,7 +94,8 @@ export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects }) =>
   }
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="min-h-screen bg-background relative pb-20">
+      <div className="relative z-10 p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <div className="gradient-outline rounded-full p-1">
@@ -112,33 +136,74 @@ export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects }) =>
         </div>
       </GradientCard>
 
+      {/* Flashcards Section */}
+      <GradientCard>
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-text-primary mb-3 flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-gradient-purple" />
+            Flashcards
+          </h3>
+          <p className="text-sm text-text-secondary mb-4">
+            Study with AI-generated flashcards for {selectedSubject}
+          </p>
+          <GradientButton 
+            onClick={() => setActiveFlashcards(true)}
+            className="w-full"
+          >
+            <BookOpen className="w-4 h-4 mr-2" />
+            Start Flashcard Study
+          </GradientButton>
+        </div>
+      </GradientCard>
+
       {/* Study Mode Selector */}
       <GradientCard>
         <div className="p-4">
           <h3 className="text-lg font-semibold text-text-primary mb-3 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-gradient-orange" />
-            Study Mode
+            <Brain className="w-5 h-5 text-gradient-orange" />
+            Study Modes
           </h3>
           <div className="grid grid-cols-2 gap-3">
             {studyModes.map((mode) => {
               const Icon = mode.icon;
+              const isLocked = mode.requiresPremium && !hasPersonalPlus;
+              
               return (
                 <button
                   key={mode.id}
-                  onClick={() => setActiveLauncher(mode.id as StudyMode)}
-                  className="p-4 rounded-lg text-left transition-all bg-surface-muted text-text-secondary hover:bg-surface hover:scale-[1.02]"
+                  onClick={() => isLocked ? setShowUpgradeModal(true) : setActiveLauncher(mode.id as StudyMode)}
+                  className={`p-4 rounded-lg text-left transition-all hover:scale-[1.02] relative ${
+                    isLocked 
+                      ? 'bg-surface-muted text-text-secondary opacity-60 cursor-not-allowed' 
+                      : 'bg-surface-muted text-text-secondary hover:bg-surface'
+                  }`}
                 >
+                  {isLocked && (
+                    <div className="absolute top-2 right-2">
+                      <Crown className="w-4 h-4 text-gradient-orange" />
+                    </div>
+                  )}
                   <div className="flex items-center gap-3 mb-2">
                     <Icon className={`w-5 h-5 ${mode.color}`} />
                     <span className="font-medium text-sm text-text-primary">{mode.name}</span>
                   </div>
                   <p className="text-xs text-text-muted">{mode.description}</p>
+                  {mode.requiresPremium && (
+                    <p className="text-xs text-gradient-orange mt-1">Personal+ Exclusive</p>
+                  )}
                 </button>
               );
             })}
           </div>
         </div>
       </GradientCard>
+      </div>
+      
+      {/* Mini Game Upgrade Modal */}
+      <MiniGameUpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)} 
+      />
     </div>
   );
 };
