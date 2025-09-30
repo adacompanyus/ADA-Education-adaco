@@ -618,178 +618,343 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           {/* Avatars */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold gradient-text">Avatars</h2>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🐱</span>
+            <div className="grid grid-cols-2 gap-3">
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🐱</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Scholar Cat</h3>
-                    <p className="text-sm text-text-secondary">Wise feline companion</p>
+                    <p className="text-xs text-text-secondary">Wise feline companion</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(300, 'Scholar Cat')}
+                    disabled={userTokens < 300}
+                    className="w-full"
+                  >
+                    300 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(300, 'Scholar Cat')}
-                  disabled={userTokens < 300}
-                >
-                  300 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🦉</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🦉</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Wise Owl</h3>
-                    <p className="text-sm text-text-secondary">Nocturnal study buddy</p>
+                    <p className="text-xs text-text-secondary">Nocturnal study buddy</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(400, 'Wise Owl')}
+                    disabled={userTokens < 400}
+                    className="w-full"
+                  >
+                    400 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(400, 'Wise Owl')}
-                  disabled={userTokens < 400}
-                >
-                  400 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🐉</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🐉</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Study Dragon</h3>
-                    <p className="text-sm text-text-secondary">Mythical learning companion</p>
+                    <p className="text-xs text-text-secondary">Mythical learning companion</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(750, 'Study Dragon')}
+                    disabled={userTokens < 750}
+                    className="w-full"
+                  >
+                    750 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(750, 'Study Dragon')}
-                  disabled={userTokens < 750}
-                >
-                  750 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🤖</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🤖</span>
                   <div>
                     <h3 className="font-medium text-text-primary">AI Assistant</h3>
-                    <p className="text-sm text-text-secondary">Future tech avatar</p>
+                    <p className="text-xs text-text-secondary">Future tech avatar</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(600, 'AI Assistant')}
+                    disabled={userTokens < 600}
+                    className="w-full"
+                  >
+                    600 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(600, 'AI Assistant')}
-                  disabled={userTokens < 600}
-                >
-                  600 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🧙‍♂️</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Study Wizard</h3>
+                    <p className="text-xs text-text-secondary">Magical learning guide</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(850, 'Study Wizard')}
+                    disabled={userTokens < 850}
+                    className="w-full"
+                  >
+                    850 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🦄</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Unicorn</h3>
+                    <p className="text-xs text-text-secondary">Magical study companion</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(950, 'Unicorn')}
+                    disabled={userTokens < 950}
+                    className="w-full"
+                  >
+                    950 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+            </div>
           </div>
 
           {/* Power-ups */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold gradient-text">Power-ups</h2>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🛡️</span>
+            <div className="grid grid-cols-2 gap-3">
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🛡️</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Streak Freeze</h3>
-                    <p className="text-sm text-text-secondary">Protect your streak for 1 day</p>
+                    <p className="text-xs text-text-secondary">Protect your streak for 1 day</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(100, 'Streak Freeze')}
+                    disabled={userTokens < 100}
+                    className="w-full"
+                  >
+                    100 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(100, 'Streak Freeze')}
-                  disabled={userTokens < 100}
-                >
-                  100 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">⚡</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">⚡</span>
                   <div>
                     <h3 className="font-medium text-text-primary">XP Booster</h3>
-                    <p className="text-sm text-text-secondary">Double XP for 1 hour</p>
+                    <p className="text-xs text-text-secondary">Double XP for 1 hour</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(150, 'XP Booster')}
+                    disabled={userTokens < 150}
+                    className="w-full"
+                  >
+                    150 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(150, 'XP Booster')}
-                  disabled={userTokens < 150}
-                >
-                  150 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">💎</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">💎</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Gem Multiplier</h3>
-                    <p className="text-sm text-text-secondary">2x tokens for next game</p>
+                    <p className="text-xs text-text-secondary">2x tokens for next game</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(200, 'Gem Multiplier')}
+                    disabled={userTokens < 200}
+                    className="w-full"
+                  >
+                    200 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(200, 'Gem Multiplier')}
-                  disabled={userTokens < 200}
-                >
-                  200 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🔥</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Fire Boost</h3>
+                    <p className="text-xs text-text-secondary">Triple XP for 30 minutes</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(250, 'Fire Boost')}
+                    disabled={userTokens < 250}
+                    className="w-full"
+                  >
+                    250 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🌟</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Star Power</h3>
+                    <p className="text-xs text-text-secondary">Instant perfect score</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(300, 'Star Power')}
+                    disabled={userTokens < 300}
+                    className="w-full"
+                  >
+                    300 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🎯</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Focus Mode</h3>
+                    <p className="text-xs text-text-secondary">No distractions for 2 hours</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(180, 'Focus Mode')}
+                    disabled={userTokens < 180}
+                    className="w-full"
+                  >
+                    180 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+            </div>
           </div>
 
           {/* Special Items */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold gradient-text">Special Items</h2>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🎯</span>
+            <div className="grid grid-cols-2 gap-3">
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🏆</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Accuracy Badge</h3>
-                    <p className="text-sm text-text-secondary">Perfect score achievement</p>
+                    <p className="text-xs text-text-secondary">Perfect score achievement</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(500, 'Accuracy Badge')}
+                    disabled={userTokens < 500}
+                    className="w-full"
+                  >
+                    500 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(500, 'Accuracy Badge')}
-                  disabled={userTokens < 500}
-                >
-                  500 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
-            <GradientCard className="cursor-pointer hover:scale-[1.02]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">👑</span>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">👑</span>
                   <div>
                     <h3 className="font-medium text-text-primary">Master Crown</h3>
-                    <p className="text-sm text-text-secondary">Complete subject mastery</p>
+                    <p className="text-xs text-text-secondary">Complete subject mastery</p>
                   </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(1000, 'Master Crown')}
+                    disabled={userTokens < 1000}
+                    className="w-full"
+                  >
+                    1000 🪙
+                  </GradientButton>
                 </div>
-                <GradientButton 
-                  size="sm"
-                  onClick={() => handlePurchase(1000, 'Master Crown')}
-                  disabled={userTokens < 1000}
-                >
-                  1000 🪙
-                </GradientButton>
-              </div>
-            </GradientCard>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🎨</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Theme Pack</h3>
+                    <p className="text-xs text-text-secondary">Unlock custom themes</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(400, 'Theme Pack')}
+                    disabled={userTokens < 400}
+                    className="w-full"
+                  >
+                    400 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🚀</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Rocket Boost</h3>
+                    <p className="text-xs text-text-secondary">Skip to next level</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(600, 'Rocket Boost')}
+                    disabled={userTokens < 600}
+                    className="w-full"
+                  >
+                    600 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">💫</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Lucky Star</h3>
+                    <p className="text-xs text-text-secondary">Random bonus rewards</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(350, 'Lucky Star')}
+                    disabled={userTokens < 350}
+                    className="w-full"
+                  >
+                    350 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+              
+              <GradientCard className="cursor-pointer hover:scale-[1.02]">
+                <div className="text-center space-y-3 p-4">
+                  <span className="text-3xl">🎪</span>
+                  <div>
+                    <h3 className="font-medium text-text-primary">Fun Mode</h3>
+                    <p className="text-xs text-text-secondary">Extra animations & effects</p>
+                  </div>
+                  <GradientButton 
+                    size="sm"
+                    onClick={() => handlePurchase(450, 'Fun Mode')}
+                    disabled={userTokens < 450}
+                    className="w-full"
+                  >
+                    450 🪙
+                  </GradientButton>
+                </div>
+              </GradientCard>
+            </div>
           </div>
         </div>
         <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
