@@ -299,26 +299,28 @@ export const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
         </div>
 
         {/* Continue Button */}
-        {selectedPlan && selectedPlan !== 'enterprise' && (
-          <div className="animate-scale-in">
-            <GradientButton
-              size="lg"
-              className="w-full"
-              onClick={handleContinue}
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                `Continue with ${plans.find(p => p.id === selectedPlan)?.name}`
-              )}
-            </GradientButton>
-          </div>
-        )}
       </div>
+      
+      {/* Fixed Continue Button */}
+      {selectedPlan && selectedPlan !== 'enterprise' && (
+        <div className="fixed bottom-6 left-6 right-6 max-w-md mx-auto animate-scale-in">
+          <GradientButton
+            size="lg"
+            className="w-full"
+            onClick={handleContinue}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              `Continue with ${plans.find(p => p.id === selectedPlan)?.name}`
+            )}
+          </GradientButton>
+        </div>
+      )}
     </div>
   );
 };

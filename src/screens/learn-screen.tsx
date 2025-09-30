@@ -53,7 +53,7 @@ export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects, subs
       description: 'Scientifically optimized review',
       icon: Clock,
       color: 'text-gradient-purple',
-      requiresPremium: true
+      requiresPremium: subscriptionTier === 'Basic'
     },
     {
       id: 'write',
@@ -69,7 +69,7 @@ export const LearnScreen: React.FC<LearnScreenProps> = ({ selectedSubjects, subs
       description: 'Mixed practice problems',
       icon: PenTool,
       color: 'text-gradient-purple',
-      requiresPremium: true
+      requiresPremium: subscriptionTier === 'Basic'
     }
   ];
 
