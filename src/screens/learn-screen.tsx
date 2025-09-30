@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Brain, Target, Sparkles, Clock, MessageCircle, Grid, Lightbulb, PenTool, Crown } from 'lucide-react';
+import { BookOpen, Brain, Target, Sparkles, Clock, MessageCircle, Grid2x2 as Grid, Lightbulb, PenTool, Crown } from 'lucide-react';
 import { GradientCard } from '@/components/ui/gradient-card';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { LearnModeLauncher } from '@/components/learn-mode-launcher';
